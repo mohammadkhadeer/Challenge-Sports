@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragments.standings.StandingBaseFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/top_selectors"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_55sdp"
+        android:background="@color/colorPrimary">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/appCompatSpinner2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/primary_rounded_rect"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/appCompatSpinner"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.4"
+            tools:layout_editor_absoluteY="13dp" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/appCompatSpinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/primary_rounded_rect"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/appCompatSpinner2"
+            app:layout_constraintWidth_percent="0.4"
+            tools:layout_editor_absoluteY="13dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.tabs.TabLayout
+        app:layout_constraintTop_toBottomOf="@+id/top_selectors"
+        android:id="@+id/tab_layout_standings"
+        android:layout_width="match_parent"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/grey_text"
+        app:tabIndicatorFullWidth="false"
+        app:tabTextAppearance="@style/TabtextAppearence"
+        app:tabIndicatorColor="@color/white"
+        android:paddingBottom="@dimen/_5sdp"
+        android:background="@color/tablayout_color"
+        android:layout_height="@dimen/_25sdp"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/standings_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout_standings" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:paddingHorizontal="@dimen/_25sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/home_technic_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="110"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/away_technic_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="210"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/technic_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Possession"
+        android:gravity="center"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/away_technic_value"
+        app:layout_constraintStart_toEndOf="@+id/home_technic_value"
+        android:textColor="@color/dark_grey_bg"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        app:layout_constraintStart_toEndOf="@+id/home_technic_value"
+        app:layout_constraintEnd_toStartOf="@+id/away_technic_value"
+        app:layout_constraintTop_toBottomOf="@+id/technic_name"
+        android:layout_height="@dimen/_7sdp"
+        >
+
+        <View
+            android:id="@+id/away_indicator"
+            android:layout_width="0dp"
+            android:layout_marginStart="-1dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/orange_background_gradient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_indicator"
+            />
+
+        <View
+            android:id="@+id/home_indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/blue_background_gradient"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
