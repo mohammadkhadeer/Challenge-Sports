@@ -109,7 +109,6 @@
                 android:maxLines="1"
                 android:paddingVertical="0dp"
 
-                android:text="1.4"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toStartOf="@+id/index_c2_r1"
@@ -121,7 +120,6 @@
                 android:id="@+id/index_c1_r2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.1"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@id/match_time"
@@ -137,7 +135,6 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:maxLines="1"
                 android:paddingVertical="0dp"
-                android:text="1.4"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toStartOf="@+id/index_c3_r1"
@@ -149,7 +146,6 @@
                 android:id="@+id/index_c2_r2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.1"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@id/match_time"
@@ -166,7 +162,6 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:maxLines="1"
                 android:paddingVertical="0dp"
-                android:text="1.4"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toStartOf="@+id/match_date"
@@ -178,7 +173,6 @@
                 android:id="@+id/index_c3_r2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.1"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@id/match_time"
@@ -243,7 +237,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/_3sdp"
-                    android:text="HY"
+                    android:text="HT"
                     android:textColor="@color/white"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -253,7 +247,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_3sdp"
-                android:text="7:1"
                 app:layout_constraintStart_toStartOf="@+id/c_ht_container"
                 app:layout_constraintTop_toBottomOf="@+id/c_ht_container" />
 
@@ -262,7 +255,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_3sdp"
-                android:text="1:1"
                 app:layout_constraintEnd_toEndOf="@+id/c_ht_container"
                 app:layout_constraintTop_toBottomOf="@+id/c_ht_container" />
 

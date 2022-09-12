@@ -3,6 +3,7 @@ package com.example.myapplication.model.api
 import com.example.myapplication.model.data.generalized.GeneralTokenResponse
 import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
+import com.example.myapplication.model.data.homepage.briefing.BriefingBase
 import com.example.myapplication.model.data.homepage.event.EventBase
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage.new2.BaseClassIndexNew
@@ -27,4 +28,5 @@ interface ApiHelper {
     suspend fun getLiveOdds(): BaseLiveOdds
     suspend fun getAnalysisForMatch(matchId:String):AnalysisBase
     suspend fun getEvents(): EventBase
+    suspend fun getBriefing(matchId: String): BriefingBase
 }

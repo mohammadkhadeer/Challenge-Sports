@@ -145,6 +145,23 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 }
                 onBackPressedListener?.changeBackPressBehaviour(this)
             }
+            MainAdapterMessages.OPEN_BRIEF -> {
+                val frag=MatchOptionsFragment.newInstance(
+                    (mainAdapter
+                        ?.dataList
+                        ?.get(position)
+                        ?.matchId
+                        ?:0)
+                        .toString(),MatchOptionsFragment.BRIEFING_FRAGMENT)
+                try {
+                    frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    inflateFragment(frag
+                        ,R.id.fragment_container)
+                }catch (e:Exception){
+
+                }
+                onBackPressedListener?.changeBackPressBehaviour(this)
+            }
         }
     }
 

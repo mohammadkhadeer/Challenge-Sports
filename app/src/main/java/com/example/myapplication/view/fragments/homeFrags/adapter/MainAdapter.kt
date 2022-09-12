@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -45,6 +47,7 @@ import kotlin.collections.ArrayList
         var index_btn=itemView.findViewById<View>(R.id.index_bt)
         var analysis_bt=itemView.findViewById<View>(R.id.analysis_bt)
         var event_bt=itemView.findViewById<View>(R.id.event_bt)
+        var brief_bt=itemView.findViewById<View>(R.id.briefing_button)
         var fragment_container=itemView.findViewById<FrameLayout>(R.id.fragment_container)
         init {
             index_btn.setOnClickListener {
@@ -61,6 +64,9 @@ import kotlin.collections.ArrayList
             event_bt.setOnClickListener {
                 communicator.onMessageFromAdapter(MainAdapterMessages.OPEN_EVENT,layoutPosition,fragment_container.id)
             }
+            brief_bt.setOnClickListener {
+                communicator.onMessageFromAdapter(MainAdapterMessages.OPEN_BRIEF,layoutPosition,fragment_container.id)
+            }
 
         }
     }
@@ -72,10 +78,24 @@ import kotlin.collections.ArrayList
     override fun onBindViewHolder(holder: MainPageAdapterViewHolder, position: Int) {
 
         val dataObject=dataList[position]
+
+        if (!dataObject.havOdds){
+            holder.index_btn.visibility= GONE
+        }else{
+            holder.index_btn.visibility= VISIBLE
+        }
+        if (!dataObject.havBriefing){
+            holder.brief_bt.visibility= GONE
+        }else{
+            holder.brief_bt.visibility= VISIBLE
+        }
+
         holder.leagueNameShort.text=dataObject.leagueNameShort
 
         holder.homeNameTv.text=dataObject.homeName
         holder.awayNameTv.text=dataObject.awayName
+
+
         if (dataObject.state==0){
             holder.scoreIndicator.text=context.getString(R.string.soon)
         }else{

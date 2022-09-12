@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.example.myapplication.R
 import com.example.myapplication.model.data.homepage.new2.Match
+import com.example.myapplication.utils.GeneralTools
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter
 import com.example.myapplication.view.fragments.homeFrags.detailFragment.AnalysisFragment
 import com.example.myapplication.view.fragments.homeFrags.detailFragment.EventFragment
@@ -66,6 +68,11 @@ class MatchOptionsFragment : Fragment() {
         awayNameTv.text=match?.awayName
         if (match?.state==0){
             scoreIndicator.text=context?.getString(R.string.soon)
+            view.findViewById<View>(R.id.set_reminder).setOnClickListener {
+                GeneralTools.setAlarmFor(requireContext(),returnTimeMs(returnTime(match!!)))
+                Toast.makeText(requireContext(),"Alarm Set for"+returnTimeMs(returnTime(match!!))+" : "+returnTime(match!!),Toast.LENGTH_LONG).show()
+            }
+
         }else{
             scoreIndicator.text=match?.homeScore.toString() + " : "+match?.awayScore.toString()
         }
@@ -129,6 +136,9 @@ class MatchOptionsFragment : Fragment() {
             EVENT_TYPE->{
                 EventFragment.newInstance(matchId!!,"")
             }
+            BRIEFING_FRAGMENT->{
+                BriefingFragment.newInstance(matchId!!,"")
+            }
             else -> {
                 AnalysisFragment.newInstance(matchId!!,"")
             }
@@ -145,8 +155,10 @@ class MatchOptionsFragment : Fragment() {
         val sdf = SimpleDateFormat("yyyy/M/dd HH:mm:ss")
         val time=returnGMTToCurrentTimezone(returnGMTTimeInMs(dataObject.matchTime))
         return sdf.format(time)
-
-
+    }
+    private fun returnTimeMs(time:String):Long{
+        val sdf = SimpleDateFormat("yyyy/M/dd HH:mm:ss")
+        return sdf.parse(time).time
     }
 
     private fun returnMinutes(dataObject: Match):String
@@ -256,5 +268,6 @@ class MatchOptionsFragment : Fragment() {
         const val INDEX_TYPE="index_frag"
         const val ANALYSIS_TYPE= "analysis_frag"
         const val EVENT_TYPE= "event_type"
+        const val BRIEFING_FRAGMENT= "brief_frag"
     }
 }

@@ -3,6 +3,7 @@ package com.example.myapplication.model.api
 import com.example.myapplication.model.data.generalized.GeneralTokenResponse
 import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
+import com.example.myapplication.model.data.homepage.briefing.BriefingBase
 import com.example.myapplication.model.data.homepage.event.EventBase
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage. new2.BaseClassIndexNew
@@ -51,6 +52,9 @@ interface ApiService {
 
     @GET("/api/zqbf-list-event")
     suspend fun getEvents(): EventBase
+
+    @GET("/api/zqbf-match-briefing-en/{matchId}")
+    suspend fun getBrief(@Path("matchId") matchId:String): BriefingBase
 
     //TODO:Add API calls here
 }

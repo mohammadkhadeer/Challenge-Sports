@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.model.api.ApiHelper
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
 import com.example.myapplication.model.data.homepage.event.EventBase
-import com.example.myapplication.model.data.homepage.event.formatted.FormattedTecnicEvent
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage. new2.BaseClassIndexNew
 import com.example.myapplication.model.data.news.NewsBase
@@ -32,6 +31,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     var liveOddsLiveData=MutableLiveData<Resource<BaseLiveOdds>>()
     var analysisLiveData=MutableLiveData<Resource<AnalysisBase>>()
     var eventsLiveData=MutableLiveData<Resource<EventBase>>()
+    var briefingLiveData=MutableLiveData<Resource<String>>()
 
     init {
   /*      makeNewsCall()
@@ -217,6 +217,18 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
                 eventsLiveData.postValue(Resource.success(eventBase))
             }catch (e:Exception){
                 eventsLiveData.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+
+    fun getBriefing(matchId:String){
+        viewModelScope.launch {
+            try {
+                briefingLiveData.postValue(Resource.loading(null))
+                val briefingBase=apiHelper.getBriefing(matchId)
+                briefingLiveData.postValue(Resource.success(briefingBase.recommendEn))
+            }catch (e:Exception){
+                briefingLiveData.postValue(Resource.error(e.toString(),null))
             }
         }
     }

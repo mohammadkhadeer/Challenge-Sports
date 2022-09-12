@@ -9,5 +9,6 @@ enum class MainAdapterMessages{
    OPEN_ANALYSIS,
    OPEN_LEAGUE,
    CLOSE_LEAGUE,
-   OPEN_EVENT
+   OPEN_EVENT,
+   OPEN_BRIEF
 }
