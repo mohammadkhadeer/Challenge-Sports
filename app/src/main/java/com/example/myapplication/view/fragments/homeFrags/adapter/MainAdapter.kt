@@ -48,6 +48,7 @@ import kotlin.collections.ArrayList
         var analysis_bt=itemView.findViewById<View>(R.id.analysis_bt)
         var event_bt=itemView.findViewById<View>(R.id.event_bt)
         var brief_bt=itemView.findViewById<View>(R.id.briefing_button)
+        var league_bt=itemView.findViewById<View>(R.id.league_bt)
         var fragment_container=itemView.findViewById<FrameLayout>(R.id.fragment_container)
         init {
             index_btn.setOnClickListener {
@@ -67,6 +68,10 @@ import kotlin.collections.ArrayList
             brief_bt.setOnClickListener {
                 communicator.onMessageFromAdapter(MainAdapterMessages.OPEN_BRIEF,layoutPosition,fragment_container.id)
             }
+            league_bt.setOnClickListener {
+                communicator.onMessageFromAdapter(MainAdapterMessages.OPEN_LEAGUE,layoutPosition,fragment_container.id)
+            }
+
 
         }
     }

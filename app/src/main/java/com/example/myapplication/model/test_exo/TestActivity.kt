@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.example.myapplication.utils.GeneralTools
+import com.example.myapplication.utils.SpewViewModel
 import com.example.myapplication.view.fragments.homeFrags.IndexDisplayFragmnet
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -20,8 +21,13 @@ class TestActivity : AppCompatActivity() {
         setContentView(R.layout.activity_test)
 
         findViewById<View>(R.id.test_bt).setOnClickListener {
-        GeneralTools.setAlarmFor(this,System.currentTimeMillis()+60000)
+
+            val vm=SpewViewModel.giveMeViewModel(this)
+            vm.getLeagueInfoForMatch("1953","0","22252")
+           //vm.getLeagueInfoForMatch("140","44","0")
         }
+
+
 
 
 /*        inflateFragment(

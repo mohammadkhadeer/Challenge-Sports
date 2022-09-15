@@ -5,6 +5,7 @@ import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
 import com.example.myapplication.model.data.homepage.briefing.BriefingBase
 import com.example.myapplication.model.data.homepage.event.EventBase
+import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage. new2.BaseClassIndexNew
 import com.example.myapplication.model.data.news.NewsBase
@@ -56,5 +57,7 @@ interface ApiService {
     @GET("/api/zqbf-match-briefing-en/{matchId}")
     suspend fun getBrief(@Path("matchId") matchId:String): BriefingBase
 
-    //TODO:Add API calls here
+    @GET("/api/zqbf-list-league/{leagueId}/{subleagueId}/{groupId}")
+    suspend fun getLeagueInfo(@Path("leagueId")leagueId: String, @Path("subleagueId") subLeagueId: String,@Path("groupId") groupId: String): BaseLeagueInfoHomePage
+
 }

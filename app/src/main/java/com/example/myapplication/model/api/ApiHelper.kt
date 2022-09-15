@@ -5,6 +5,7 @@ import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
 import com.example.myapplication.model.data.homepage.briefing.BriefingBase
 import com.example.myapplication.model.data.homepage.event.EventBase
+import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage.new2.BaseClassIndexNew
 import com.example.myapplication.model.data.news.NewsBase
@@ -29,4 +30,5 @@ interface ApiHelper {
     suspend fun getAnalysisForMatch(matchId:String):AnalysisBase
     suspend fun getEvents(): EventBase
     suspend fun getBriefing(matchId: String): BriefingBase
+    suspend fun getLeagueInfo(leagueId: String, subLeagueId: String, groupId: String): BaseLeagueInfoHomePage
 }

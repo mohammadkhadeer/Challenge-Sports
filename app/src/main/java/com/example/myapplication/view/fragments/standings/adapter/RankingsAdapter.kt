@@ -67,47 +67,53 @@ class RankingsAdapter(var context:Context,var teams:ArrayList<TeamInfo>,var rank
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position==0){
-            return
+
+        try {
+            if (position==0){
+                return
+            }
+            val myholder=holder as RankingViewHolder
+            val team=spewTeam(rankings[position].teamId)
+            myholder.ranking_tv.text=rankings[position].rank.toString()
+            Glide.with(context)
+                .load(team.flag)
+                .into(myholder.teamFlag)
+            myholder.teamName.text=team.nameEn
+            myholder.matchPlayed.text=rankings[position].totalCount.toString()
+            myholder.won.text=rankings[position].winCount.toString()
+            myholder.draw.text=rankings[position].drawCount.toString()
+            myholder.loss.text=rankings[position].loseCount.toString()
+            myholder.gf.text=rankings[position].getScore.toString()
+            myholder.ga.text=rankings[position].loseScore.toString()
+            myholder.pts.text=rankings[position].integral.toString()
+            val rank=rankings[position]
+            val percentStats="W%="+rank.winRate+"% / L%="+rank.loseRate+
+                    "% / AVA="+rank.loseAverage+" D%="+rank.drawRate+"% / AVF="+rank.winAverage
+
+            myholder.percentStats.text=percentStats
+
+            Glide.with(context)
+                .load(returnMatchAsset(rank.recentFirstResult))
+                .into(myholder.match1)
+            Glide.with(context)
+                .load(returnMatchAsset(rank.recentSecondResult))
+                .into(myholder.match2)
+            Glide.with(context)
+                .load(returnMatchAsset(rank.recentThirdResult))
+                .into(myholder.match3)
+            Glide.with(context)
+                .load(returnMatchAsset(rank.recentFourthResult))
+                .into(myholder.match4)
+            Glide.with(context)
+                .load(returnMatchAsset(rank.recentFifthResult))
+                .into(myholder.match5)
+            Glide.with(context)
+                .load(returnMatchAsset(rank.recentSixthResult))
+                .into(myholder.match6)
+        }catch (e:Exception){
+
         }
-        val myholder=holder as RankingViewHolder
-        val team=spewTeam(rankings[position].teamId)
-        myholder.ranking_tv.text=rankings[position].rank.toString()
-        Glide.with(context)
-            .load(team.flag)
-            .into(myholder.teamFlag)
-        myholder.teamName.text=team.nameEn
-        myholder.matchPlayed.text=rankings[position].totalCount.toString()
-        myholder.won.text=rankings[position].winCount.toString()
-        myholder.draw.text=rankings[position].drawCount.toString()
-        myholder.loss.text=rankings[position].loseCount.toString()
-        myholder.gf.text=rankings[position].getScore.toString()
-        myholder.ga.text=rankings[position].loseScore.toString()
-        myholder.pts.text=rankings[position].integral.toString()
-        val rank=rankings[position]
-        val percentStats="W%="+rank.winRate+"% / L%="+rank.loseRate+
-                "% / AVA="+rank.loseAverage+" D%="+rank.drawRate+"% / AVF="+rank.winAverage
 
-        myholder.percentStats.text=percentStats
-
-        Glide.with(context)
-            .load(returnMatchAsset(rank.recentFirstResult))
-            .into(myholder.match1)
-        Glide.with(context)
-            .load(returnMatchAsset(rank.recentSecondResult))
-            .into(myholder.match2)
-        Glide.with(context)
-            .load(returnMatchAsset(rank.recentThirdResult))
-            .into(myholder.match3)
-        Glide.with(context)
-            .load(returnMatchAsset(rank.recentFourthResult))
-            .into(myholder.match4)
-        Glide.with(context)
-            .load(returnMatchAsset(rank.recentFifthResult))
-            .into(myholder.match5)
-        Glide.with(context)
-            .load(returnMatchAsset(rank.recentSixthResult))
-            .into(myholder.match6)
 
     }
 

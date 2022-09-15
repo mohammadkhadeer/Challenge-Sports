@@ -70,4 +70,16 @@
     <string name="subs">Substitutions</string>
     <string name="channel_name">notification_channel</string>
     <string name="set_reminder">Set Reminder</string>
+    <string name="full_name">Full Name:</string>
+    <string name="abbreviation">Abbreviation</string>
+    <string name="type">Type:</string>
+    <string name="current_sub_league">Current Sub-League:</string>
+    <string name="total_rounds">Total Rounds:</string>
+    <string name="current_round">Current Round:</string>
+    <string name="current_season">Current Season:</string>
+    <string name="country">Country:</string>
+    <string name="rules">Rules:</string>
+    <string name="no_info_yet">No info yet</string>
+    <string name="league_cup_info">League / Cup Information</string>
+    <string name="league_standings">League Standings</string>
 </resources>

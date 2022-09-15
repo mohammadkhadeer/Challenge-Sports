@@ -123,7 +123,21 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 onBackPressedListener?.changeBackPressBehaviour(this)
             }
             MainAdapterMessages.OPEN_LEAGUE -> {
+                val frag=MatchOptionsFragment.newInstance(
+                    (mainAdapter
+                        ?.dataList
+                        ?.get(position)
+                        ?.matchId
+                        ?:0)
+                        .toString(),MatchOptionsFragment.LEAGUE_FRAGMENT)
+                try {
+                    frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    inflateFragment(frag
+                        ,R.id.fragment_container)
+                }catch (e:Exception){
 
+                }
+                onBackPressedListener?.changeBackPressBehaviour(this)
             }
             MainAdapterMessages.CLOSE_LEAGUE -> {
 

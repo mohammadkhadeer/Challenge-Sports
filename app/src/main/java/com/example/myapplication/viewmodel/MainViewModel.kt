@@ -6,6 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.model.api.ApiHelper
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
 import com.example.myapplication.model.data.homepage.event.EventBase
+import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
+import com.example.myapplication.model.data.homepage.leagueInfo.LeagueInfo
+import com.example.myapplication.model.data.homepage.leagueInfo.LeagueStanding
+import com.example.myapplication.model.data.homepage.leagueInfo.any.LeagueStandingTypeGroupBase
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage. new2.BaseClassIndexNew
 import com.example.myapplication.model.data.news.NewsBase
@@ -16,6 +20,7 @@ import com.example.myapplication.model.data.standings.player.PlayerStandingBase
 import com.example.myapplication.model.data.standings.sorted.SortedStandings
 import com.example.myapplication.model.data.videos.VideosListBase
 import com.example.myapplication.utils.Resource
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import kotlin.Exception
 
@@ -32,6 +37,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     var analysisLiveData=MutableLiveData<Resource<AnalysisBase>>()
     var eventsLiveData=MutableLiveData<Resource<EventBase>>()
     var briefingLiveData=MutableLiveData<Resource<String>>()
+    var leagueInfoLiveData=MutableLiveData<Resource<BaseLeagueInfoHomePage>>()
 
     init {
   /*      makeNewsCall()
@@ -232,8 +238,44 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
             }
         }
     }
+    fun getLeagueInfoForMatch(leagueId:String,subLeague:String?,groupId:String?){
+        viewModelScope.launch {
+            try {
+                leagueInfoLiveData.postValue(Resource.loading(null))
+               val leagueInfoBase=apiHelper.getLeagueInfo(leagueId,subLeague?:"0",groupId?:"0")
+                leagueInfoLiveData.postValue(Resource.success(testCasting(leagueInfoBase)))
+            }catch (e:Exception){
+                briefingLiveData.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
 
+    private fun testCasting(leagueInfoBase: BaseLeagueInfoHomePage): BaseLeagueInfoHomePage {
 
+        val obj=leagueInfoBase.leagueStanding[0]
+        val jsonObj=Gson().toJson(obj)
+        val groupObj=Gson().fromJson(jsonObj,LeagueStandingTypeGroupBase::class.java)
+        try {
+            println(groupObj.list[0].leagueId)
+            leagueInfoBase.leagueStanding= listOf<LeagueStandingTypeGroupBase>(groupObj)
+        }catch (e:Exception){
+            val groupObjOriginal=Gson().fromJson(jsonObj,LeagueStanding::class.java)
+            leagueInfoBase.leagueStanding= listOf<LeagueStanding>(groupObjOriginal)
+            println(leagueInfoBase)
+        }
+        when (leagueInfoBase.leagueStanding[0]){
+            is LeagueStandingTypeGroupBase->{
+                println("Groups Base")
+            }
+            is LeagueStanding->{
+                println("Standard Base")
+            }
+            else->{
+                println("Bad News!")
+            }
+        }
+        return leagueInfoBase
+    }
 
 
 }

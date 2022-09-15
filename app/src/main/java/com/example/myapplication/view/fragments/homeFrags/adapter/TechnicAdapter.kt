@@ -40,9 +40,14 @@ class TechnicAdapter(var context: Context,var dataList:List<FormattedTecnicEvent
                 .matchConstraintPercentWidth=width.toFloat()
         }
         else{
-            (holder.homeIndicator.layoutParams as ConstraintLayout.LayoutParams)
-                .matchConstraintPercentWidth=
-                returnHomePercentage(dataList[position].homeCount.toDouble(),dataList[position].awayCount.toDouble()).toFloat()
+            try {
+                (holder.homeIndicator.layoutParams as ConstraintLayout.LayoutParams)
+                    .matchConstraintPercentWidth=
+                    returnHomePercentage(dataList[position].homeCount.toDouble(),dataList[position].awayCount.toDouble()).toFloat()
+            }catch (e:Exception){
+
+            }
+
         }
     }
 
