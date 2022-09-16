@@ -92,7 +92,7 @@ class LeagueBaseFragmet : Fragment() {
                         getString(R.string.league_cup_info)
                     }
                 }
-            }
+            }.attach()
         }catch (e:Exception){
 
         }

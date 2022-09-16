@@ -1,5 +1,6 @@
 package com.example.myapplication.view.fragments.homeFrags.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -18,14 +21,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
- class MainAdapter(var context:Context,var dataList:ArrayList<Match>,var communicator: MainAdapterCommunicator) : RecyclerView.Adapter<MainAdapter.MainPageAdapterViewHolder>() {
+ class MainAdapter(var context:Context,var dataList:ArrayList<Match>,var communicator: MainAdapterCommunicator) : RecyclerView.Adapter<MainAdapter.MainPageAdapterViewHolder>(),Filterable {
      companion object{
          val GMT_OFFSET_IN_MS:Long=28800000
          val HOUR_CONSTANT:Long=3600000
          val MINS_CONSTANT:Long=60000
     }
+     var originalList=dataList
+     init {
 
-
+     }
 
     val displayFragment:Fragment?=null
 
@@ -256,4 +261,41 @@ import kotlin.collections.ArrayList
         return dataList.size
     }
 
-}
+     override fun getFilter(): Filter {
+         return object : Filter(){
+             override fun performFiltering(charset: CharSequence?): FilterResults {
+                 val filterResults=FilterResults()
+                 val filterList=ArrayList<Match>()
+                if (charset.isNullOrEmpty()){
+                    filterResults.apply {
+                        count=originalList.size
+                        values=originalList
+                    }
+                }else{
+                    for (match in originalList){
+                        if (match.homeName.startsWith(charset,true)
+                            ||match.awayName.startsWith(charset,true)
+                            ||match.leagueName.startsWith(charset,true)
+                            ||match.leagueNameShort.startsWith(charset,true))
+                        {
+                            filterList.add(match)
+                        }
+                    }
+                    filterResults.apply {
+                        count=filterList.size
+                        values=filterList
+                    }
+                }
+                 return filterResults
+             }
+
+             @Suppress("UNCHECKED_CAST")
+             @SuppressLint("NotifyDataSetChanged")
+             override fun publishResults(p0: CharSequence?, results: FilterResults?) {
+                 dataList=results?.values as ArrayList<Match>
+                 notifyDataSetChanged()
+             }
+         }
+     }
+
+ }

@@ -46,48 +46,53 @@ class OddsRvPopulator(var context: Context, var dataList: List<Any>, var typeOdd
         val data=dataList[position] as List<*>
         holder.companyName.text = returnCompanyName(data as List<Any>)
 
-        when (typeOdds) {
-            ASIA_FULL->{
-                holder.homeOne.text=data[6].toString()
-                holder.liveHandicap.text=data[5].toString()
-                holder.awayOne.text=data[7].toString()
-                holder.homeTwo.text=data[3].toString()
-                holder.initHandicap.text=data[2].toString()
-                holder.awayTwo.text=data[4].toString()
+        try {
+            when (typeOdds) {
+                ASIA_FULL->{
+                    holder.homeOne.text=data[6].toString()
+                    holder.liveHandicap.text=data[5].toString()
+                    holder.awayOne.text=data[7].toString()
+                    holder.homeTwo.text=data[3].toString()
+                    holder.initHandicap.text=data[2].toString()
+                    holder.awayTwo.text=data[4].toString()
+                }
+                _1X2_FULL->{
+                    holder.homeOne.text=data[5].toString()
+                    holder.liveHandicap.text=data[6].toString()
+                    holder.awayOne.text=data[7].toString()
+                    holder.homeTwo.text=data[4].toString()
+                    holder.initHandicap.text=data[3].toString()
+                    holder.awayTwo.text=data[4].toString()
+                }
+                OVERUNDER_FULL->{
+                    holder.homeOne.text=data[6].toString()
+                    holder.liveHandicap.text=data[5].toString()
+                    holder.awayOne.text=data[7].toString()
+                    holder.homeTwo.text=data[3].toString()
+                    holder.initHandicap.text=data[2].toString()
+                    holder.awayTwo.text=data[4].toString()
+                }
+                ASIA_HALF->{
+                    holder.homeOne.text=data[6].toString()
+                    holder.liveHandicap.text=data[5].toString()
+                    holder.awayOne.text=data[7].toString()
+                    holder.homeTwo.text=data[3].toString()
+                    holder.initHandicap.text=data[2].toString()
+                    holder.awayTwo.text=data[4].toString()
+                }
+                OVERUNDER_HALF->{
+                    holder.homeOne.text=data[6].toString()
+                    holder.liveHandicap.text=data[5].toString()
+                    holder.awayOne.text=data[7].toString()
+                    holder.homeTwo.text=data[3].toString()
+                    holder.initHandicap.text=data[2].toString()
+                    holder.awayTwo.text=data[4].toString()
+                }
             }
-            _1X2_FULL->{
-                holder.homeOne.text=data[5].toString()
-                holder.liveHandicap.text=data[6].toString()
-                holder.awayOne.text=data[7].toString()
-                holder.homeTwo.text=data[4].toString()
-                holder.initHandicap.text=data[3].toString()
-                holder.awayTwo.text=data[4].toString()
-            }
-            OVERUNDER_FULL->{
-                holder.homeOne.text=data[6].toString()
-                holder.liveHandicap.text=data[5].toString()
-                holder.awayOne.text=data[7].toString()
-                holder.homeTwo.text=data[3].toString()
-                holder.initHandicap.text=data[2].toString()
-                holder.awayTwo.text=data[4].toString()
-            }
-            ASIA_HALF->{
-                holder.homeOne.text=data[6].toString()
-                holder.liveHandicap.text=data[5].toString()
-                holder.awayOne.text=data[7].toString()
-                holder.homeTwo.text=data[3].toString()
-                holder.initHandicap.text=data[2].toString()
-                holder.awayTwo.text=data[4].toString()
-            }
-            OVERUNDER_HALF->{
-                holder.homeOne.text=data[6].toString()
-                holder.liveHandicap.text=data[5].toString()
-                holder.awayOne.text=data[7].toString()
-                holder.homeTwo.text=data[3].toString()
-                holder.initHandicap.text=data[2].toString()
-                holder.awayTwo.text=data[4].toString()
-            }
+        }catch (e:Exception){
+
         }
+
 
     }
 

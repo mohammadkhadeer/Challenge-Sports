@@ -109,7 +109,9 @@ class LeagueInfoFragment : Fragment() {
         }
 
         try {
-            vm.getLeagueInfoForMatch(match!!.leagueId.toString(),match!!.subLeagueId,match!!.groupId.toString())
+
+            vm.getLeagueInfoForMatch(match!!.leagueId.toString(),
+                match!!.subLeagueId.ifEmpty { null },match!!.groupId.toString())
         }catch (e:Exception){
             println(e)
         }

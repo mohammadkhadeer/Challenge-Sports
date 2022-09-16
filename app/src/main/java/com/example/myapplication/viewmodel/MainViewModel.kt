@@ -252,28 +252,33 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
     private fun testCasting(leagueInfoBase: BaseLeagueInfoHomePage): BaseLeagueInfoHomePage {
 
-        val obj=leagueInfoBase.leagueStanding[0]
-        val jsonObj=Gson().toJson(obj)
-        val groupObj=Gson().fromJson(jsonObj,LeagueStandingTypeGroupBase::class.java)
         try {
-            println(groupObj.list[0].leagueId)
-            leagueInfoBase.leagueStanding= listOf<LeagueStandingTypeGroupBase>(groupObj)
+            val obj=leagueInfoBase.leagueStanding[0]
+            val jsonObj=Gson().toJson(obj)
+            val groupObj=Gson().fromJson(jsonObj,LeagueStandingTypeGroupBase::class.java)
+            try {
+                println(groupObj.list[0].leagueId)
+                leagueInfoBase.leagueStanding= listOf<LeagueStandingTypeGroupBase>(groupObj)
+            }catch (e:Exception){
+                val groupObjOriginal=Gson().fromJson(jsonObj,LeagueStanding::class.java)
+                leagueInfoBase.leagueStanding= listOf<LeagueStanding>(groupObjOriginal)
+                println(leagueInfoBase)
+            }
+            when (leagueInfoBase.leagueStanding[0]){
+                is LeagueStandingTypeGroupBase->{
+                    println("Groups Base")
+                }
+                is LeagueStanding->{
+                    println("Standard Base")
+                }
+                else->{
+                    println("Bad News!")
+                }
+            }
         }catch (e:Exception){
-            val groupObjOriginal=Gson().fromJson(jsonObj,LeagueStanding::class.java)
-            leagueInfoBase.leagueStanding= listOf<LeagueStanding>(groupObjOriginal)
-            println(leagueInfoBase)
+
         }
-        when (leagueInfoBase.leagueStanding[0]){
-            is LeagueStandingTypeGroupBase->{
-                println("Groups Base")
-            }
-            is LeagueStanding->{
-                println("Standard Base")
-            }
-            else->{
-                println("Bad News!")
-            }
-        }
+
         return leagueInfoBase
     }
 

@@ -26,17 +26,20 @@
         <activity
             android:name=".view.BaseActivity"
             android:configChanges="uiMode"
-            android:exported="true"/>
+            android:exported="true">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+    </activity>
 
         <activity
             android:name=".model.test_exo.TestActivity"
             android:configChanges="uiMode"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
+
         <receiver android:name=".utils.MatchReminder"/>
     </application>
 

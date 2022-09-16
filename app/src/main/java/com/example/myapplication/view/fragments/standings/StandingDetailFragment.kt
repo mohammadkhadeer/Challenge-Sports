@@ -36,7 +36,7 @@ class StandingDetailFragment : Fragment() {
     private var leagueId: String? = null
     private var isLeague: Boolean? = null
     private var callApi:Boolean?=null
-    var leagueStandingsBase:StandingsBase?=null
+    var leagueStandingsBase:BaseLeagueInfoHomePage?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +78,14 @@ class StandingDetailFragment : Fragment() {
                 vm.makePlayerStandingCall(leagueId!!)
             }
         }
+        else{
+            try {
+                populateRecyclerView(leagueStandingsBase!!)
+            }catch (e:Exception){
+
+            }
+
+        }
 
     }
 
@@ -104,6 +112,7 @@ class StandingDetailFragment : Fragment() {
             }
 
         }catch (e:Exception){
+            leagueStandingsBase=data
             println(e)
         }
     }
@@ -115,7 +124,7 @@ class StandingDetailFragment : Fragment() {
             .load(data.leagueData01[0].leagueLogo)
             .into(loadinto!!)
         rv.adapter=MotherRecyclerViewAdapter(requireContext(),data.leagueStanding[0] as LeagueStandingTypeGroupBase)
-
+        rv.layoutManager=LinearLayoutManager(requireContext())
     }
 
 
