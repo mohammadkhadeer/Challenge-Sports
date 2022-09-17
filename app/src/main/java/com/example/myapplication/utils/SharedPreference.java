@@ -21,7 +21,9 @@ public class SharedPreference
 
 		public static final String EMPTY_KEY="empty";
 
-		public static SharedPreference getInstance()
+        public static final String SAVED_MATCHES_TOKEN="saved_matches_key";
+
+        public static SharedPreference getInstance()
 			{
 				return ourInstance;
 			}

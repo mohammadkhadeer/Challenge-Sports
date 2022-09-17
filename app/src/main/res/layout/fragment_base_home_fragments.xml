@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.homeFrags.BaseHomeFragments">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
@@ -37,18 +38,77 @@
             app:layout_constraintWidth_percent="0.4"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.viewpager2.widget.ViewPager2
+        app:layout_constraintTop_toBottomOf="@+id/top_layout"
+        android:id="@+id/highlighted_matches_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/dots_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:dotsSize="@dimen/_8sdp"
+        app:dotsColor="@color/light_primary"
+        app:dotsCornerRadius="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:progressMode="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highlighted_matches_viewpager"
+        app:selectedDotColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/rest_matches_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/dots_indicator"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_recycler_view"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_layout" />
+        app:layout_constraintTop_toBottomOf="@id/rest_matches_heading" />
     <FrameLayout
         android:id="@+id/fragment_container_base"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:background="@color/white"
         android:layout_height="match_parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loader_anim_container"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+        <com.airbnb.lottie.LottieAnimationView
+            app:lottie_rawRes="@raw/main_loading_anim"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:layout_constraintBottom_toTopOf="@+id/loading_text_botton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:id="@+id/loading_text_botton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
 
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="@string/loading_please_wait"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,6 +56,12 @@ import kotlin.collections.ArrayList
         var league_bt=itemView.findViewById<View>(R.id.league_bt)
         var fragment_container=itemView.findViewById<FrameLayout>(R.id.fragment_container)
         init {
+
+            itemView.setOnLongClickListener(View.OnLongClickListener {
+                communicator.onMessageFromAdapter(MainAdapterMessages.LONG_PRESS_ITEM,absoluteAdapterPosition,fragment_container.id)
+                return@OnLongClickListener true
+            })
+
             index_btn.setOnClickListener {
                 communicator.onMessageFromAdapter(MainAdapterMessages.OPEN_INDEX,layoutPosition,fragment_container.id)
             /* if (displayFragment != null && displayFragment is IndexDisplayFragmnet) {

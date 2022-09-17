@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eightbitlab.com.blurview.BlurView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/baseBlurView"
+    app:blurOverlayColor="#48000000"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_10sdp"
+            android:background="@color/white"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Match Options"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/set_reminder_bt"
+                android:layout_width="wrap_content"
+                android:text="@string/add_reminder"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/add_to_highlights_bt"
+                android:layout_width="wrap_content"
+                android:text="@string/add_to_highlights"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/pin_live_score"
+                android:layout_width="wrap_content"
+                android:text="@string/pin_live_score"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</eightbitlab.com.blurview.BlurView>

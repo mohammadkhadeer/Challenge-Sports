@@ -82,4 +82,10 @@
     <string name="no_info_yet">No info yet</string>
     <string name="league_cup_info">League / Cup Information</string>
     <string name="league_standings">League Standings</string>
+    <string name="search_here">Search for matches here</string>
+    <string name="loading_please_wait">Loading, Please wait</string>
+    <string name="add_reminder">Add Reminder</string>
+    <string name="add_to_highlights">Add to Highlights</string>
+    <string name="pin_live_score">Pin Live Score</string>
+    <string name="schedule">Schedule</string>
 </resources>

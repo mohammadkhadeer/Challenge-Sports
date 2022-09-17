@@ -10,5 +10,6 @@ enum class MainAdapterMessages{
    OPEN_LEAGUE,
    CLOSE_LEAGUE,
    OPEN_EVENT,
-   OPEN_BRIEF
+   OPEN_BRIEF,
+   LONG_PRESS_ITEM
 }

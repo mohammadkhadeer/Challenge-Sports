@@ -70,6 +70,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.4.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.daimajia.androidanimations:library:2.4@aar'
+    implementation 'com.github.Dimezis:BlurView:version-2.0.2'
+    implementation "com.tbuonomo:dotsindicator:4.3"
 
 
 

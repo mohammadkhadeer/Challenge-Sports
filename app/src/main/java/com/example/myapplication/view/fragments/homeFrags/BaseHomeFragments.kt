@@ -1,6 +1,11 @@
 package com.example.myapplication.view.fragments.homeFrags
 
+import android.app.Activity
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,15 +14,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.R
 import com.example.myapplication.model.data.homepage.new2.Match
 import com.example.myapplication.model.test_exo.TestActivity
+import com.example.myapplication.utils.GeneralTools
 import com.example.myapplication.utils.SpewViewModel
 import com.example.myapplication.utils.Status
+import com.example.myapplication.view.adapters.ViewPagerAdapter
 import com.example.myapplication.view.fragments.OnBackPressedListener
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterMessages
+import com.example.myapplication.view.fragments.homeFrags.detailFragment.HighlightedFragment
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import eightbitlab.com.blurview.BlurView
+import eightbitlab.com.blurview.RenderEffectBlur
+import eightbitlab.com.blurview.RenderScriptBlur
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -59,16 +72,21 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                     mainAdapter=MainAdapter(requireContext(), it.data?.matchList as ArrayList<Match>,this)
                     recyclerViewMain.adapter=mainAdapter
                     recyclerViewMain.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+                    view.findViewById<View>(R.id.loader_anim_container).visibility=View.GONE
                 }
                 Status.ERROR ->{
                     println(it.message)
                 }
                 Status.LOADING -> {
-
+                   view.findViewById<View>(R.id.loader_anim_container).visibility=View.VISIBLE
                 }
             }
         }
         vm.makeIndexNetworkCall("1")
+        refreshHighlights()
+    }
+    fun searchMatch(constraint:String){
+        mainAdapter?.filter?.filter(constraint)
     }
     companion object {
         @JvmStatic
@@ -176,9 +194,15 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 }
                 onBackPressedListener?.changeBackPressBehaviour(this)
             }
+            MainAdapterMessages.LONG_PRESS_ITEM -> {
+                try {
+                    displayDialog(requireActivity(),mainAdapter?.dataList?.get(position)!!)
+                }catch (e:Exception){
+
+                }
+                 }
         }
     }
-
     private fun inflateFragment(fragment: Fragment, resourceId: Int) {
         val ft=requireActivity().supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container_base,fragment)
@@ -188,6 +212,58 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
      fun hideFragment() {
         view?.findViewById<View>(R.id.fragment_container_base)?.visibility=View.GONE
 
+    }
+    fun displayDialog(context: Activity,match: Match){
+        val dialog=Dialog(context,android.R.style.ThemeOverlay)
+        dialog.setContentView(R.layout.dialog_longpress)
+
+        val radius = 2f
+
+        val decorView = context.getWindow().getDecorView()
+        // ViewGroup you want to start blur from. Choose root as close to BlurView in hierarchy as possible.
+        val rootView =  decorView.findViewById<ViewGroup>(android.R.id.content)
+
+        // Optional:
+        // Set drawable to draw in the beginning of each blurred frame.
+        // Can be used in case your layout has a lot of transparent space and your content
+        // gets a too low alpha value after blur is applied.
+        val windowBackground = decorView.getBackground()
+        val blurView=dialog.findViewById<BlurView>(R.id.baseBlurView)
+        blurView.setupWith(rootView,  RenderScriptBlur(context)) // or RenderEffectBlur
+            .setFrameClearDrawable(windowBackground) // Optional
+            .setBlurRadius(radius)
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.findViewById<View>(R.id.add_to_highlights_bt).setOnClickListener {
+            GeneralTools.saveToHighlightedMatches(match,context)
+            refreshHighlights()
+        }
+        dialog.show()
+
+    }
+
+    private fun refreshHighlights() {
+        println(GeneralTools.getHighlightedMatches(requireContext()))
+        val list = GeneralTools.getHighlightedMatches(requireContext())
+        list ?: return
+        val fragsList = ArrayList<Fragment>()
+        for (item in list) {
+            val frag = HighlightedFragment.newInstance("", "")
+            frag.match = item
+            fragsList.add(frag)
+        }
+        val viewPager = view?.findViewById<ViewPager2>(R.id.highlighted_matches_viewpager)
+        viewPager?.adapter = ViewPagerAdapter(
+            requireActivity().supportFragmentManager,
+            requireActivity().lifecycle,
+            fragsList
+        )
+        val dotsIndicator = view?.findViewById<DotsIndicator>(R.id.dots_indicator)
+        try {
+            dotsIndicator?.attachTo(viewPager!!)
+        } catch (e: Exception) {
+
+        }
     }
 
 }

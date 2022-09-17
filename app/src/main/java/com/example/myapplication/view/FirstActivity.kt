@@ -22,6 +22,7 @@ class FirstActivity : AppCompatActivity(), AuthFragmentCommunicationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
+
         object : CountDownTimer(1200, 300) {
             override fun onTick(p0: Long) {
 
