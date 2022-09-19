@@ -28,11 +28,74 @@ import kotlin.collections.ArrayList
          val MINS_CONSTANT:Long=60000
     }
      var originalList=dataList
+     var liveMatches= ArrayList<Match>()
+     var soonMatches= ArrayList<Match>()
+     var ftMatches= ArrayList<Match>()
+     var categoryFilterType:CategoryFilterType=CategoryFilterType.ALL
+     private var filterString=""
      init {
-
+         sortMatchesOnCategory()
      }
 
-    val displayFragment:Fragment?=null
+
+     private fun sortMatchesOnCategory(){
+         soonMatches.clear()
+         liveMatches.clear()
+         ftMatches.clear()
+         for (match in originalList){
+             when(match.state){
+                 0->{
+                     soonMatches.add(match)
+                     //soon
+                 }
+                 1->{
+                     liveMatches.add(match)
+                    // "FH "
+                 }
+                 2->{
+                     liveMatches.add(match)
+                   //  "HT "
+                 }
+                 3->{
+                     liveMatches.add(match)
+                    // "SH "
+                 }
+                 4-> {
+                     liveMatches.add(match)
+                     //"OT "
+                 }
+                 5-> {
+                     liveMatches.add(match)
+                    // "PT "
+                 }
+                 -1-> {
+                     ftMatches.add(match)
+                   //  "FT"
+                 }
+                 -10-> {
+                   //  "CL"
+                 }
+                 -11-> {
+                  //   "TBD"
+                 }
+                 -12-> {
+                  //   "CIH"
+                 }
+                 -13-> {
+                  //   "INT"
+                 }
+                 -14-> {
+                 //    "DEL"
+                 }
+                 else -> {
+                     soonMatches.add(match)
+                    // "Soon"
+                 }
+             }
+         }
+     }
+
+
 
     inner class MainPageAdapterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var leagueNameShort=itemView.findViewById<TextView>(R.id.group_indicator)
@@ -82,7 +145,6 @@ import kotlin.collections.ArrayList
             league_bt.setOnClickListener {
                 communicator.onMessageFromAdapter(MainAdapterMessages.OPEN_LEAGUE,layoutPosition,fragment_container.id)
             }
-
 
         }
     }
@@ -154,9 +216,8 @@ import kotlin.collections.ArrayList
 
             }
         }
-       val timeZone= TimeZone.getDefault()
-        println(timeZone.getDisplayName(false,TimeZone.SHORT))
-
+        if (position==dataList.size-1)
+        communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,position,0)
     }
 
     private fun return24HrsOnly(matchTime:String):String{
@@ -272,13 +333,14 @@ import kotlin.collections.ArrayList
              override fun performFiltering(charset: CharSequence?): FilterResults {
                  val filterResults=FilterResults()
                  val filterList=ArrayList<Match>()
+                 val baseList=returnFilterData()
                 if (charset.isNullOrEmpty()){
                     filterResults.apply {
-                        count=originalList.size
-                        values=originalList
+                        count=baseList.size
+                        values=baseList
                     }
                 }else{
-                    for (match in originalList){
+                    for (match in baseList){
                         if (match.homeName.startsWith(charset,true)
                             ||match.awayName.startsWith(charset,true)
                             ||match.leagueName.startsWith(charset,true)
@@ -299,9 +361,67 @@ import kotlin.collections.ArrayList
              @SuppressLint("NotifyDataSetChanged")
              override fun publishResults(p0: CharSequence?, results: FilterResults?) {
                  dataList=results?.values as ArrayList<Match>
+                 filterString=p0.toString()
                  notifyDataSetChanged()
              }
          }
+     }
+
+     fun updateList(list:List<Match>) {
+         originalList.addAll(list)
+         sortMatchesOnCategory()
+         updateFilter()
+     }
+     fun setFilter(filter:CategoryFilterType){
+         categoryFilterType=filter
+         updateFilter()
+     }
+     fun updateFilter(){
+         when(categoryFilterType){
+             CategoryFilterType.ALL -> {
+                 dataList=originalList
+             }
+             CategoryFilterType.LIVE -> {
+                 dataList=liveMatches
+             }
+             CategoryFilterType.SOON -> {
+                 dataList=soonMatches
+             }
+             CategoryFilterType.FT -> {
+                 dataList=ftMatches
+             }
+             CategoryFilterType.OTHER -> {
+
+             }
+         }
+         filter.filter(filterString)
+         notifyDataSetChanged()
+     }
+     fun returnFilterData():ArrayList<Match>{
+         return when(categoryFilterType){
+             CategoryFilterType.ALL -> {
+                 originalList
+             }
+             CategoryFilterType.LIVE -> {
+                 liveMatches
+             }
+             CategoryFilterType.SOON -> {
+                 soonMatches
+             }
+             CategoryFilterType.FT -> {
+                 ftMatches
+             }
+             CategoryFilterType.OTHER -> {
+                 originalList
+             }
+         }
+     }
+     enum class CategoryFilterType{
+         ALL,
+         LIVE,
+         SOON,
+         FT,
+         OTHER
      }
 
  }

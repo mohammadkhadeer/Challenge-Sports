@@ -36,10 +36,55 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/appCompatSpinner2"
             app:layout_constraintWidth_percent="0.4"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_local_filters"
+        app:layout_constraintTop_toBottomOf="@+id/top_layout"
+        android:layout_width="match_parent"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicator="@null"
+        app:tabTextColor="@color/colorPrimary"
+        app:tabIndicatorColor="@color/transparent"
+        android:clipToPadding="false"
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabLive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabSoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/soon"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabFt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ft"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabOther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/other"
+            />
+
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        app:layout_constraintTop_toBottomOf="@+id/top_layout"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_local_filters"
         android:id="@+id/highlighted_matches_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -69,13 +114,25 @@
         app:layout_constraintTop_toBottomOf="@id/dots_indicator"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_recycler_view"
-        android:layout_marginTop="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintBottom_toTopOf="@+id/loading_more_bar"
         app:layout_constraintTop_toBottomOf="@id/rest_matches_heading" />
+
+    <ProgressBar
+        android:id="@+id/loading_more_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressBackgroundTint="@color/colorPrimary"
+        android:progressTint="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
     <FrameLayout
         android:id="@+id/fragment_container_base"
         android:layout_width="match_parent"

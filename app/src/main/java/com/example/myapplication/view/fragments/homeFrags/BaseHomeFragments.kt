@@ -2,8 +2,6 @@ package com.example.myapplication.view.fragments.homeFrags
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,13 +9,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.R
 import com.example.myapplication.model.data.homepage.new2.Match
-import com.example.myapplication.model.test_exo.TestActivity
+import com.example.myapplication.model.data.news.details.OnPostDetailResponse
 import com.example.myapplication.utils.GeneralTools
 import com.example.myapplication.utils.SpewViewModel
 import com.example.myapplication.utils.Status
@@ -27,9 +24,9 @@ import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterMessages
 import com.example.myapplication.view.fragments.homeFrags.detailFragment.HighlightedFragment
+import com.google.android.material.tabs.TabLayout
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import eightbitlab.com.blurview.BlurView
-import eightbitlab.com.blurview.RenderEffectBlur
 import eightbitlab.com.blurview.RenderScriptBlur
 
 private const val ARG_PARAM1 = "param1"
@@ -82,6 +79,36 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 }
             }
         }
+        val tabLayout=view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tab?.position){
+                    0->{
+                        mainAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
+                    }
+                    1->{
+                        mainAdapter?.setFilter(MainAdapter.CategoryFilterType.LIVE)
+                    }
+                    2->{
+                        mainAdapter?.setFilter(MainAdapter.CategoryFilterType.SOON)
+                    }
+                    3->{
+                        mainAdapter?.setFilter(MainAdapter.CategoryFilterType.FT)
+                    }
+                    else->{
+                        mainAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+        })
         vm.makeIndexNetworkCall("1")
         refreshHighlights()
     }
@@ -201,8 +228,34 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
 
                 }
                  }
+            MainAdapterMessages.LOAD_MORE->{
+                try {
+                    loadMoreItems()
+                }catch (e:Exception){
+
+                }
+            }
         }
     }
+
+    private fun loadMoreItems() {
+        val vm=SpewViewModel.giveMeViewModel(requireActivity())
+        vm.makeIndexNetworkCall(object : OnPostDetailResponse<List<Match>>{
+            override fun onSuccess(responseBody: List<Match>) {
+                view?.findViewById<View>(R.id.loading_more_bar)?.visibility=View.GONE
+                mainAdapter?.updateList(responseBody)
+            }
+            override fun onFailure(message: String) {
+                view?.findViewById<View>(R.id.loading_more_bar)?.visibility=View.GONE
+                println(message)
+            }
+
+            override fun onLoading(message: String) {
+                view?.findViewById<View>(R.id.loading_more_bar)?.visibility=View.VISIBLE
+            }
+        })
+    }
+
     private fun inflateFragment(fragment: Fragment, resourceId: Int) {
         val ft=requireActivity().supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container_base,fragment)

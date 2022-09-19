@@ -88,4 +88,8 @@
     <string name="add_to_highlights">Add to Highlights</string>
     <string name="pin_live_score">Pin Live Score</string>
     <string name="schedule">Schedule</string>
+    <string name="all">All</string>
+    <string name="live">LIVE</string>
+    <string name="ft">FT</string>
+    <string name="other">OTHER</string>
 </resources>

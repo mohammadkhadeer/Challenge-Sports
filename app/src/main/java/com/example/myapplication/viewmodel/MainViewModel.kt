@@ -7,11 +7,11 @@ import com.example.myapplication.model.api.ApiHelper
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
 import com.example.myapplication.model.data.homepage.event.EventBase
 import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
-import com.example.myapplication.model.data.homepage.leagueInfo.LeagueInfo
 import com.example.myapplication.model.data.homepage.leagueInfo.LeagueStanding
 import com.example.myapplication.model.data.homepage.leagueInfo.any.LeagueStandingTypeGroupBase
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage. new2.BaseClassIndexNew
+import com.example.myapplication.model.data.homepage.new2.Match
 import com.example.myapplication.model.data.news.NewsBase
 import com.example.myapplication.model.data.news.details.NewsPostBase
 import com.example.myapplication.model.data.news.details.OnPostDetailResponse
@@ -38,6 +38,8 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     var eventsLiveData=MutableLiveData<Resource<EventBase>>()
     var briefingLiveData=MutableLiveData<Resource<String>>()
     var leagueInfoLiveData=MutableLiveData<Resource<BaseLeagueInfoHomePage>>()
+    var lastPageMatchesBase=0
+    var currentPageMatches=0
 
     init {
   /*      makeNewsCall()
@@ -103,9 +105,32 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
             baseHomePageLiveData.postValue(Resource.loading(null))
             try {
                 val homeBase=apiHelper.getHomeMatches("en",pageNumber)
+                lastPageMatchesBase=homeBase.meta.lastPage
+                currentPageMatches=homeBase.meta.currentPage
                 baseHomePageLiveData.postValue(Resource.success(homeBase))
             }catch (e:Exception){
                 baseHomePageLiveData.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+
+    fun makeIndexNetworkCall(onResponseListener: OnPostDetailResponse<List<Match>>){
+
+        if (currentPageMatches==lastPageMatchesBase){
+            onResponseListener.onFailure("Max Page Reached")
+            return
+        }
+        viewModelScope.launch {
+            onResponseListener.onLoading("Loading")
+            try {
+                currentPageMatches++
+                val homeBase=apiHelper.getHomeMatches("en",currentPageMatches.toString())
+                lastPageMatchesBase=homeBase.meta.lastPage
+                currentPageMatches=homeBase.meta.currentPage
+
+                onResponseListener.onSuccess(homeBase.matchList)
+            }catch (e:Exception){
+                onResponseListener.onFailure(e.toString())
             }
         }
     }
@@ -121,6 +146,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
             }
         }
     }
+
     fun makePlayerStandingCall(leagueId: String){
       viewModelScope.launch {
           try {
