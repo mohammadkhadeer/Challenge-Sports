@@ -19,4 +19,6 @@
     <color name="over_white_light_grey">#EAEAEA</color>
     <color name="alt_grey">#33141B4D</color>
     <color name="dark_grey_bg">#727272</color>
+    <color name="solid_grey">#eaeaea</color>
+    <color name="almost_white_grey_contrast">#F9F8F9</color>
 </resources>

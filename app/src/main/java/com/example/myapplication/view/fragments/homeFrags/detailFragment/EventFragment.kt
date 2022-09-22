@@ -48,7 +48,6 @@ class EventFragment : Fragment() {
         vm.eventsLiveData.observe(requireActivity()){
             when(it.status){
                 Status.SUCCESS -> {
-
                     try {
                         val data=it.data!!
 

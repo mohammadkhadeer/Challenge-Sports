@@ -6,35 +6,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.homeFrags.BaseHomeFragments">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_game_filters"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicator="@null"
+        app:tabRippleColor="@color/transparent"
+        app:tabTextColor="@color/colorPrimary"
+        app:tabIndicatorColor="@color/transparent"
+        android:clipToPadding="false"
+        app:tabInlineLabel="true"
+        app:tabIconTint="@color/tab_selector_color"
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabSoccer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_football"
+            android:text="@string/soccer"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabBasketball"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_basketball"
+            android:text="@string/basketball"
+            />
+
+    </com.google.android.material.tabs.TabLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="@dimen/_30sdp">
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_game_filters"
+        android:layout_height="@dimen/_35sdp">
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/appCompatSpinner2"
+            android:id="@+id/league_spinner"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/primary_rounded_rect"
-            android:backgroundTint="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/appCompatSpinner"
+            android:layout_margin="@dimen/_2sdp"
+            android:background="@drawable/ellipse_grey_outline"
+            style="@style/dropdown_custom"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/time_spinner"
             app:layout_constraintHorizontal_bias="0.5"
             android:spinnerMode="dropdown"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="0.4" />
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/appCompatSpinner"
+            android:id="@+id/time_spinner"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_margin="@dimen/_2sdp"
             android:background="@drawable/primary_rounded_rect"
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/appCompatSpinner2"
+            app:layout_constraintStart_toEndOf="@+id/league_spinner"
             app:layout_constraintWidth_percent="0.4"/>
 
 

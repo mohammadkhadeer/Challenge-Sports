@@ -11,5 +11,5 @@ data class BaseClassIndexNew(
     @SerializedName("todayHotLeague")
     var todayHotLeague: List<TodayHotLeague> = listOf(),
     @SerializedName("todayHotLeagueList")
-    var todayHotLeagueList: List<TodayHotLeagueX> = listOf()
+    var todayHotLeagueList: List<Match> = listOf()
 )

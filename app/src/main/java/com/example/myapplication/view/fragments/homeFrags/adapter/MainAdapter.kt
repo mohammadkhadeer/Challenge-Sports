@@ -27,6 +27,9 @@ import kotlin.collections.ArrayList
          val HOUR_CONSTANT:Long=3600000
          val MINS_CONSTANT:Long=60000
     }
+
+     var loadMore: Boolean=true
+     var isMaxLoaded: Boolean=false
      var originalList=dataList
      var liveMatches= ArrayList<Match>()
      var soonMatches= ArrayList<Match>()
@@ -216,7 +219,7 @@ import kotlin.collections.ArrayList
 
             }
         }
-        if (position==dataList.size-1)
+        if (position==dataList.size-1&&loadMore)
         communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,position,0)
     }
 
@@ -362,12 +365,24 @@ import kotlin.collections.ArrayList
              override fun publishResults(p0: CharSequence?, results: FilterResults?) {
                  dataList=results?.values as ArrayList<Match>
                  filterString=p0.toString()
+                 if (dataList.size==0&&!isMaxLoaded){
+                     if (loadMore){
+                         communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,0,0)
+                     }
+                 }
                  notifyDataSetChanged()
              }
          }
      }
 
      fun updateList(list:List<Match>) {
+         originalList.addAll(list)
+         sortMatchesOnCategory()
+         updateFilter()
+     }
+     fun setNewList(list:List<Match>,loadMore:Boolean){
+         this.loadMore=loadMore
+         originalList.clear()
          originalList.addAll(list)
          sortMatchesOnCategory()
          updateFilter()

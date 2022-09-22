@@ -1,5 +1,6 @@
 package com.example.myapplication.model.api
 
+import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
 import com.example.myapplication.model.data.generalized.GeneralTokenResponse
 import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
@@ -8,6 +9,7 @@ import com.example.myapplication.model.data.homepage.event.EventBase
 import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage. new2.BaseClassIndexNew
+import com.example.myapplication.model.data.livescorepin.LiveScorePin
 import com.example.myapplication.model.data.news.NewsBase
 import com.example.myapplication.model.data.news.details.NewsPostBase
 import com.example.myapplication.model.data.raw.LoginRequestBody
@@ -59,5 +61,11 @@ interface ApiService {
 
     @GET("/api/zqbf-list-league/{leagueId}/{subleagueId}/{groupId}")
     suspend fun getLeagueInfo(@Path("leagueId")leagueId: String, @Path("subleagueId") subLeagueId: String,@Path("groupId") groupId: String): BaseLeagueInfoHomePage
+
+    @GET("/api/lqbf-list")
+    suspend fun getBasketballMatches(): BaseIndexBasketball
+
+    @GET("/api/zqbf-list-match/en/{matchId}")
+    suspend fun getMatchUpdate(@Path("matchId") matchId: String): LiveScorePin
 
 }

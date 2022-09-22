@@ -2,13 +2,22 @@ package com.example.myapplication.view.fragments.homeFrags
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -16,18 +25,24 @@ import com.example.myapplication.R
 import com.example.myapplication.model.data.homepage.new2.Match
 import com.example.myapplication.model.data.news.details.OnPostDetailResponse
 import com.example.myapplication.utils.GeneralTools
+import com.example.myapplication.utils.SharedPreference
 import com.example.myapplication.utils.SpewViewModel
 import com.example.myapplication.utils.Status
 import com.example.myapplication.view.adapters.ViewPagerAdapter
+import com.example.myapplication.view.floatingbubble.service.FloatingScoreService
 import com.example.myapplication.view.fragments.OnBackPressedListener
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter
+import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterBasketBall
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterMessages
 import com.example.myapplication.view.fragments.homeFrags.detailFragment.HighlightedFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.common.reflect.Reflection.getPackageName
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
+import java.util.*
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -43,7 +58,8 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
     private var param2: String? = null
     private var mainAdapter:MainAdapter?=null
     var onBackPressedListener: OnBackPressedListener?=null
-
+    var leaguesList=ArrayList<String>()
+    var basketBallAdapter:MainAdapterBasketBall?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -66,16 +82,70 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
         vm.baseHomePageLiveData.observe(requireActivity()){
             when(it.status){
                 Status.SUCCESS -> {
-                    mainAdapter=MainAdapter(requireContext(), it.data?.matchList as ArrayList<Match>,this)
-                    recyclerViewMain.adapter=mainAdapter
-                    recyclerViewMain.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-                    view.findViewById<View>(R.id.loader_anim_container).visibility=View.GONE
+                    try {
+                        leaguesList.add(SharedPreference.ALL_LEAGUES_TAG)
+                        for (leagues in it.data!!.todayHotLeague){
+                            leaguesList.add(leagues.leagueName)
+                        }
+                        mainAdapter=MainAdapter(requireContext(), it.data?.matchList as ArrayList<Match>,this)
+                        recyclerViewMain.adapter=mainAdapter
+                        recyclerViewMain.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+                        view.findViewById<View>(R.id.loader_anim_container).visibility=View.GONE
+                        val spinnerLeague=view.findViewById<AppCompatSpinner>(R.id.league_spinner)
+                        spinnerLeague.adapter=ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,leaguesList)
+                        val baseList= ArrayList<Match>()
+                        baseList.addAll(it.data.matchList)
+                        val baseDefaultAdapter=mainAdapter
+                        spinnerLeague.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
+                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
+                                //TODO: Filter today hot league here: REF league ID
+                                when(position){
+                                    0->{
+                                        mainAdapter?.setNewList(baseList,true)
+                                        recyclerViewMain.adapter?.notifyDataSetChanged()
+                                    }
+                                    else->{
+                                        val selectedList=ArrayList<Match>()
+                                        for (match in it.data.todayHotLeagueList)
+                                        {
+                                            if (match.leagueId==it.data.todayHotLeague[position-1].leagueId){
+                                                selectedList.add(match)
+                                            }
+                                        }
+                                        mainAdapter?.setNewList(selectedList,false)
+                                        mainAdapter?.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                            }
+                        }
+                    }catch (e:Exception){
+                        //TODO: Put Error, could not load here
+                    }
+
                 }
                 Status.ERROR ->{
                     println(it.message)
                 }
                 Status.LOADING -> {
                    view.findViewById<View>(R.id.loader_anim_container).visibility=View.VISIBLE
+                }
+            }
+        }
+        vm.basketBallLiveData.observe(requireActivity()){
+            when(it.status){
+                Status.SUCCESS -> {
+                    basketBallAdapter= MainAdapterBasketBall(requireContext(),
+                        it.data!!.matchList as ArrayList<com.example.myapplication.model.data.basketball.homepage.Match>
+                    )
+                }
+                Status.ERROR -> {
+
+                }
+                Status.LOADING -> {
+
                 }
             }
         }
@@ -109,7 +179,27 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
 
             }
         })
+        view.findViewById<TabLayout>(R.id.tab_layout_game_filters).addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab?.position!=0){
+                    recyclerViewMain.adapter=basketBallAdapter
+                    recyclerViewMain.adapter?.notifyDataSetChanged()
+                }else{
+                    recyclerViewMain.adapter=mainAdapter
+                    recyclerViewMain.adapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+        })
         vm.makeIndexNetworkCall("1")
+        vm.makeIndexBasketBallCall()
         refreshHighlights()
     }
     fun searchMatch(constraint:String){
@@ -223,7 +313,9 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
             }
             MainAdapterMessages.LONG_PRESS_ITEM -> {
                 try {
-                    displayDialog(requireActivity(),mainAdapter?.dataList?.get(position)!!)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        displayDialog(requireActivity(),mainAdapter?.dataList?.get(position)!!)
+                    }
                 }catch (e:Exception){
 
                 }
@@ -246,6 +338,8 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 mainAdapter?.updateList(responseBody)
             }
             override fun onFailure(message: String) {
+
+                    mainAdapter?.isMaxLoaded=message == SharedPreference.MAX_PAGE_REACHED
                 view?.findViewById<View>(R.id.loading_more_bar)?.visibility=View.GONE
                 println(message)
             }
@@ -266,7 +360,8 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
         view?.findViewById<View>(R.id.fragment_container_base)?.visibility=View.GONE
 
     }
-    fun displayDialog(context: Activity,match: Match){
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun displayDialog(context: Activity, match: Match){
         val dialog=Dialog(context,android.R.style.ThemeOverlay)
         dialog.setContentView(R.layout.dialog_longpress)
 
@@ -290,6 +385,25 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
         dialog.findViewById<View>(R.id.add_to_highlights_bt).setOnClickListener {
             GeneralTools.saveToHighlightedMatches(match,context)
             refreshHighlights()
+            dialog.dismiss()
+        }
+        dialog.findViewById<View>(R.id.cross_bt).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.findViewById<View>(R.id.pin_live_score).setOnClickListener {
+
+            if (!Settings.canDrawOverlays(requireContext())) {
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + requireActivity().packageName)
+                )
+                startActivityForResult(intent, 0)
+            }
+            else{
+                ActivityCompat.startForegroundService(requireContext(), Intent(requireContext(),FloatingScoreService::class.java).putExtra(SharedPreference.MATCH_ID_TOKEN,match.matchId.toString()))
+                dialog.dismiss()
+            }
+
         }
         dialog.show()
 

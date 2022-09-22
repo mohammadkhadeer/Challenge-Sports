@@ -22,6 +22,12 @@ public class SharedPreference
 		public static final String EMPTY_KEY="empty";
 
         public static final String SAVED_MATCHES_TOKEN="saved_matches_key";
+        @NotNull
+        public static final String MAX_PAGE_REACHED="max_page_reached";
+
+		public static final String ALL_LEAGUES_TAG="All Leagues";
+        @Nullable
+        public static final String MATCH_ID_TOKEN="matchid";
 
         public static SharedPreference getInstance()
 			{

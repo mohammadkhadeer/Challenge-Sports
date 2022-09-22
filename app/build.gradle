@@ -73,6 +73,7 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.4@aar'
     implementation 'com.github.Dimezis:BlurView:version-2.0.2'
     implementation "com.tbuonomo:dotsindicator:4.3"
+    implementation 'com.github.TorryDo:Floating-Bubble-View:0.3.1'
 
 
 

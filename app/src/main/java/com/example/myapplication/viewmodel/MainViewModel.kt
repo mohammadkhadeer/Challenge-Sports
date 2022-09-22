@@ -1,9 +1,11 @@
 package com.example.myapplication.viewmodel
 
+import android.service.controls.templates.RangeTemplate
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.model.api.ApiHelper
+import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
 import com.example.myapplication.model.data.homepage.event.EventBase
 import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
@@ -12,6 +14,7 @@ import com.example.myapplication.model.data.homepage.leagueInfo.any.LeagueStandi
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage. new2.BaseClassIndexNew
 import com.example.myapplication.model.data.homepage.new2.Match
+import com.example.myapplication.model.data.livescorepin.LiveScorePin
 import com.example.myapplication.model.data.news.NewsBase
 import com.example.myapplication.model.data.news.details.NewsPostBase
 import com.example.myapplication.model.data.news.details.OnPostDetailResponse
@@ -20,6 +23,7 @@ import com.example.myapplication.model.data.standings.player.PlayerStandingBase
 import com.example.myapplication.model.data.standings.sorted.SortedStandings
 import com.example.myapplication.model.data.videos.VideosListBase
 import com.example.myapplication.utils.Resource
+import com.example.myapplication.utils.SharedPreference
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import kotlin.Exception
@@ -38,6 +42,8 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     var eventsLiveData=MutableLiveData<Resource<EventBase>>()
     var briefingLiveData=MutableLiveData<Resource<String>>()
     var leagueInfoLiveData=MutableLiveData<Resource<BaseLeagueInfoHomePage>>()
+    var basketBallLiveData=MutableLiveData<Resource<BaseIndexBasketball>>()
+    var updateMatchLiveData=MutableLiveData<Resource<LiveScorePin>>()
     var lastPageMatchesBase=0
     var currentPageMatches=0
 
@@ -117,7 +123,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     fun makeIndexNetworkCall(onResponseListener: OnPostDetailResponse<List<Match>>){
 
         if (currentPageMatches==lastPageMatchesBase){
-            onResponseListener.onFailure("Max Page Reached")
+            onResponseListener.onFailure(SharedPreference.MAX_PAGE_REACHED)
             return
         }
         viewModelScope.launch {
@@ -276,6 +282,30 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         }
     }
 
+    fun makeIndexBasketBallCall(){
+        viewModelScope.launch {
+            try {
+                basketBallLiveData.postValue(Resource.loading(null))
+                val basketBallMatchesList=apiHelper.getBasketballMatches()
+                basketBallLiveData.postValue(Resource.success(basketBallMatchesList))
+            }catch (e:Exception){
+                basketBallLiveData.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+
+    fun updateSingleMatch(matchId: String){
+        viewModelScope.launch {
+            try {
+                updateMatchLiveData.postValue(Resource.loading(null))
+                val matchUpdate=apiHelper.getMatchUpdate(matchId)
+                updateMatchLiveData.postValue(Resource.success(matchUpdate))
+            }catch (e:Exception){
+                updateMatchLiveData.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+
     private fun testCasting(leagueInfoBase: BaseLeagueInfoHomePage): BaseLeagueInfoHomePage {
 
         try {
@@ -304,7 +334,6 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         }catch (e:Exception){
 
         }
-
         return leagueInfoBase
     }
 

@@ -1,5 +1,6 @@
 package com.example.myapplication.model.api
 
+import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
 import com.example.myapplication.model.data.generalized.GeneralTokenResponse
 import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
@@ -8,6 +9,7 @@ import com.example.myapplication.model.data.homepage.event.EventBase
 import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage.new2.BaseClassIndexNew
+import com.example.myapplication.model.data.livescorepin.LiveScorePin
 import com.example.myapplication.model.data.news.NewsBase
 import com.example.myapplication.model.data.news.details.NewsPostBase
 import com.example.myapplication.model.data.raw.LoginRequestBody
@@ -31,4 +33,6 @@ interface ApiHelper {
     suspend fun getEvents(): EventBase
     suspend fun getBriefing(matchId: String): BriefingBase
     suspend fun getLeagueInfo(leagueId: String, subLeagueId: String, groupId: String): BaseLeagueInfoHomePage
+    suspend fun getBasketballMatches(): BaseIndexBasketball
+    suspend fun getMatchUpdate(matchId: String): LiveScorePin
 }
