@@ -37,7 +37,6 @@ import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCom
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterMessages
 import com.example.myapplication.view.fragments.homeFrags.detailFragment.HighlightedFragment
 import com.google.android.material.tabs.TabLayout
-import com.google.common.reflect.Reflection.getPackageName
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
@@ -139,7 +138,7 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 Status.SUCCESS -> {
                     basketBallAdapter= MainAdapterBasketBall(requireContext(),
                         it.data!!.matchList as ArrayList<com.example.myapplication.model.data.basketball.homepage.Match>
-                    )
+                 ,this)
                 }
                 Status.ERROR -> {
 
@@ -155,18 +154,24 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 when(tab?.position){
                     0->{
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
+                        basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
+
                     }
                     1->{
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.LIVE)
+                        basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.LIVE)
                     }
                     2->{
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.SOON)
+                        basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.SOON)
                     }
                     3->{
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.FT)
+                        basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.FT)
                     }
                     else->{
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
+                        basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
                     }
                 }
             }
@@ -204,6 +209,7 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
     }
     fun searchMatch(constraint:String){
         mainAdapter?.filter?.filter(constraint)
+        basketBallAdapter?.filter?.filter(constraint)
     }
     companion object {
         @JvmStatic
@@ -216,20 +222,21 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
             }
     }
 
-    override fun onMessageFromAdapter(message: MainAdapterMessages, position: Int,resourceId:Int) {
+    override fun onMessageFromAdapter(message: MainAdapterMessages, position: Int,adapterType:Int) {
         when(message){
             MainAdapterMessages.OPEN_INDEX ->
             {
         //        startActivity(Intent(requireContext(),TestActivity::class.java).putExtra("matchid", (mainAdapter?.dataList?.get(position)?.matchId ?:0).toString()))
+             val matchid=if(adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE) (mainAdapter?.dataList?.get(position)?.matchId ?:0).toString() else basketBallAdapter?.dataList?.get(position)?.matchId.toString()
+
                val frag=MatchOptionsFragment.newInstance(
-                   (mainAdapter
-                       ?.dataList
-                       ?.get(position)
-                       ?.matchId
-                       ?:0)
-                       .toString(),MatchOptionsFragment.INDEX_TYPE)
+                   matchid,MatchOptionsFragment.INDEX_TYPE,adapterType)
                 try {
-                    frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    if (adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE){
+                        frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    }else{
+                        frag.data=basketBallAdapter?.dataList?.get(position)
+                    }
                     inflateFragment(frag
                         ,R.id.fragment_container)
                 }catch (e:Exception){
@@ -241,15 +248,17 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
 
             }
             MainAdapterMessages.OPEN_ANALYSIS -> {
+                val matchid=if(adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE) (mainAdapter?.dataList?.get(position)?.matchId ?:0).toString() else basketBallAdapter?.dataList?.get(position)?.matchId.toString()
+
                 val frag=MatchOptionsFragment.newInstance(
-                    (mainAdapter
-                        ?.dataList
-                        ?.get(position)
-                        ?.matchId
-                        ?:0)
-                        .toString(),MatchOptionsFragment.ANALYSIS_TYPE)
+                    matchid, MatchOptionsFragment.ANALYSIS_TYPE, adapterType
+                )
                 try {
-                    frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    if (adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE){
+                        frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    }else{
+                        frag.data=basketBallAdapter?.dataList?.get(position)
+                    }
                     inflateFragment(frag
                         ,R.id.fragment_container)
                 }catch (e:Exception){
@@ -258,17 +267,24 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 onBackPressedListener?.changeBackPressBehaviour(this)
             }
             MainAdapterMessages.OPEN_LEAGUE -> {
+                val matchid=if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE) basketBallAdapter?.dataList?.get(position)?.matchId.toString() else (mainAdapter
+                    ?.dataList
+                    ?.get(position)
+                    ?.matchId
+                    ?:0)
+                    .toString()
                 val frag=MatchOptionsFragment.newInstance(
-                    (mainAdapter
-                        ?.dataList
-                        ?.get(position)
-                        ?.matchId
-                        ?:0)
-                        .toString(),MatchOptionsFragment.LEAGUE_FRAGMENT)
+                   matchid , MatchOptionsFragment.LEAGUE_FRAGMENT, adapterType
+                )
                 try {
-                    frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    if (adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE){
+                        frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    }else{
+                        frag.data=basketBallAdapter?.dataList?.get(position)
+                    }
                     inflateFragment(frag
                         ,R.id.fragment_container)
+
                 }catch (e:Exception){
 
                 }
@@ -284,7 +300,8 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                         ?.get(position)
                         ?.matchId
                         ?:0)
-                        .toString(),MatchOptionsFragment.EVENT_TYPE)
+                        .toString(), MatchOptionsFragment.EVENT_TYPE, adapterType
+                )
                 try {
                     frag.setData(mainAdapter?.dataList?.get(position)!!)
                     inflateFragment(frag
@@ -295,15 +312,21 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 onBackPressedListener?.changeBackPressBehaviour(this)
             }
             MainAdapterMessages.OPEN_BRIEF -> {
+                val matchid=if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE) basketBallAdapter?.dataList?.get(position)?.matchId.toString() else (mainAdapter
+                    ?.dataList
+                    ?.get(position)
+                    ?.matchId
+                    ?:0)
+                    .toString()
                 val frag=MatchOptionsFragment.newInstance(
-                    (mainAdapter
-                        ?.dataList
-                        ?.get(position)
-                        ?.matchId
-                        ?:0)
-                        .toString(),MatchOptionsFragment.BRIEFING_FRAGMENT)
+                    matchid, MatchOptionsFragment.BRIEFING_FRAGMENT, adapterType
+                )
                 try {
-                    frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    if (adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE){
+                        frag.setData(mainAdapter?.dataList?.get(position)!!)
+                    }else{
+                        frag.data=basketBallAdapter?.dataList?.get(position)
+                    }
                     inflateFragment(frag
                         ,R.id.fragment_container)
                 }catch (e:Exception){
@@ -413,6 +436,7 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
         println(GeneralTools.getHighlightedMatches(requireContext()))
         val list = GeneralTools.getHighlightedMatches(requireContext())
         list ?: return
+        list.reverse()
         val fragsList = ArrayList<Fragment>()
         for (item in list) {
             val frag = HighlightedFragment.newInstance("", "")

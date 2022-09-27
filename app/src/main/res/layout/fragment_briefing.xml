@@ -5,12 +5,120 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.homeFrags.BriefingFragment">
+<ScrollView
+    app:layout_constraintTop_toTopOf="parent"
+    android:id="@+id/baskteball_briefing"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/briefing_heading"
+            android:layout_width="match_parent"
+            android:text="@string/briefing"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/briefing_body"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/briefing"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/briefing_heading" />
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/briefing_body"
+            android:id="@+id/desription_heading"
+            android:layout_width="match_parent"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/description_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/briefing"
+
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/desription_heading" />
+
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/description_body"
+            android:id="@+id/confidence_index_heading"
+            android:layout_width="match_parent"
+            android:text="@string/coonfidence_heading"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+
+
+        <TextView
+            android:id="@+id/confidence_index_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/briefing"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/confidence_index_heading" />
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/confidence_index_body"
+            android:id="@+id/match_track_heading"
+            android:layout_width="match_parent"
+            android:text="@string/match_track_heading"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+
+
+        <TextView
+            android:id="@+id/match_track_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/briefing"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/match_track_heading" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+
 
     <WebView
         android:id="@+id/briefing_container_tv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

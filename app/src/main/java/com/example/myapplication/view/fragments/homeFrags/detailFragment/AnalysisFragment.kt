@@ -11,7 +11,9 @@ import com.example.myapplication.R
 import com.example.myapplication.model.data.homepage.analysis.analysisOdds.FormattedAnalysisOdds
 import com.example.myapplication.utils.SpewViewModel
 import com.example.myapplication.utils.Status
+import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 import com.example.myapplication.view.fragments.homeFrags.adapter.MatchesPopulatingAdapter
+import com.example.myapplication.view.fragments.homeFrags.adapter.MatchesPopulatingAdapterBasketball
 import com.example.myapplication.view.fragments.homeFrags.adapter.SortedOddsAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,13 +25,13 @@ private const val ARG_PARAM2 = "param2"
 class AnalysisFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var matchId: String? = null
-    private var param2: String? = null
+    private var adapterType: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             matchId = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            adapterType = it.getInt(ARG_PARAM2)
         }
     }
 
@@ -50,52 +52,93 @@ class AnalysisFragment : Fragment() {
         val awayOddsRv=view.findViewById<RecyclerView>(R.id.away_team_odds_rv)
 
         val vm=SpewViewModel.giveMeViewModel(requireActivity())
-        vm.analysisLiveData.observe(requireActivity()){
-            when(it.status){
-                Status.SUCCESS -> {
-                    try {
-                        headToHeadRv.visibility=View.VISIBLE
-                        awayRecentRv.visibility=View.VISIBLE
-                        homeRecentRv.visibility=View.VISIBLE
-                        homeOddsRv.visibility=View.VISIBLE
-                        awayOddsRv.visibility=View.VISIBLE
+        if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE){
+            vm.analysisLiveDataBasketball.observe(requireActivity()){
+                when(it.status){
+                    Status.SUCCESS -> {
+                        try {
+                            headToHeadRv.visibility=View.VISIBLE
+                            awayRecentRv.visibility=View.VISIBLE
+                            homeRecentRv.visibility=View.VISIBLE
 
-                        headToHeadRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data?.list?.get(0)?.headToHead!!)
-                        headToHeadRv.layoutManager=LinearLayoutManager(requireContext())
+                            headToHeadRv.adapter=MatchesPopulatingAdapterBasketball(requireContext(),it.data!!.list[0].headToHead)
+                            awayRecentRv.adapter=MatchesPopulatingAdapterBasketball(requireContext(),it.data.list[0].awayLastMatches)
+                            homeRecentRv.adapter=MatchesPopulatingAdapterBasketball(requireContext(),it.data.list[0].homeLastMatches)
 
-                        homeRecentRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data.list[0].homeLastMatches)
-                        homeRecentRv.layoutManager=LinearLayoutManager(requireContext())
+                            headToHeadRv.layoutManager=LinearLayoutManager(context)
+                            awayRecentRv.layoutManager=LinearLayoutManager(context)
+                            homeRecentRv.layoutManager=LinearLayoutManager(context)
+                        }catch (e:Exception){
+                            println(e)
+                        }
 
-                        awayRecentRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data.list[0].awayLastMatches)
-                        awayRecentRv.layoutManager=LinearLayoutManager(requireContext())
-
-                        homeOddsRv.adapter=SortedOddsAdapter(requireContext(),returnFormattedOddsList(it.data.list[0].homeOdds))
-                        homeOddsRv.layoutManager=LinearLayoutManager(requireContext())
-
-                        awayOddsRv.adapter=SortedOddsAdapter(requireContext(),returnFormattedOddsList(it.data.list[0].awayOdds))
-                        awayOddsRv.layoutManager=LinearLayoutManager(requireContext())
-
-
-                    }catch (e:Exception){
 
                     }
+                    Status.ERROR -> {
 
-                //    vm.analysisLiveData.removeObservers(requireActivity())
-                }
-                Status.ERROR -> {
-        //            vm.analysisLiveData.removeObservers(requireActivity())
-                }
-                Status.LOADING -> {
-                    headToHeadRv.visibility=View.GONE
-                    awayRecentRv.visibility=View.GONE
-                    homeRecentRv.visibility=View.GONE
-                    homeOddsRv.visibility=View.GONE
-                    awayOddsRv.visibility=View.GONE
+                    }
+                    Status.LOADING ->{
+                        headToHeadRv.visibility=View.GONE
+                        awayRecentRv.visibility=View.GONE
+                        homeRecentRv.visibility=View.GONE
+                        homeOddsRv.visibility=View.GONE
+                        awayOddsRv.visibility=View.GONE
 
+                    }
                 }
             }
+
+            vm.makeAnalysisCallBasketball(matchId!!)
+
+        }else{
+            vm.analysisLiveData.observe(requireActivity()){
+                when(it.status){
+                    Status.SUCCESS -> {
+                        try {
+                            headToHeadRv.visibility=View.VISIBLE
+                            awayRecentRv.visibility=View.VISIBLE
+                            homeRecentRv.visibility=View.VISIBLE
+                            homeOddsRv.visibility=View.VISIBLE
+                            awayOddsRv.visibility=View.VISIBLE
+
+                            headToHeadRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data?.list?.get(0)?.headToHead!!)
+                            headToHeadRv.layoutManager=LinearLayoutManager(requireContext())
+
+                            homeRecentRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data.list[0].homeLastMatches)
+                            homeRecentRv.layoutManager=LinearLayoutManager(requireContext())
+
+                            awayRecentRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data.list[0].awayLastMatches)
+                            awayRecentRv.layoutManager=LinearLayoutManager(requireContext())
+
+                            homeOddsRv.adapter=SortedOddsAdapter(requireContext(),returnFormattedOddsList(it.data.list[0].homeOdds))
+                            homeOddsRv.layoutManager=LinearLayoutManager(requireContext())
+
+                            awayOddsRv.adapter=SortedOddsAdapter(requireContext(),returnFormattedOddsList(it.data.list[0].awayOdds))
+                            awayOddsRv.layoutManager=LinearLayoutManager(requireContext())
+
+
+                        }catch (e:Exception){
+
+                        }
+
+                        //    vm.analysisLiveData.removeObservers(requireActivity())
+                    }
+                    Status.ERROR -> {
+                        //            vm.analysisLiveData.removeObservers(requireActivity())
+                    }
+                    Status.LOADING -> {
+                        headToHeadRv.visibility=View.GONE
+                        awayRecentRv.visibility=View.GONE
+                        homeRecentRv.visibility=View.GONE
+                        homeOddsRv.visibility=View.GONE
+                        awayOddsRv.visibility=View.GONE
+
+                    }
+                }
+            }
+            vm.makeAnalysisCall(matchId!!)
         }
-        vm.makeAnalysisCall(matchId!!)
+
     }
 
     private fun returnFormattedOddsList(mixedOdds: List<List<String>>): List<FormattedAnalysisOdds> {
@@ -131,11 +174,11 @@ class AnalysisFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(matchId: String, param2: String) =
+        fun newInstance(matchId: String, adapterType: Int) =
             AnalysisFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, matchId)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_PARAM2, adapterType)
                 }
             }
     }

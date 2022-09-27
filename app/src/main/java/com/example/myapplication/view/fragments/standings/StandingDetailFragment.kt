@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -60,22 +61,66 @@ class StandingDetailFragment : Fragment() {
         if (callApi!!){
             val vm = SpewViewModel.giveMeViewModel(requireActivity())
             if (isLeague!!) {
-                vm.standingsLiveData.observe(requireActivity()) {
-                    if (it.status == Status.SUCCESS) {
-                        populateRecyclerView(rv, it?.data!!)
-                        vm.standingsLiveData.removeObservers(requireActivity())
+                view.findViewById<View>(R.id.team_standing_view).visibility=View.VISIBLE
+                vm.leagueInfoLiveData.observe(requireActivity()) {
+                    when(it.status){
+                        Status.SUCCESS -> {
+                            try {
+                                view.findViewById<TextView>(R.id.league_name).text= it?.data?.leagueData01?.get(0)?.nameEn+" "+ it?.data?.leagueData01?.get(0)?.currSeason
+                                populateRecyclerView(view,it?.data!!)
+                                view.findViewById<View>(R.id.loading_layout).visibility=View.GONE
+                            }catch (e:Exception){
+
+                            }
+                        }
+                        Status.ERROR -> {
+                            view.findViewById<View>(R.id.error_layout).visibility=View.VISIBLE
+                        }
+                        Status.LOADING -> {
+                            view.findViewById<View>(R.id.error_layout).visibility=View.GONE
+                            view.findViewById<View>(R.id.loading_layout).visibility=View.VISIBLE
+                        }
                     }
+
+                     //   vm.standingsLiveData.removeObservers(requireActivity())
+
                 }
-                vm.makeStandingsCall(leagueId!!)
+                vm.getLeagueInfoForMatch(leagueId!!,"0","0")
             } else {
-                vm.playerStandingsLiveData.observe(requireActivity()) {
-                    if (it.status == Status.SUCCESS) {
-                        val theList = it.data?.list
-                        populateRecyclerView(rv, theList)
-                        vm.standingsLiveData.removeObservers(requireActivity())
+                   view.findViewById<View>(R.id.player_standing_view).visibility=View.VISIBLE
+                try {
+                    vm.playerStandingsLiveData.observe(requireActivity()) {
+
+                        when(it.status){
+                            Status.SUCCESS -> {
+
+                                val theList = it.data?.list
+                                        try {
+                                            view.findViewById<TextView>(R.id.league_name).visibility=View.GONE
+                                            populateRecyclerView(rv, theList)
+                                            view.findViewById<View>(R.id.loading_layout).visibility=View.GONE
+                                        }catch (e:Exception){
+
+                                        }
+                            }
+                            Status.ERROR -> {
+                                view.findViewById<View>(R.id.error_layout).visibility=View.VISIBLE
+                            }
+                            Status.LOADING -> {
+                                view.findViewById<View>(R.id.error_layout).visibility=View.GONE
+                                view.findViewById<View>(R.id.loading_layout).visibility=View.VISIBLE
+                            }
+                        }
+
+                          //  vm.standingsLiveData.removeObservers(requireActivity())
+
                     }
+                    vm.makePlayerStandingCall(leagueId!!)
+                }catch (e:Exception){
+
                 }
-                vm.makePlayerStandingCall(leagueId!!)
+
+
             }
         }
         else{
@@ -91,12 +136,31 @@ class StandingDetailFragment : Fragment() {
 
     private fun populateRecyclerView(rv: RecyclerView, list: MutableList<List>?) {
         val properList = list as ArrayList<List>
-        properList.add(0, List())
         rv.adapter=PlayerStandingAdapter(requireContext(),properList)
         rv.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
     }
 
     fun populateRecyclerView(data: BaseLeagueInfoHomePage){
+        val rv=view?.findViewById<RecyclerView>(R.id.standing_recycler)
+        try {
+            when(data.leagueStanding[0]){
+                is LeagueStandingTypeGroupBase ->{
+                    populateRecyclerView(rv!!,data)
+                }
+                is LeagueStanding->{
+                    populateRecyclerView(rv!!,data.leagueStanding[0] as LeagueStanding)
+                }
+                else->{
+
+                }
+            }
+
+        }catch (e:Exception){
+            leagueStandingsBase=data
+            println(e)
+        }
+    }
+    fun populateRecyclerView(view: View,data: BaseLeagueInfoHomePage){
         val rv=view?.findViewById<RecyclerView>(R.id.standing_recycler)
         try {
             when(data.leagueStanding[0]){
@@ -134,7 +198,6 @@ class StandingDetailFragment : Fragment() {
             .load(data.leagueInfo.logo)
             .into(loadinto!!)
         val rankings = data.totalStandings as ArrayList<TotalStanding>
-        rankings.add(0, TotalStanding())
         rv.adapter = RankingsAdapter(
             requireContext(), data.teamInfo as ArrayList<TeamInfo>,
             rankings
@@ -148,7 +211,6 @@ class StandingDetailFragment : Fragment() {
             .load(data.leagueInfo.logo)
             .into(loadinto!!)
         val rankings = data.totalStandings as ArrayList<com.example.myapplication.model.data.homepage.leagueInfo.TotalStanding>
-        rankings.add(0, com.example.myapplication.model.data.homepage.leagueInfo.TotalStanding())
         rv.adapter = RankingsAdapterDetail(
             requireContext(), data.teamInfo as ArrayList<com.example.myapplication.model.data.homepage.leagueInfo.TeamInfo>,
             rankings

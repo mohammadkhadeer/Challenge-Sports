@@ -6,7 +6,7 @@
         <item name="textAllCaps">false</item>
     </style>
 
-    <style name="dropdown_custom">
+    <style name="dropdown_custom" >
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
     </style>

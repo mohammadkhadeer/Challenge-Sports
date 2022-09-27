@@ -12,33 +12,38 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_55sdp"
         android:background="@color/colorPrimary">
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/appCompatSpinner2"
+        <Spinner
+            android:id="@+id/league_selector_dropdown"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/primary_rounded_rect"
-            android:backgroundTint="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/appCompatSpinner"
-            app:layout_constraintHorizontal_bias="0.5"
-            android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.4"
-            tools:layout_editor_absoluteY="13dp" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/appCompatSpinner"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/primary_rounded_rect"
-            android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:background="@null"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            style="@style/dropdown_custom"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/appCompatSpinner2"
-            app:layout_constraintWidth_percent="0.4"
-            tools:layout_editor_absoluteY="13dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <TextView
+            android:id="@+id/league_selector"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/league_selector_rect_background"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/white"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingHorizontal="@dimen/_5sdp"
+            app:drawableEndCompat="@drawable/ic_dropdown" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.tabs.TabLayout

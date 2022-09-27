@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.R
+import com.example.myapplication.model.data.basketball.odds.BasketballOddsBase
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage.new2.Match
 import com.example.myapplication.model.data.homepage.new2.Odds
@@ -20,7 +21,10 @@ import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter.Companion.GMT_OFFSET_IN_MS
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter.Companion.HOUR_CONSTANT
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter.Companion.MINS_CONSTANT
+import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 import com.example.myapplication.view.fragments.homeFrags.adapter.OddsRvPopulator
+import com.example.myapplication.view.fragments.homeFrags.adapter.OddsRvPopulatorBasketball
+import com.example.myapplication.view.fragments.homeFrags.basketball.IndexViewpagerFragmentBasketball
 import com.example.myapplication.view.fragments.homeFrags.detailFragment.IndexViewPagerFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import java.text.SimpleDateFormat
@@ -34,13 +38,13 @@ private const val ARG_PARAM2 = "param2"
 
 class IndexDisplayFragmnet : Fragment() {
     private var matchId: String? = null
-    private var param2: String? = null
+    private var adapterType: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             matchId = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            adapterType = it.getInt(ARG_PARAM2)
         }
     }
 
@@ -56,30 +60,58 @@ class IndexDisplayFragmnet : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val vm = SpewViewModel.giveMeViewModel(requireActivity())
 
-        vm.liveOddsLiveData.observe(requireActivity()) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    try {
-                        populateViewPager(it.data!!)
-                    }
-                    catch (e: Exception) {
+        when(adapterType){
+            MainAdapterCommunicator.BASKETBALL_TYPE->{
+                vm.basketballLiveOdds.observe(requireActivity()){
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            try {
+                                populateViewPager(it.data!!)
+                            }
+                            catch (e: Exception) {
 
+                            }
+                        }
+                        Status.ERROR -> {
+
+                        }
+
+                        Status.LOADING -> {
+
+                        }
                     }
                 }
-                Status.ERROR -> {
+                vm.makeOddsBasketballCall(matchId!!)
+            }
+            else->{
+                vm.liveOddsLiveData.observe(requireActivity()) {
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            try {
+                                populateViewPager(it.data!!)
+                            }
+                            catch (e: Exception) {
 
+                            }
+                        }
+                        Status.ERROR -> {
+
+                        }
+
+                        Status.LOADING -> {
+
+                        }
+                    }
                 }
-
-                Status.LOADING -> {
+                try {
+                    vm.makeLiveOddsCall(matchId!!)
+                } catch (e: Exception) {
 
                 }
             }
-        }
-        try {
-            vm.makeLiveOddsCall(matchId!!)
-        } catch (e: Exception) {
 
         }
+
     }
 
 
@@ -124,15 +156,44 @@ class IndexDisplayFragmnet : Fragment() {
 
         }.attach()
     }
+    private fun populateViewPager(data: BasketballOddsBase) {
+        val viewPager = view?.findViewById<ViewPager2>(R.id.odds_viewPager)
+        val fragsList = ArrayList<Fragment>()
+
+        fragsList.add(IndexViewpagerFragmentBasketball.newInstance(OddsRvPopulatorBasketball.SPREAD, ""))
+        fragsList.add(IndexViewpagerFragmentBasketball.newInstance(OddsRvPopulatorBasketball.TOTAL, ""))
+        fragsList.forEach {
+            (it as IndexViewpagerFragmentBasketball).setupData(data)
+        }
+        viewPager?.adapter = ViewPagerAdapter(
+            requireActivity().supportFragmentManager,
+            requireActivity().lifecycle,
+            fragsList
+        )
+        TabLayoutMediator(view?.findViewById(R.id.odds_tab_layout)!!,viewPager!!){tab,position->
+            tab.text= when(position){
+                0->{
+                    OddsRvPopulatorBasketball.SPREAD
+                }
+                1->{
+                    OddsRvPopulatorBasketball.TOTAL
+                }
+                else->{
+                    "Other"
+                }
+            }
+
+        }.attach()
+    }
 
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: String, adapterType: Int) =
             IndexDisplayFragmnet().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_PARAM2, adapterType)
                 }
             }
     }

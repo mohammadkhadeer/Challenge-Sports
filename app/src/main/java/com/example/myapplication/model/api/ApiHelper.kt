@@ -1,6 +1,10 @@
 package com.example.myapplication.model.api
 
+import com.example.myapplication.model.data.basketball.analysis.AnalysisBasktetballBase
+import com.example.myapplication.model.data.basketball.briefing.BasketballBriefingBase
 import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
+import com.example.myapplication.model.data.basketball.league.LeagueBaseInfo
+import com.example.myapplication.model.data.basketball.odds.BasketballOddsBase
 import com.example.myapplication.model.data.generalized.GeneralTokenResponse
 import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
@@ -35,4 +39,8 @@ interface ApiHelper {
     suspend fun getLeagueInfo(leagueId: String, subLeagueId: String, groupId: String): BaseLeagueInfoHomePage
     suspend fun getBasketballMatches(): BaseIndexBasketball
     suspend fun getMatchUpdate(matchId: String): LiveScorePin
+    suspend fun getBasketballLiveOdds(): BasketballOddsBase
+    suspend fun getAnalysisForMatchBasketball(matchId: String): AnalysisBasktetballBase
+    suspend fun getBasketballLeague(leagueId: String):LeagueBaseInfo
+    suspend fun getBasketBallBriefing(matchId: String): BasketballBriefingBase
 }

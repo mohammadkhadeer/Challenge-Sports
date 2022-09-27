@@ -6,17 +6,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.homeFrags.MatchOptionsFragment">
 
-    <include
-        android:id="@+id/top_details"
-        layout="@layout/home_page_item"
+    <FrameLayout
         app:layout_constraintTop_toTopOf="parent"
-        />
+        android:id="@+id/top_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            layout="@layout/home_page_item"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </FrameLayout>
+
 
     <Button
         android:id="@+id/set_reminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/set_reminder"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_details" />

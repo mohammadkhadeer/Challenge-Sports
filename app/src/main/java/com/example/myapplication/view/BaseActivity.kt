@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.codeboy.pager2_transformers.Pager2_GateTransformer
 import com.example.myapplication.R
 import com.example.myapplication.utils.GeneralTools
 import com.example.myapplication.utils.transformer.Pager2_VerticalFlipTransformer
@@ -32,7 +33,6 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val closeSearchIcon=findViewById<View>(R.id.cross_icon)
         val searchBar=findViewById<EditText>(R.id.search_matches)
         val heading=findViewById<TextView>(R.id.top_heading_mainpage)
-
         val baseViewPager=findViewById<ViewPager2>(R.id.baseViewPager)
         val newsFrag= NewsFragment.newInstance(false,":")
         val homeFragment=BaseHomeFragments.newInstance("","")
@@ -45,7 +45,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         baseViewPager.adapter=ViewPagerAdapter(supportFragmentManager,lifecycle,fragsList)
         baseViewPager.isUserInputEnabled=false
         baseViewPager.offscreenPageLimit=3
-        baseViewPager.setPageTransformer(Pager2_VerticalFlipTransformer())
+        //baseViewPager.setPageTransformer(Pager2_GateTransformer())
 
 
         closeSearchIcon.setOnClickListener {

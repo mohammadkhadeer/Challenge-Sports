@@ -387,6 +387,7 @@ import kotlin.collections.ArrayList
          sortMatchesOnCategory()
          updateFilter()
      }
+
      fun setFilter(filter:CategoryFilterType){
          categoryFilterType=filter
          updateFilter()

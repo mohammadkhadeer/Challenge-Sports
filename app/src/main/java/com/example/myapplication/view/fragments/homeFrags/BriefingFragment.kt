@@ -1,7 +1,7 @@
 package com.example.myapplication.view.fragments.homeFrags
 
-import android.R.attr
 import android.os.Bundle
+import android.service.autofill.VisibilitySetterAction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +9,13 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.TextClock
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.utils.SpewViewModel
 import com.example.myapplication.utils.Status
+import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,13 +31,13 @@ private const val ARG_PARAM2 = "param2"
 class BriefingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var matchId: String? = null
-    private var param2: String? = null
+    private var adapterType: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             matchId = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            adapterType = it.getInt(ARG_PARAM2)
         }
     }
 
@@ -49,44 +52,75 @@ class BriefingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val vm=SpewViewModel.giveMeViewModel(requireActivity())
        // val briefTv=view.findViewById<TextView>(R.id.briefing_container_tv)
-        vm.briefingLiveData.observe(requireActivity()){
-            when(it.status){
-                Status.SUCCESS ->{
-               //     briefTv.visibility=View.VISIBLE
-                    val data = it.data
-                    val webview = view.findViewById<WebView>(R.id.briefing_container_tv)
-                    webview.visibility=View.VISIBLE
-                    webview.webViewClient = WebViewClient()
-                    webview.settings.javaScriptCanOpenWindowsAutomatically = true
-                    webview.settings.pluginState = WebSettings.PluginState.ON
-                    webview.settings.mediaPlaybackRequiresUserGesture = false
-                    webview.webChromeClient = WebChromeClient()
-                    webview.loadDataWithBaseURL(null, data!!, "text/html", "UTF-8", null)
-                /*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        briefTv.text= Html.fromHtml(it.data,Html.FROM_HTML_MODE_COMPACT)
-                    }else{
-                        briefTv.text= Html.fromHtml(it.data)
-                    }*/
-                }
-                Status.ERROR ->{
-
-                }
-                Status.LOADING -> {
-                    view.findViewById<WebView>(R.id.briefing_container_tv).visibility=View.GONE
+        if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE){
+            vm.basketballBriefingLiveData.observe(requireActivity()){
+                when(it.status){
+                    Status.SUCCESS -> {
+                        view.findViewById<View>(R.id.baskteball_briefing).visibility=View.VISIBLE
+                        val briefinBody=view.findViewById<TextView>(R.id.briefing_body)
+                        val descriptionBody=view.findViewById<TextView>(R.id.description_body)
+                        val confidenceIndex=view.findViewById<TextView>(R.id.confidence_index_body)
+                        val matchTrackRecord=view.findViewById<TextView>(R.id.match_track_body)
+                        it.data?.apply {
+                            briefinBody.text=analyseEn
+                            descriptionBody.text=explainEn
+                            confidenceIndex.text=confidenceEn
+                            matchTrackRecord.text=headToHeadEn
+                        }
+                    }
+                    Status.ERROR -> {
+                        println(it.message)
+                    }
+                    Status.LOADING -> {
+                        view.findViewById<View>(R.id.baskteball_briefing).visibility=View.GONE
+                    }
                 }
             }
+            vm.makeBasketBallBriefingCall(matchId!!)
+        }else{
+            view.findViewById<View>(R.id.baskteball_briefing).visibility=View.GONE
+            vm.briefingLiveData.observe(requireActivity()){
+                when(it.status){
+                    Status.SUCCESS ->{
+
+                        //     briefTv.visibility=View.VISIBLE
+                        val data = it.data
+                        val webview = view.findViewById<WebView>(R.id.briefing_container_tv)
+                        webview.visibility=View.VISIBLE
+                        webview.webViewClient = WebViewClient()
+                        webview.settings.javaScriptCanOpenWindowsAutomatically = true
+                        webview.settings.pluginState = WebSettings.PluginState.ON
+                        webview.settings.mediaPlaybackRequiresUserGesture = false
+                        webview.webChromeClient = WebChromeClient()
+                        webview.loadDataWithBaseURL(null, data!!, "text/html", "UTF-8", null)
+                        /*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                briefTv.text= Html.fromHtml(it.data,Html.FROM_HTML_MODE_COMPACT)
+                            }else{
+                                briefTv.text= Html.fromHtml(it.data)
+                            }*/
+                    }
+                    Status.ERROR ->{
+
+                    }
+                    Status.LOADING -> {
+                        view.findViewById<WebView>(R.id.briefing_container_tv).visibility=View.GONE
+                    }
+                }
+            }
+            vm.getBriefing(matchId!!)
         }
-        vm.getBriefing(matchId!!)
+
+
 
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(matchId: String, param2: String) =
+        fun newInstance(matchId: String, adapterType: Int) =
             BriefingFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, matchId)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_PARAM2, adapterType)
                 }
             }
     }

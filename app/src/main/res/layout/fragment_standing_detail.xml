@@ -7,6 +7,21 @@
     tools:context=".view.fragments.standings.StandingDetailFragment">
 
     <LinearLayout
+        android:id="@+id/top_lables"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/league_name_logo">
+
+        <include
+            android:visibility="gone"
+            android:id="@+id/player_standing_view"
+            layout="@layout/player_standing_first_item" />
+        <include android:id="@+id/team_standing_view"
+            android:visibility="gone"
+            layout="@layout/standings_fist_item"/>
+    </LinearLayout>
+    <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/league_name_logo"
         android:orientation="horizontal"
@@ -27,11 +42,62 @@
             android:text="English Premiere League 2022-2023"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/standing_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/league_name_logo"/>
+        app:layout_constraintTop_toBottomOf="@+id/top_lables" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/loading_layout"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            app:lottie_rawRes="@raw/league_loading_anim"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:layout_height="@dimen/_200sdp"/>
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:text="@string/loading_league_info_please_wait"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            app:lottie_rawRes="@raw/error_anim"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:layout_height="@dimen/_200sdp"/>
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:text="@string/loading_league_info_please_wait"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

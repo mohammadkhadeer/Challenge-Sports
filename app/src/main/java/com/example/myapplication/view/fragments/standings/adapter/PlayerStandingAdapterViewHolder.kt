@@ -37,31 +37,14 @@ class PlayerStandingAdapter(var context:Context,var playerList:ArrayList<List>) 
 
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position==0)
-            1
-        else
-            0
-    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            1->{
-               object: RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.player_standing_first_item,parent,false)){
-
-               }
-            }else->{
-                PlayerStandingAdapterViewHolder(LayoutInflater.from(context).inflate(R.layout.player_standing_recyclerview,parent,false))
-            }
-        }
+       return PlayerStandingAdapterViewHolder(LayoutInflater.from(context).inflate(R.layout.player_standing_recyclerview,parent,false))
     }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position==0){
-            return
-        }
         val myholder=holder as PlayerStandingAdapterViewHolder
         val player=playerList[position]
-        val rank=(position).toString()
+        val rank=(position+1).toString()
         myholder.ranking_tv.text= rank
         myholder.teamNameTv.text=player.teamNameEn
         myholder.playerNameTv.text=player.playerNameEn

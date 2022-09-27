@@ -1,7 +1,11 @@
 package com.example.myapplication.view.fragments.homeFrags.adapter
 
 interface MainAdapterCommunicator {
-   fun onMessageFromAdapter(message:MainAdapterMessages,position:Int,resourceId:Int)
+   companion object{
+      const val BASKETBALL_TYPE=0
+      const val FOOTBALL_TYPE=1
+   }
+   fun onMessageFromAdapter(message:MainAdapterMessages,position:Int,adapterType:Int)
 }
 enum class MainAdapterMessages{
     OPEN_INDEX,

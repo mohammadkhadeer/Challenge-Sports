@@ -1,6 +1,10 @@
 package com.example.myapplication.model.api
 
+import com.example.myapplication.model.data.basketball.analysis.AnalysisBasktetballBase
+import com.example.myapplication.model.data.basketball.briefing.BasketballBriefingBase
 import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
+import com.example.myapplication.model.data.basketball.league.LeagueBaseInfo
+import com.example.myapplication.model.data.basketball.odds.BasketballOddsBase
 import com.example.myapplication.model.data.generalized.GeneralTokenResponse
 import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
@@ -36,5 +40,10 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
    override suspend fun getLeagueInfo(leagueId: String, subLeagueId: String, groupId: String): BaseLeagueInfoHomePage =apiService.getLeagueInfo(leagueId,subLeagueId,groupId)
    override suspend fun getBasketballMatches(): BaseIndexBasketball = apiService.getBasketballMatches()
    override suspend fun getMatchUpdate(matchId: String): LiveScorePin=apiService.getMatchUpdate(matchId)
+   override suspend fun getBasketballLiveOdds(): BasketballOddsBase= apiService.getBasketballLiveOdds()
+   override suspend fun getAnalysisForMatchBasketball(matchId: String): AnalysisBasktetballBase =apiService.getAnalysisForMatchBasketball(matchId)
+   override suspend fun getBasketballLeague(leagueId: String): LeagueBaseInfo =apiService.getBasketballLeague(leagueId)
+   override suspend fun getBasketBallBriefing(matchId: String): BasketballBriefingBase=apiService.getBasktetBallBriefing(matchId)
+
 
 }

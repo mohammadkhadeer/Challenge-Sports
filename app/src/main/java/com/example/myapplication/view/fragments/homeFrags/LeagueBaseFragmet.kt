@@ -11,37 +11,36 @@ import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHo
 import com.example.myapplication.model.data.homepage.new2.Match
 import com.example.myapplication.model.data.news.details.OnPostDetailResponse
 import com.example.myapplication.view.adapters.ViewPagerAdapter
+import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 import com.example.myapplication.view.fragments.homeFrags.detailFragment.LeagueInfoFragment
 import com.example.myapplication.view.fragments.standings.StandingDetailFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LeagueBaseFragmet.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class LeagueBaseFragmet : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
-    private var param2: String? = null
+    private var adapterType: Int? = null
     private var match: Match? = null
+    private var bbMatch: com.example.myapplication.model.data.basketball.homepage.Match? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            adapterType = it.getInt(ARG_PARAM2)
         }
     }
 
     fun setData(match: Match) {
         this.match = match
+    }
+    fun setData(match: com.example.myapplication.model.data.basketball.homepage.Match) {
+        this.bbMatch = match
     }
 
     override fun onCreateView(
@@ -57,24 +56,32 @@ class LeagueBaseFragmet : Fragment() {
         val tabLayout = view.findViewById<TabLayout>(R.id.league_tab_layout)
         val fragsList = ArrayList<Fragment>()
         try {
-            val frag=LeagueInfoFragment.newInstance(match!!.leagueId.toString(), "")
-            frag.match=match
-            fragsList.add(frag)
-            val frag2=StandingDetailFragment.newInstance(match!!.leagueId.toString(), true,false)
-            fragsList.add(frag2)
-            frag.OnPostDetailResponse=object : OnPostDetailResponse<BaseLeagueInfoHomePage>{
-                override fun onSuccess(responseBody: BaseLeagueInfoHomePage) {
-                    frag2.populateRecyclerView(responseBody)
+            val frag=LeagueInfoFragment.newInstance(if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE)bbMatch!!.leagueId.toString()else match!!.leagueId.toString()
+                ,adapterType!!)
+            if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE){
+                frag.bbMatch=bbMatch
+                fragsList.add(frag)
+            }else{
+                frag.match=match
+                fragsList.add(frag)
+                val frag2=StandingDetailFragment.newInstance(match!!.leagueId.toString(), true,false)
+                fragsList.add(frag2)
+                frag.OnPostDetailResponse=object : OnPostDetailResponse<BaseLeagueInfoHomePage>{
+                    override fun onSuccess(responseBody: BaseLeagueInfoHomePage) {
+                        frag2.populateRecyclerView(responseBody)
+                    }
+
+                    override fun onFailure(message: String) {
+                        println(message)
+                    }
+
+                    override fun onLoading(message: String) {
+
+                    }
                 }
 
-                override fun onFailure(message: String) {
-                    println(message)
-                }
-
-                override fun onLoading(message: String) {
-
-                }
             }
+
             viewpager.adapter = ViewPagerAdapter(
                 requireActivity().supportFragmentManager,
                 requireActivity().lifecycle,
@@ -94,27 +101,19 @@ class LeagueBaseFragmet : Fragment() {
                 }
             }.attach()
         }catch (e:Exception){
-
+            println(e)
         }
 
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LeagueBaseFragmet.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(matchId: String, adapterType: Int) =
             LeagueBaseFragmet().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM1, matchId)
+                    putInt(ARG_PARAM2, adapterType)
                 }
             }
     }

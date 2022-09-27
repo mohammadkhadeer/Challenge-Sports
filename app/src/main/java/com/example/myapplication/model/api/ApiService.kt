@@ -1,6 +1,10 @@
 package com.example.myapplication.model.api
 
+import com.example.myapplication.model.data.basketball.analysis.AnalysisBasktetballBase
+import com.example.myapplication.model.data.basketball.briefing.BasketballBriefingBase
 import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
+import com.example.myapplication.model.data.basketball.league.LeagueBaseInfo
+import com.example.myapplication.model.data.basketball.odds.BasketballOddsBase
 import com.example.myapplication.model.data.generalized.GeneralTokenResponse
 import com.example.myapplication.model.data.generalized.OtpResponse
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
@@ -67,5 +71,18 @@ interface ApiService {
 
     @GET("/api/zqbf-list-match/en/{matchId}")
     suspend fun getMatchUpdate(@Path("matchId") matchId: String): LiveScorePin
+
+    @GET("api/lqbf-live-odds/")
+    suspend fun getBasketballLiveOdds(): BasketballOddsBase
+
+    @GET("/api/lqbf-match-analysis/{matchId}")
+    suspend fun getAnalysisForMatchBasketball(@Path("matchId") matchId: String): AnalysisBasktetballBase
+
+    @GET("/api/lqbf-list-league/{leagueId}")
+    suspend fun getBasketballLeague(@Path("leagueId")leagueId: String): LeagueBaseInfo
+
+    @GET("/api/lqbf-match-briefing/{matchId}")
+    suspend fun getBasktetBallBriefing(@Path("matchId")matchId: String): BasketballBriefingBase
+
 
 }

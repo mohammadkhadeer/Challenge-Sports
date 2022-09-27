@@ -47,31 +47,14 @@ class RankingsAdapterDetail(var context:Context, var teams:ArrayList<TeamInfo>, 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType==1){
-            RankingViewHolder(LayoutInflater.from(context).inflate(R.layout.standings_item,parent,false))
-        }  else{
-            object :
-                RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.standings_fist_item,parent,false)){
+        return RankingViewHolder(LayoutInflater.from(context).inflate(R.layout.standings_item,parent,false))
 
-            }
-        }
 
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if (position==0){
-            2
-        }else{
-            1
-        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         try {
-            if (position==0){
-                return
-            }
             val myholder=holder as RankingViewHolder
             val team=spewTeam(rankings[position].teamId)
             myholder.ranking_tv.text=rankings[position].rank.toString()

@@ -5,7 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.model.api.ApiHelper
+import com.example.myapplication.model.data.basketball.analysis.AnalysisBasktetballBase
+import com.example.myapplication.model.data.basketball.briefing.BasketballBriefingBase
 import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
+import com.example.myapplication.model.data.basketball.league.LeagueBaseInfo
+import com.example.myapplication.model.data.basketball.odds.BasketballOddsBase
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
 import com.example.myapplication.model.data.homepage.event.EventBase
 import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
@@ -24,11 +28,16 @@ import com.example.myapplication.model.data.standings.sorted.SortedStandings
 import com.example.myapplication.model.data.videos.VideosListBase
 import com.example.myapplication.utils.Resource
 import com.example.myapplication.utils.SharedPreference
+import com.example.myapplication.utils.SubLeagueException
 import com.google.gson.Gson
+import com.google.gson.internal.LinkedTreeMap
 import kotlinx.coroutines.launch
 import kotlin.Exception
 
 class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
+    val basketballBriefingLiveData=MutableLiveData<Resource<BasketballBriefingBase>>()
+    val analysisLiveDataBasketball=MutableLiveData<Resource<AnalysisBasktetballBase>>()
+    var basketballLiveOdds= MutableLiveData<Resource<BasketballOddsBase>>()
     var newsLiveData = MutableLiveData<Resource<NewsBase>>()
     var videosLiveData = MutableLiveData<Resource<VideosListBase>>()
     var maxPageNumberNews = 100
@@ -44,6 +53,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     var leagueInfoLiveData=MutableLiveData<Resource<BaseLeagueInfoHomePage>>()
     var basketBallLiveData=MutableLiveData<Resource<BaseIndexBasketball>>()
     var updateMatchLiveData=MutableLiveData<Resource<LiveScorePin>>()
+    var baskteballLeagueLiveData=MutableLiveData<Resource<LeagueBaseInfo>>()
     var lastPageMatchesBase=0
     var currentPageMatches=0
 
@@ -195,7 +205,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     }
 
     private fun sortTheListOfOdds(odds: BaseLiveOdds,matchId:String): BaseLiveOdds {
-        val filteredBaseLiveOdds=BaseLiveOdds()
+
 
         val handicap=ArrayList<Any>()
         val europeOdds=ArrayList<Any>()
@@ -232,6 +242,26 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         odds.list[0].overUnder= listOf(overUnder)
         odds.list[0].overUnderHalf= listOf(overUnderHalf)
         odds.list[0].handicapHalf= listOf(handicapHalf)
+        return odds
+    }
+
+    private fun sortTheListOfOdds(odds:BasketballOddsBase,matchId:String): BasketballOddsBase {
+
+
+        val spread=ArrayList<Any>()
+        val total=ArrayList<Any>()
+        for (item in odds.list[0].spread){
+            if ((item[0] as Double).toInt().toString()==matchId){
+                spread.add(item)
+            }
+        }
+        for (item in odds.list[0].total){
+            if ((item[0] as Double).toInt().toString()==matchId){
+                total.add(item)
+            }
+        }
+        odds.list[0].spread= listOf(spread) as List<List<Double>>
+        odds.list[0].total= listOf(total) as List<List<Double>>
         return odds
     }
 
@@ -272,12 +302,24 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     }
     fun getLeagueInfoForMatch(leagueId:String,subLeague:String?,groupId:String?){
         viewModelScope.launch {
+            var leagueBaseInfo:BaseLeagueInfoHomePage?=null
             try {
                 leagueInfoLiveData.postValue(Resource.loading(null))
                val leagueInfoBase=apiHelper.getLeagueInfo(leagueId,subLeague?:"0",groupId?:"0")
+                leagueBaseInfo=leagueInfoBase
                 leagueInfoLiveData.postValue(Resource.success(testCasting(leagueInfoBase)))
             }catch (e:Exception){
-                briefingLiveData.postValue(Resource.error(e.toString(),null))
+                if (e is SubLeagueException){
+                    val list=leagueBaseInfo?.leagueStanding?.get(0) as LinkedTreeMap<Any,Any>
+                   val map= list["list"] as ArrayList<LinkedTreeMap<Any,Any>>
+                    val value=(map[0]["subId"] as Double).toInt()
+                    println(value.toInt())
+
+                    getLeagueInfoForMatch(leagueId,value.toString(),null)
+                }else{
+                    briefingLiveData.postValue(Resource.error(e.toString(),null))
+                }
+
             }
         }
     }
@@ -294,19 +336,21 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         }
     }
 
-    fun updateSingleMatch(matchId: String){
+    fun makeOddsBasketballCall(matchId:String){
         viewModelScope.launch {
             try {
-                updateMatchLiveData.postValue(Resource.loading(null))
-                val matchUpdate=apiHelper.getMatchUpdate(matchId)
-                updateMatchLiveData.postValue(Resource.success(matchUpdate))
+                basketballLiveOdds.postValue(Resource.loading(null))
+                val basketballOddsBase=apiHelper.getBasketballLiveOdds()
+                basketballLiveOdds.postValue(Resource.success(sortTheListOfOdds(basketballOddsBase, matchId)))
             }catch (e:Exception){
-                updateMatchLiveData.postValue(Resource.error(e.toString(),null))
+                basketballLiveOdds.postValue(Resource.error(e.toString(),null))
             }
         }
+
     }
 
-    private fun testCasting(leagueInfoBase: BaseLeagueInfoHomePage): BaseLeagueInfoHomePage {
+
+    private fun testCasting(leagueInfoBase: BaseLeagueInfoHomePage): BaseLeagueInfoHomePage{
 
         try {
             val obj=leagueInfoBase.leagueStanding[0]
@@ -314,8 +358,14 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
             val groupObj=Gson().fromJson(jsonObj,LeagueStandingTypeGroupBase::class.java)
             try {
                 println(groupObj.list[0].leagueId)
+                if (groupObj.list[0].leagueId==0){
+                      throw SubLeagueException("Call SubLeague Please")
+                }
                 leagueInfoBase.leagueStanding= listOf<LeagueStandingTypeGroupBase>(groupObj)
             }catch (e:Exception){
+                if (e is SubLeagueException){
+                    throw SubLeagueException(e.message?:"Subleague Please")
+                }
                 val groupObjOriginal=Gson().fromJson(jsonObj,LeagueStanding::class.java)
                 leagueInfoBase.leagueStanding= listOf<LeagueStanding>(groupObjOriginal)
                 println(leagueInfoBase)
@@ -332,9 +382,47 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
                 }
             }
         }catch (e:Exception){
-
+            if (e is SubLeagueException){
+                throw SubLeagueException(e.message?:"Subleage Exception")
+            }
         }
         return leagueInfoBase
+    }
+
+    fun makeAnalysisCallBasketball(matchId: String) {
+        viewModelScope.launch {
+            try {
+                analysisLiveDataBasketball.postValue(Resource.loading(null))
+                val analysisBase=apiHelper.getAnalysisForMatchBasketball(matchId)
+                analysisLiveDataBasketball.postValue(Resource.success(analysisBase))
+            }catch (e:Exception){
+                analysisLiveDataBasketball.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+    fun makeLeagueInfoCall(leagueId: String){
+        viewModelScope.launch {
+            try {
+                baskteballLeagueLiveData.postValue(Resource.loading(null))
+                val bBallLeague=apiHelper.getBasketballLeague(leagueId)
+                baskteballLeagueLiveData.postValue(Resource.success(bBallLeague))
+            }catch (e:Exception){
+                baskteballLeagueLiveData.postValue(Resource.error(e.toString(),null))
+
+            }
+        }
+    }
+
+    fun makeBasketBallBriefingCall(matchId: String){
+        viewModelScope.launch {
+            try {
+                basketballBriefingLiveData.postValue(Resource.loading(null))
+                val briefingBase=apiHelper.getBasketBallBriefing(matchId)
+                basketballBriefingLiveData.postValue(Resource.success(briefingBase))
+            }catch (e:Exception){
+                basketballBriefingLiveData.postValue(Resource.error(e.toString(),null))
+            }
+        }
     }
 
 

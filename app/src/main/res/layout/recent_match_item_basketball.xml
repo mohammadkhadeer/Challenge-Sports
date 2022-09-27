@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/blue_light_transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/league_name"
+        app:layout_constraintTop_toTopOf="@+id/league_name" />
+    <TextView
+        android:id="@+id/league_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Group A"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:paddingVertical="@dimen/_3sdp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jun 28 2022, 06:30"
+        app:layout_constraintHorizontal_bias="0.2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/league_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view" />
+    <TextView
+        android:id="@+id/total_points_half"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="12sp"
+        android:text="C: 3:11  HT: 0:11"
+        />
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/total_points_half"
+        android:id="@+id/score_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/primary_rounded_rect"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:backgroundTint="@color/over_white_light_grey"
+        android:text="1 : 0"
+        android:textColor="@color/black"
+        android:paddingVertical="@dimen/_3sdp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+        android:id="@+id/team_1_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:paddingHorizontal="@dimen/_2sdp"
+        android:text="Chicago Dtuch Lions FC"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/score_indicator"
+        app:layout_constraintEnd_toStartOf="@+id/score_indicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/score_indicator" />
+    <TextView
+        android:id="@+id/team_2_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:paddingHorizontal="@dimen/_2sdp"
+        android:text="Devonport City Reserves"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/score_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/score_indicator"
+        app:layout_constraintTop_toTopOf="@id/score_indicator" />
+</androidx.constraintlayout.widget.ConstraintLayout>
