@@ -3,6 +3,7 @@ package com.example.myapplication.model.api
 import com.example.myapplication.model.data.basketball.analysis.AnalysisBasktetballBase
 import com.example.myapplication.model.data.basketball.briefing.BasketballBriefingBase
 import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
+import com.example.myapplication.model.data.basketball.homepage.past.future.PastFutureBasketBall
 import com.example.myapplication.model.data.basketball.league.LeagueBaseInfo
 import com.example.myapplication.model.data.basketball.odds.BasketballOddsBase
 import com.example.myapplication.model.data.generalized.GeneralTokenResponse
@@ -13,6 +14,7 @@ import com.example.myapplication.model.data.homepage.event.EventBase
 import com.example.myapplication.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage.new2.BaseClassIndexNew
+import com.example.myapplication.model.data.homepage.past.future.PastFutureBaseCall
 import com.example.myapplication.model.data.livescorepin.LiveScorePin
 import com.example.myapplication.model.data.news.NewsBase
 import com.example.myapplication.model.data.news.details.NewsPostBase
@@ -43,4 +45,6 @@ interface ApiHelper {
     suspend fun getAnalysisForMatchBasketball(matchId: String): AnalysisBasktetballBase
     suspend fun getBasketballLeague(leagueId: String):LeagueBaseInfo
     suspend fun getBasketBallBriefing(matchId: String): BasketballBriefingBase
+    suspend fun getPastFutureMatches(date: String): PastFutureBaseCall
+    suspend fun getPastFutureMatchesBasketball(date: String): PastFutureBasketBall
 }

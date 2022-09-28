@@ -28,8 +28,14 @@ public class SharedPreference
 		public static final String ALL_LEAGUES_TAG="All Leagues";
         @Nullable
         public static final String MATCH_ID_TOKEN="matchid";
+        @NotNull
+        public static final String TODAY_ITEM="Today Matches";
+		@NotNull
+		public static final String PAST_ITEM="Previous Matches";
+		@NotNull
+		public static final String FUTURE_ITEM="Future Matches";
 
-        public static SharedPreference getInstance()
+		public static SharedPreference getInstance()
 			{
 				return ourInstance;
 			}

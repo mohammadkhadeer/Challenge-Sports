@@ -12,14 +12,21 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.model.api.ApiHelperImpl
 import com.example.myapplication.model.api.RetroInstance
+import com.example.myapplication.model.data.news.List
 import com.example.myapplication.model.data.news.NewsBase
+import com.example.myapplication.model.data.news.details.OnPostDetailResponse
 import com.example.myapplication.utils.Resource
+import com.example.myapplication.utils.SpewViewModel
 import com.example.myapplication.utils.Status
 import com.example.myapplication.utils.ViewModelFactory
 import com.example.myapplication.viewmodel.MainViewModel
 import com.example.myapplication.view.adapters.MultipurposeAdapter
 import com.example.myapplication.view.adapters.RecyclerViewOnclick
 import com.example.myapplication.view.fragments.OnDetailListener
+import com.example.myapplication.view.fragments.homeFrags.adapter.LoadMoreCommunicator
+import com.example.myapplication.view.fragments.homeFrags.adapter.NewsAdapter
+import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +43,7 @@ class NewsInnerFragment : Fragment() {
     private lateinit var seeAllRecommended: View
     private lateinit var trendingRv: RecyclerView
     private lateinit var seeAllTrending: View
+    private var loadingBar:View?=null
     private var onDetailListener: OnDetailListener?=null
 
     // TODO: Rename and change types of parameters
@@ -63,6 +71,7 @@ class NewsInnerFragment : Fragment() {
          trendingRv=view.findViewById(R.id.trending_recycler_view)
          seeAllRecommended=view.findViewById(R.id.see_all_bottom)
          recommendedRV=view.findViewById(R.id.recommended_recycler)
+        loadingBar=view.findViewById(R.id.loading_more_bar)
 
         val viewModel=ViewModelProvider(requireActivity().viewModelStore,ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))).get(MainViewModel::class.java)
         viewModel.makeNewsCall("1")
@@ -103,6 +112,7 @@ class NewsInnerFragment : Fragment() {
                 holder.headline.text= newsList?.get(position)?.title
                 holder.tag.text= newsList?.get(position)?.keywords?.substringBefore(",")
                 Glide.with(context).load(newsList?.get(position)?.path).into(holder.imageContainer)
+
             }
 
             override fun getItemCount(): Int {
@@ -110,9 +120,9 @@ class NewsInnerFragment : Fragment() {
             }
 
         }
-        trendingRv.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        trendingRv.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,true)
 
-        recommendedRV.adapter=object : MultipurposeAdapter(requireContext(),R.layout.recommended_item_view,object : RecyclerViewOnclick{
+       /* recommendedRV.adapter=object : MultipurposeAdapter(requireContext(),R.layout.recommended_item_view,object : RecyclerViewOnclick{
             override fun onClick(position: Int) {
                 val list=ArrayList<String>()
                 list.add(newsList?.get(position)?.id.toString())
@@ -128,9 +138,36 @@ class NewsInnerFragment : Fragment() {
             override fun getItemCount(): Int {
                 return newsList?.size ?:0
             }
-        }
-        recommendedRV.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,true)
+        }*/
+        val vm=SpewViewModel.giveMeViewModel(requireActivity())
+        recommendedRV.adapter=NewsAdapter(requireContext(), newsList!! as ArrayList<List>,object : LoadMoreCommunicator{
+            override fun loadMore() {
+                vm.makeNewsCall(object : OnPostDetailResponse<NewsBase>{
+                    override fun onSuccess(responseBody: NewsBase) {
+                        (recommendedRV?.adapter as NewsAdapter).updateList(responseBody.list)
+                        loadingBar?.visibility=View.GONE
+                    }
 
+                    override fun onFailure(message: String) {
+                            loadingBar?.visibility=View.GONE
+                    }
+
+                    override fun onLoading(message: String) {
+                        loadingBar?.visibility=View.VISIBLE
+                     }
+
+                })
+            }
+        },
+        object : RecyclerViewOnclick{
+            override fun onClick(position: Int) {
+                val list=ArrayList<String>()
+                list.add(newsList.get(position)?.id.toString())
+                onDetailListener?.onDetail(list)
+            }
+
+        })
+        recommendedRV.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
 
     }
     companion object {

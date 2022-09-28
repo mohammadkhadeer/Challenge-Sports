@@ -29,10 +29,11 @@
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.33133817870884996" />
         <entry key="app/src/main/res/layout/analysis_odds_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/child_item.xml" value="0.3304831124412142" />
+        <entry key="app/src/main/res/layout/date_item.xml" value="0.3180846515604959" />
         <entry key="app/src/main/res/layout/dialog_longpress.xml" value="0.3180846515604959" />
         <entry key="app/src/main/res/layout/events_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_analysis.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/fragment_base_home_fragments.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/fragment_base_home_fragments.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_briefing.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_event.xml" value="0.33133817870884996" />
         <entry key="app/src/main/res/layout/fragment_highlighted.xml" value="0.16673792218896966" />
@@ -44,20 +45,25 @@
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_match_options.xml" value="0.33133817870884996" />
         <entry key="app/src/main/res/layout/fragment_news.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/fragment_news_inner.xml" value="0.3189397178281317" />
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.3857708380868038" />
         <entry key="app/src/main/res/layout/fragment_standing_base.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/fragment_standing_detail.xml" value="0.3333333333333333" />
-        <entry key="app/src/main/res/layout/home_match_item_basketball.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/fragment_video_base.xml" value="0.3189397178281317" />
+        <entry key="app/src/main/res/layout/home_match_item_basketball.xml" value="0.6454948301329394" />
         <entry key="app/src/main/res/layout/home_page_item.xml" value="0.3271422541156606" />
         <entry key="app/src/main/res/layout/layout_match_pin.xml" value="0.5" />
         <entry key="app/src/main/res/layout/mother_rv_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/odds_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/odds_item_basketball.xml" value="0.3180846515604959" />
         <entry key="app/src/main/res/layout/odds_item_view.xml" value="0.37742207245155857" />
+        <entry key="app/src/main/res/layout/past_future_item.xml" value="0.3180846515604959" />
+        <entry key="app/src/main/res/layout/past_future_item_basketball.xml" value="0.3180846515604959" />
         <entry key="app/src/main/res/layout/player_standing_first_item.xml" value="0.40260416666666665" />
         <entry key="app/src/main/res/layout/player_standing_recyclerview.xml" value="0.40260416666666665" />
         <entry key="app/src/main/res/layout/recent_match_item.xml" value="0.3304831124412142" />
         <entry key="app/src/main/res/layout/recent_match_item_basketball.xml" value="0.3180846515604959" />
+        <entry key="app/src/main/res/layout/recommended_item_view.xml" value="0.3189397178281317" />
         <entry key="app/src/main/res/layout/simple_spinner_item.xml" value="0.3180846515604959" />
         <entry key="app/src/main/res/layout/standings_fist_item.xml" value="0.37362365722656254" />
         <entry key="app/src/main/res/layout/standings_item.xml" value="0.33773803710937494" />

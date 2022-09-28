@@ -35,6 +35,8 @@ import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapter
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterBasketBall
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 import com.example.myapplication.view.fragments.homeFrags.adapter.MainAdapterMessages
+import com.example.myapplication.view.fragments.homeFrags.adapter.pastfuture.DatesListAdapter
+import com.example.myapplication.view.fragments.homeFrags.adapter.pastfuture.PastFutureAdapter
 import com.example.myapplication.view.fragments.homeFrags.detailFragment.HighlightedFragment
 import com.google.android.material.tabs.TabLayout
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
@@ -46,19 +48,16 @@ import java.util.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BaseHomeFragments.newInstance] factory method to
- * create an instance of this fragment.
- */
-class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
-    // TODO: Rename and change types of parameters
+class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
     private var param1: String? = null
     private var param2: String? = null
-    private var mainAdapter:MainAdapter?=null
-    var onBackPressedListener: OnBackPressedListener?=null
-    var leaguesList=ArrayList<String>()
-    var basketBallAdapter:MainAdapterBasketBall?=null
+    private var mainAdapter: MainAdapter? = null
+    private var pastFutureAdapter: PastFutureAdapter? = null
+    var onBackPressedListener: OnBackPressedListener? = null
+    var leaguesList = ArrayList<String>()
+    var timeList = ArrayList<String>()
+    var basketBallAdapter: MainAdapterBasketBall? = null
+    var adapterTypeParent: Int = MainAdapterCommunicator.FOOTBALL_TYPE
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -76,69 +75,213 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val recyclerViewMain=view.findViewById<RecyclerView>(R.id.main_recycler_view)
-        val vm=SpewViewModel.giveMeViewModel(requireActivity())
-        vm.baseHomePageLiveData.observe(requireActivity()){
-            when(it.status){
+        val recyclerViewMain = view.findViewById<RecyclerView>(R.id.main_recycler_view)
+        val vm = SpewViewModel.giveMeViewModel(requireActivity())
+
+
+        vm.baseHomePageLiveData.observe(requireActivity()) {
+            when (it.status) {
                 Status.SUCCESS -> {
                     try {
                         leaguesList.add(SharedPreference.ALL_LEAGUES_TAG)
-                        for (leagues in it.data!!.todayHotLeague){
+                        for (leagues in it.data!!.todayHotLeague) {
                             leaguesList.add(leagues.leagueName)
                         }
-                        mainAdapter=MainAdapter(requireContext(), it.data?.matchList as ArrayList<Match>,this)
-                        recyclerViewMain.adapter=mainAdapter
-                        recyclerViewMain.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-                        view.findViewById<View>(R.id.loader_anim_container).visibility=View.GONE
-                        val spinnerLeague=view.findViewById<AppCompatSpinner>(R.id.league_spinner)
-                        spinnerLeague.adapter=ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,leaguesList)
-                        val baseList= ArrayList<Match>()
+                        timeList.add(SharedPreference.TODAY_ITEM)
+                        timeList.add(SharedPreference.PAST_ITEM)
+                        timeList.add(SharedPreference.FUTURE_ITEM)
+                        mainAdapter = MainAdapter(
+                            requireContext(),
+                            it.data?.matchList as ArrayList<Match>,
+                            this
+                        )
+                        recyclerViewMain.adapter = mainAdapter
+                        recyclerViewMain.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        view.findViewById<View>(R.id.loader_anim_container).visibility = View.GONE
+                        val spinnerLeague = view.findViewById<AppCompatSpinner>(R.id.league_spinner)
+                        val timeSpinner = view.findViewById<AppCompatSpinner>(R.id.time_spinner)
+                        spinnerLeague.adapter = ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_spinner_item,
+                            leaguesList
+                        )
+                        timeSpinner.adapter = ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_spinner_item,
+                            timeList
+                        )
+                        val baseList = ArrayList<Match>()
                         baseList.addAll(it.data.matchList)
-                        val baseDefaultAdapter=mainAdapter
-                        spinnerLeague.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
-                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
-                                //TODO: Filter today hot league here: REF league ID
-                                when(position){
-                                    0->{
-                                        mainAdapter?.setNewList(baseList,true)
-                                        recyclerViewMain.adapter?.notifyDataSetChanged()
-                                    }
-                                    else->{
-                                        val selectedList=ArrayList<Match>()
-                                        for (match in it.data.todayHotLeagueList)
-                                        {
-                                            if (match.leagueId==it.data.todayHotLeague[position-1].leagueId){
-                                                selectedList.add(match)
-                                            }
+                        val baseDefaultAdapter = mainAdapter
+                        spinnerLeague.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    p0: AdapterView<*>?,
+                                    p1: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    when (position) {
+                                        0 -> {
+                                            mainAdapter?.setNewList(baseList, true)
+                                            recyclerViewMain.adapter?.notifyDataSetChanged()
                                         }
-                                        mainAdapter?.setNewList(selectedList,false)
-                                        mainAdapter?.notifyDataSetChanged()
+                                        else -> {
+                                            val selectedList = ArrayList<Match>()
+                                            for (match in it.data.todayHotLeagueList) {
+                                                if (match.leagueId == it.data.todayHotLeague[position - 1].leagueId) {
+                                                    selectedList.add(match)
+                                                }
+                                            }
+                                            mainAdapter?.setNewList(selectedList, false)
+                                            mainAdapter?.notifyDataSetChanged()
+                                        }
                                     }
                                 }
+
+                                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                                }
                             }
-                            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                        val tablayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
+                        val daysRecyclerView =
+                            view.findViewById<RecyclerView>(R.id.days_recycler_view)
+                        val dateSelectedListener = object : OnPostDetailResponse<String> {
+                            override fun onSuccess(responseBody: String) {
+                                if (adapterTypeParent != MainAdapterCommunicator.BASKETBALL_TYPE) {
+                                    vm.makePastFutureCall(responseBody)
+                                } else {
+                                    vm.makePastFutureCallBasketball(responseBody)
+                                }
+                            }
+
+                            override fun onFailure(message: String) {
+
+                            }
+
+                            override fun onLoading(message: String) {
 
                             }
                         }
-                    }catch (e:Exception){
+                        timeSpinner.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    p0: AdapterView<*>?,
+                                    p1: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    when (timeList[position]) {
+                                        SharedPreference.TODAY_ITEM -> {
+                                            GeneralTools.flipReplaceAnimation(
+                                                daysRecyclerView,
+                                                tablayout
+                                            )
+                                            recyclerViewMain.adapter = mainAdapter
+                                            recyclerViewMain.adapter?.notifyDataSetChanged()
+                                        }
+                                        SharedPreference.PAST_ITEM -> {
+                                            GeneralTools.flipReplaceAnimation(
+                                                tablayout,
+                                                daysRecyclerView
+                                            )
+                                            daysRecyclerView.adapter = DatesListAdapter(
+                                                requireContext(),
+                                                GeneralTools.getPastWeekDates(),
+                                                dateSelectedListener
+                                            )
+                                            daysRecyclerView.layoutManager = LinearLayoutManager(
+                                                context,
+                                                LinearLayoutManager.HORIZONTAL,
+                                                false
+                                            )
+                                        }
+                                        SharedPreference.FUTURE_ITEM -> {
+                                            GeneralTools.flipReplaceAnimation(
+                                                tablayout,
+                                                daysRecyclerView
+                                            )
+                                            daysRecyclerView.adapter = DatesListAdapter(
+                                                requireContext(),
+                                                GeneralTools.getFutureDates(),
+                                                dateSelectedListener
+                                            )
+                                            daysRecyclerView.layoutManager = LinearLayoutManager(
+                                                context,
+                                                LinearLayoutManager.HORIZONTAL,
+                                                false
+                                            )
+                                        }
+                                    }
+                                }
+
+                                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                                }
+                            }
+                        vm.pastFutureLiveData.observe(requireActivity()) { data ->
+                            when (data.status) {
+                                Status.SUCCESS -> {
+                                    pastFutureAdapter = PastFutureAdapter(
+                                        requireContext(),
+                                        data.data!!.matchList,
+                                        15
+                                    )
+                                    recyclerViewMain.adapter = pastFutureAdapter
+                                    recyclerViewMain.adapter?.notifyDataSetChanged()
+                                }
+                                Status.ERROR -> {
+
+                                }
+                                Status.LOADING -> {
+
+                                }
+                            }
+                        }
+                        vm.pastFutureLiveDataBasketball.observe(requireActivity()) { data ->
+                            when (data.status) {
+                                Status.SUCCESS -> {
+                                    pastFutureAdapter = PastFutureAdapter(
+                                        requireContext(),
+                                        data.data!!.matchList,
+                                        MainAdapterCommunicator.BASKETBALL_TYPE
+                                    )
+                                    recyclerViewMain.adapter = pastFutureAdapter
+                                    recyclerViewMain.adapter?.notifyDataSetChanged()
+                                }
+                                Status.ERROR -> {
+
+                                }
+                                Status.LOADING -> {
+
+                                }
+                            }
+                        }
+
+
+                    } catch (e: Exception) {
                         //TODO: Put Error, could not load here
                     }
 
                 }
-                Status.ERROR ->{
+                Status.ERROR -> {
                     println(it.message)
                 }
                 Status.LOADING -> {
-                   view.findViewById<View>(R.id.loader_anim_container).visibility=View.VISIBLE
+                    view.findViewById<View>(R.id.loader_anim_container).visibility = View.VISIBLE
                 }
             }
         }
-        vm.basketBallLiveData.observe(requireActivity()){
-            when(it.status){
+        vm.basketBallLiveData.observe(requireActivity()) {
+            when (it.status) {
                 Status.SUCCESS -> {
-                    basketBallAdapter= MainAdapterBasketBall(requireContext(),
-                        it.data!!.matchList as ArrayList<com.example.myapplication.model.data.basketball.homepage.Match>
-                 ,this)
+                    basketBallAdapter = MainAdapterBasketBall(
+                        requireContext(),
+                        it.data!!.matchList as ArrayList<com.example.myapplication.model.data.basketball.homepage.Match>,
+                        this
+                    )
                 }
                 Status.ERROR -> {
 
@@ -148,28 +291,28 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                 }
             }
         }
-        val tabLayout=view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.position){
-                    0->{
+                when (tab?.position) {
+                    0 -> {
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
                         basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
 
                     }
-                    1->{
+                    1 -> {
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.LIVE)
                         basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.LIVE)
                     }
-                    2->{
+                    2 -> {
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.SOON)
                         basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.SOON)
                     }
-                    3->{
+                    3 -> {
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.FT)
                         basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.FT)
                     }
-                    else->{
+                    else -> {
                         mainAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
                         basketBallAdapter?.setFilter(MainAdapter.CategoryFilterType.ALL)
                     }
@@ -184,33 +327,38 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
 
             }
         })
-        view.findViewById<TabLayout>(R.id.tab_layout_game_filters).addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab?.position!=0){
-                    recyclerViewMain.adapter=basketBallAdapter
-                    recyclerViewMain.adapter?.notifyDataSetChanged()
-                }else{
-                    recyclerViewMain.adapter=mainAdapter
-                    recyclerViewMain.adapter?.notifyDataSetChanged()
+        view.findViewById<TabLayout>(R.id.tab_layout_game_filters)
+            .addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    if (tab?.position != 0) {
+                        recyclerViewMain.adapter = basketBallAdapter
+                        recyclerViewMain.adapter?.notifyDataSetChanged()
+                        adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
+                    } else {
+                        recyclerViewMain.adapter = mainAdapter
+                        recyclerViewMain.adapter?.notifyDataSetChanged()
+                        adapterTypeParent = MainAdapterCommunicator.FOOTBALL_TYPE
+                    }
                 }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
 
-            }
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
+                override fun onTabReselected(tab: TabLayout.Tab?) {
 
-            }
-        })
+                }
+            })
         vm.makeIndexNetworkCall("1")
         vm.makeIndexBasketBallCall()
         refreshHighlights()
     }
-    fun searchMatch(constraint:String){
+
+    fun searchMatch(constraint: String) {
         mainAdapter?.filter?.filter(constraint)
         basketBallAdapter?.filter?.filter(constraint)
     }
+
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -222,24 +370,33 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
             }
     }
 
-    override fun onMessageFromAdapter(message: MainAdapterMessages, position: Int,adapterType:Int) {
-        when(message){
-            MainAdapterMessages.OPEN_INDEX ->
-            {
-        //        startActivity(Intent(requireContext(),TestActivity::class.java).putExtra("matchid", (mainAdapter?.dataList?.get(position)?.matchId ?:0).toString()))
-             val matchid=if(adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE) (mainAdapter?.dataList?.get(position)?.matchId ?:0).toString() else basketBallAdapter?.dataList?.get(position)?.matchId.toString()
+    override fun onMessageFromAdapter(
+        message: MainAdapterMessages,
+        position: Int,
+        adapterType: Int
+    ) {
+        when (message) {
+            MainAdapterMessages.OPEN_INDEX -> {
+                //        startActivity(Intent(requireContext(),TestActivity::class.java).putExtra("matchid", (mainAdapter?.dataList?.get(position)?.matchId ?:0).toString()))
+                val matchid =
+                    if (adapterType != MainAdapterCommunicator.BASKETBALL_TYPE) (mainAdapter?.dataList?.get(
+                        position
+                    )?.matchId
+                        ?: 0).toString() else basketBallAdapter?.dataList?.get(position)?.matchId.toString()
 
-               val frag=MatchOptionsFragment.newInstance(
-                   matchid,MatchOptionsFragment.INDEX_TYPE,adapterType)
+                val frag = MatchOptionsFragment.newInstance(
+                    matchid, MatchOptionsFragment.INDEX_TYPE, adapterType
+                )
                 try {
-                    if (adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE){
+                    if (adapterType != MainAdapterCommunicator.BASKETBALL_TYPE) {
                         frag.setData(mainAdapter?.dataList?.get(position)!!)
-                    }else{
-                        frag.data=basketBallAdapter?.dataList?.get(position)
+                    } else {
+                        frag.data = basketBallAdapter?.dataList?.get(position)
                     }
-                    inflateFragment(frag
-                        ,R.id.fragment_container)
-                }catch (e:Exception){
+                    inflateFragment(
+                        frag, R.id.fragment_container
+                    )
+                } catch (e: Exception) {
 
                 }
                 onBackPressedListener?.changeBackPressBehaviour(this)
@@ -248,44 +405,53 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
 
             }
             MainAdapterMessages.OPEN_ANALYSIS -> {
-                val matchid=if(adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE) (mainAdapter?.dataList?.get(position)?.matchId ?:0).toString() else basketBallAdapter?.dataList?.get(position)?.matchId.toString()
+                val matchid =
+                    if (adapterType != MainAdapterCommunicator.BASKETBALL_TYPE) (mainAdapter?.dataList?.get(
+                        position
+                    )?.matchId
+                        ?: 0).toString() else basketBallAdapter?.dataList?.get(position)?.matchId.toString()
 
-                val frag=MatchOptionsFragment.newInstance(
+                val frag = MatchOptionsFragment.newInstance(
                     matchid, MatchOptionsFragment.ANALYSIS_TYPE, adapterType
                 )
                 try {
-                    if (adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE){
+                    if (adapterType != MainAdapterCommunicator.BASKETBALL_TYPE) {
                         frag.setData(mainAdapter?.dataList?.get(position)!!)
-                    }else{
-                        frag.data=basketBallAdapter?.dataList?.get(position)
+                    } else {
+                        frag.data = basketBallAdapter?.dataList?.get(position)
                     }
-                    inflateFragment(frag
-                        ,R.id.fragment_container)
-                }catch (e:Exception){
+                    inflateFragment(
+                        frag, R.id.fragment_container
+                    )
+                } catch (e: Exception) {
 
                 }
                 onBackPressedListener?.changeBackPressBehaviour(this)
             }
             MainAdapterMessages.OPEN_LEAGUE -> {
-                val matchid=if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE) basketBallAdapter?.dataList?.get(position)?.matchId.toString() else (mainAdapter
-                    ?.dataList
-                    ?.get(position)
-                    ?.matchId
-                    ?:0)
-                    .toString()
-                val frag=MatchOptionsFragment.newInstance(
-                   matchid , MatchOptionsFragment.LEAGUE_FRAGMENT, adapterType
+                val matchid =
+                    if (adapterType == MainAdapterCommunicator.BASKETBALL_TYPE) basketBallAdapter?.dataList?.get(
+                        position
+                    )?.matchId.toString() else (mainAdapter
+                        ?.dataList
+                        ?.get(position)
+                        ?.matchId
+                        ?: 0)
+                        .toString()
+                val frag = MatchOptionsFragment.newInstance(
+                    matchid, MatchOptionsFragment.LEAGUE_FRAGMENT, adapterType
                 )
                 try {
-                    if (adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE){
+                    if (adapterType != MainAdapterCommunicator.BASKETBALL_TYPE) {
                         frag.setData(mainAdapter?.dataList?.get(position)!!)
-                    }else{
-                        frag.data=basketBallAdapter?.dataList?.get(position)
+                    } else {
+                        frag.data = basketBallAdapter?.dataList?.get(position)
                     }
-                    inflateFragment(frag
-                        ,R.id.fragment_container)
+                    inflateFragment(
+                        frag, R.id.fragment_container
+                    )
 
-                }catch (e:Exception){
+                } catch (e: Exception) {
 
                 }
                 onBackPressedListener?.changeBackPressBehaviour(this)
@@ -294,42 +460,47 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
 
             }
             MainAdapterMessages.OPEN_EVENT -> {
-                val frag=MatchOptionsFragment.newInstance(
+                val frag = MatchOptionsFragment.newInstance(
                     (mainAdapter
                         ?.dataList
                         ?.get(position)
                         ?.matchId
-                        ?:0)
+                        ?: 0)
                         .toString(), MatchOptionsFragment.EVENT_TYPE, adapterType
                 )
                 try {
                     frag.setData(mainAdapter?.dataList?.get(position)!!)
-                    inflateFragment(frag
-                        ,R.id.fragment_container)
-                }catch (e:Exception){
+                    inflateFragment(
+                        frag, R.id.fragment_container
+                    )
+                } catch (e: Exception) {
 
                 }
                 onBackPressedListener?.changeBackPressBehaviour(this)
             }
             MainAdapterMessages.OPEN_BRIEF -> {
-                val matchid=if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE) basketBallAdapter?.dataList?.get(position)?.matchId.toString() else (mainAdapter
-                    ?.dataList
-                    ?.get(position)
-                    ?.matchId
-                    ?:0)
-                    .toString()
-                val frag=MatchOptionsFragment.newInstance(
+                val matchid =
+                    if (adapterType == MainAdapterCommunicator.BASKETBALL_TYPE) basketBallAdapter?.dataList?.get(
+                        position
+                    )?.matchId.toString() else (mainAdapter
+                        ?.dataList
+                        ?.get(position)
+                        ?.matchId
+                        ?: 0)
+                        .toString()
+                val frag = MatchOptionsFragment.newInstance(
                     matchid, MatchOptionsFragment.BRIEFING_FRAGMENT, adapterType
                 )
                 try {
-                    if (adapterType!=MainAdapterCommunicator.BASKETBALL_TYPE){
+                    if (adapterType != MainAdapterCommunicator.BASKETBALL_TYPE) {
                         frag.setData(mainAdapter?.dataList?.get(position)!!)
-                    }else{
-                        frag.data=basketBallAdapter?.dataList?.get(position)
+                    } else {
+                        frag.data = basketBallAdapter?.dataList?.get(position)
                     }
-                    inflateFragment(frag
-                        ,R.id.fragment_container)
-                }catch (e:Exception){
+                    inflateFragment(
+                        frag, R.id.fragment_container
+                    )
+                } catch (e: Exception) {
 
                 }
                 onBackPressedListener?.changeBackPressBehaviour(this)
@@ -337,16 +508,16 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
             MainAdapterMessages.LONG_PRESS_ITEM -> {
                 try {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        displayDialog(requireActivity(),mainAdapter?.dataList?.get(position)!!)
+                        displayDialog(requireActivity(), mainAdapter?.dataList?.get(position)!!)
                     }
-                }catch (e:Exception){
+                } catch (e: Exception) {
 
                 }
-                 }
-            MainAdapterMessages.LOAD_MORE->{
+            }
+            MainAdapterMessages.LOAD_MORE -> {
                 try {
                     loadMoreItems()
-                }catch (e:Exception){
+                } catch (e: Exception) {
 
                 }
             }
@@ -354,59 +525,56 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
     }
 
     private fun loadMoreItems() {
-        val vm=SpewViewModel.giveMeViewModel(requireActivity())
-        vm.makeIndexNetworkCall(object : OnPostDetailResponse<List<Match>>{
+        val vm = SpewViewModel.giveMeViewModel(requireActivity())
+        vm.makeIndexNetworkCall(object : OnPostDetailResponse<List<Match>> {
             override fun onSuccess(responseBody: List<Match>) {
-                view?.findViewById<View>(R.id.loading_more_bar)?.visibility=View.GONE
+                view?.findViewById<View>(R.id.loading_more_bar)?.visibility = View.GONE
                 mainAdapter?.updateList(responseBody)
             }
-            override fun onFailure(message: String) {
 
-                    mainAdapter?.isMaxLoaded=message == SharedPreference.MAX_PAGE_REACHED
-                view?.findViewById<View>(R.id.loading_more_bar)?.visibility=View.GONE
+            override fun onFailure(message: String) {
+                mainAdapter?.isMaxLoaded = message == SharedPreference.MAX_PAGE_REACHED
+                view?.findViewById<View>(R.id.loading_more_bar)?.visibility = View.GONE
                 println(message)
             }
 
             override fun onLoading(message: String) {
-                view?.findViewById<View>(R.id.loading_more_bar)?.visibility=View.VISIBLE
+                view?.findViewById<View>(R.id.loading_more_bar)?.visibility = View.VISIBLE
             }
         })
     }
 
     private fun inflateFragment(fragment: Fragment, resourceId: Int) {
-        val ft=requireActivity().supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container_base,fragment)
+        val ft = requireActivity().supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container_base, fragment)
         ft.commit()
-        view?.findViewById<View>(R.id.fragment_container_base)?.visibility=View.VISIBLE
+        view?.findViewById<View>(R.id.fragment_container_base)?.visibility = View.VISIBLE
     }
-     fun hideFragment() {
-        view?.findViewById<View>(R.id.fragment_container_base)?.visibility=View.GONE
+
+    fun hideFragment() {
+        view?.findViewById<View>(R.id.fragment_container_base)?.visibility = View.GONE
 
     }
+
     @RequiresApi(Build.VERSION_CODES.M)
-    fun displayDialog(context: Activity, match: Match){
-        val dialog=Dialog(context,android.R.style.ThemeOverlay)
+    fun displayDialog(context: Activity, match: Match) {
+        val dialog = Dialog(context, android.R.style.ThemeOverlay)
         dialog.setContentView(R.layout.dialog_longpress)
 
         val radius = 2f
 
         val decorView = context.getWindow().getDecorView()
-        // ViewGroup you want to start blur from. Choose root as close to BlurView in hierarchy as possible.
-        val rootView =  decorView.findViewById<ViewGroup>(android.R.id.content)
+        val rootView = decorView.findViewById<ViewGroup>(android.R.id.content)
 
-        // Optional:
-        // Set drawable to draw in the beginning of each blurred frame.
-        // Can be used in case your layout has a lot of transparent space and your content
-        // gets a too low alpha value after blur is applied.
         val windowBackground = decorView.getBackground()
-        val blurView=dialog.findViewById<BlurView>(R.id.baseBlurView)
-        blurView.setupWith(rootView,  RenderScriptBlur(context)) // or RenderEffectBlur
+        val blurView = dialog.findViewById<BlurView>(R.id.baseBlurView)
+        blurView.setupWith(rootView, RenderScriptBlur(context)) // or RenderEffectBlur
             .setFrameClearDrawable(windowBackground) // Optional
             .setBlurRadius(radius)
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.findViewById<View>(R.id.add_to_highlights_bt).setOnClickListener {
-            GeneralTools.saveToHighlightedMatches(match,context)
+            GeneralTools.saveToHighlightedMatches(match, context)
             refreshHighlights()
             dialog.dismiss()
         }
@@ -421,9 +589,14 @@ class BaseHomeFragments : Fragment(),MainAdapterCommunicator {
                     Uri.parse("package:" + requireActivity().packageName)
                 )
                 startActivityForResult(intent, 0)
-            }
-            else{
-                ActivityCompat.startForegroundService(requireContext(), Intent(requireContext(),FloatingScoreService::class.java).putExtra(SharedPreference.MATCH_ID_TOKEN,match.matchId.toString()))
+            } else {
+                ActivityCompat.startForegroundService(
+                    requireContext(),
+                    Intent(requireContext(), FloatingScoreService::class.java).putExtra(
+                        SharedPreference.MATCH_ID_TOKEN,
+                        match.matchId.toString()
+                    )
+                )
                 dialog.dismiss()
             }
 

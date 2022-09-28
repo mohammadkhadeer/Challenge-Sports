@@ -8,6 +8,7 @@ import com.example.myapplication.model.api.ApiHelper
 import com.example.myapplication.model.data.basketball.analysis.AnalysisBasktetballBase
 import com.example.myapplication.model.data.basketball.briefing.BasketballBriefingBase
 import com.example.myapplication.model.data.basketball.homepage.BaseIndexBasketball
+import com.example.myapplication.model.data.basketball.homepage.past.future.PastFutureBasketBall
 import com.example.myapplication.model.data.basketball.league.LeagueBaseInfo
 import com.example.myapplication.model.data.basketball.odds.BasketballOddsBase
 import com.example.myapplication.model.data.homepage.analysis.AnalysisBase
@@ -18,6 +19,7 @@ import com.example.myapplication.model.data.homepage.leagueInfo.any.LeagueStandi
 import com.example.myapplication.model.data.homepage.liveOdds.BaseLiveOdds
 import com.example.myapplication.model.data.homepage. new2.BaseClassIndexNew
 import com.example.myapplication.model.data.homepage.new2.Match
+import com.example.myapplication.model.data.homepage.past.future.PastFutureBaseCall
 import com.example.myapplication.model.data.livescorepin.LiveScorePin
 import com.example.myapplication.model.data.news.NewsBase
 import com.example.myapplication.model.data.news.details.NewsPostBase
@@ -35,11 +37,17 @@ import kotlinx.coroutines.launch
 import kotlin.Exception
 
 class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
+    val pastFutureLiveData=MutableLiveData<Resource<PastFutureBaseCall>>()
+    val pastFutureLiveDataBasketball=MutableLiveData<Resource<PastFutureBasketBall>>()
     val basketballBriefingLiveData=MutableLiveData<Resource<BasketballBriefingBase>>()
     val analysisLiveDataBasketball=MutableLiveData<Resource<AnalysisBasktetballBase>>()
     var basketballLiveOdds= MutableLiveData<Resource<BasketballOddsBase>>()
     var newsLiveData = MutableLiveData<Resource<NewsBase>>()
     var videosLiveData = MutableLiveData<Resource<VideosListBase>>()
+    var currentPageNumberNews=1
+    var lastPageNumberNews=100
+    var lastPageNumberVideos=100
+    var currentPageNumberVideos=1
     var maxPageNumberNews = 100
     var maxPageNumberVideos = 1
     var standingsLiveData=MutableLiveData<Resource<StandingsBase>>()
@@ -86,6 +94,20 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
             }
         }
     }
+    fun makeNewsCall(listener: OnPostDetailResponse<NewsBase>) {
+        viewModelScope.launch {
+            listener.onLoading("Loading")
+            try {
+                currentPageNumberNews++
+                val news = apiHelper.getNews("en", currentPageNumberNews.toString())
+               listener.onSuccess(news)
+                currentPageNumberNews=news.meta.currentPage
+                lastPageNumberNews=news.meta.lastPage
+            } catch (e: Exception) {
+                listener.onFailure(e.toString())
+            }
+        }
+    }
 
     fun makeNewsPostCall(postID: String, onResponseListener: OnPostDetailResponse<NewsPostBase>) {
         viewModelScope.launch {
@@ -101,6 +123,20 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
     private fun makeVideosListCall() {
         makeVideosListCall("1")
+    }
+    fun makeVideosListCall(listener: OnPostDetailResponse<VideosListBase>){
+        viewModelScope.launch {
+            listener.onLoading("Loading")
+            try {
+                currentPageNumberVideos++
+                val news = apiHelper.getVideos("en", currentPageNumberVideos.toString())
+                listener.onSuccess(news)
+                currentPageNumberVideos=news.meta.currentPage
+                lastPageNumberVideos=news.meta.lastPage
+            } catch (e: Exception) {
+                listener.onFailure(e.toString())
+            }
+        }
     }
 
     fun makeVideosListCall(pageNumber: String) {
@@ -143,7 +179,6 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
                 val homeBase=apiHelper.getHomeMatches("en",currentPageMatches.toString())
                 lastPageMatchesBase=homeBase.meta.lastPage
                 currentPageMatches=homeBase.meta.currentPage
-
                 onResponseListener.onSuccess(homeBase.matchList)
             }catch (e:Exception){
                 onResponseListener.onFailure(e.toString())
@@ -421,6 +456,30 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
                 basketballBriefingLiveData.postValue(Resource.success(briefingBase))
             }catch (e:Exception){
                 basketballBriefingLiveData.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+
+    fun makePastFutureCall(date:String){
+        viewModelScope.launch {
+            try {
+                pastFutureLiveData.postValue(Resource.loading(null))
+                val pasFutureBase=apiHelper.getPastFutureMatches(date)
+                pastFutureLiveData.postValue(Resource.success(pasFutureBase))
+            }catch (e:Exception){
+                pastFutureLiveData.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+
+    fun makePastFutureCallBasketball(date: String) {
+        viewModelScope.launch {
+            try {
+                pastFutureLiveDataBasketball.postValue(Resource.loading(null))
+                val pasFutureBase=apiHelper.getPastFutureMatchesBasketball(date)
+                pastFutureLiveDataBasketball.postValue(Resource.success(pasFutureBase))
+            }catch (e:Exception){
+                pastFutureLiveDataBasketball.postValue(Resource.error(e.toString(),null))
             }
         }
     }

@@ -23,7 +23,6 @@ abstract class MultipurposeAdapter(var context:Context,var layout: Int,var oncli
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
         return viewHolder(LayoutInflater.from(context).inflate(layout,parent,false))
-
     }
 
 }

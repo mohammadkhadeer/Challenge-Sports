@@ -14,12 +14,17 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.model.api.ApiHelperImpl
 import com.example.myapplication.model.api.RetroInstance
+import com.example.myapplication.model.data.news.details.OnPostDetailResponse
+import com.example.myapplication.model.data.videos.List
+import com.example.myapplication.model.data.videos.VideosListBase
 import com.example.myapplication.utils.Status
 import com.example.myapplication.utils.ViewModelFactory
 import com.example.myapplication.view.adapters.MultipurposeAdapter
 import com.example.myapplication.view.adapters.RecyclerViewOnclick
 import com.example.myapplication.view.fragments.OnBackPressedListener
 import com.example.myapplication.view.fragments.OnDetailListener
+import com.example.myapplication.view.fragments.homeFrags.adapter.LoadMoreCommunicator
+import com.example.myapplication.view.fragments.homeFrags.adapter.VideosAdapter
 import com.example.myapplication.viewmodel.MainViewModel
 import kotlin.math.max
 
@@ -96,6 +101,40 @@ class VideoBaseFragment : Fragment() {
                     }
 
                 }
+                moreVidsRecyclerView.adapter=VideosAdapter(requireContext(),
+                    it.data?.list!! as ArrayList<List>, R.layout.video_item_view,
+                    object : RecyclerViewOnclick {
+                        override fun onClick(position: Int) {
+                            val link = it.data?.list?.get(position)?.path
+                            val maxPage = it.data?.meta?.lastPage
+                            val titleDate=it.data?.list?.get(position)?.title+getString(R.string.titledateSeperator)+it.data?.list?.get(position)?.createTime
+                            if (maxPage != null) {
+                                if (link != null) {
+                                    val list=ArrayList<String>()
+                                    list.add(link)
+                                    list.add(titleDate)
+                                    list.add(maxPage.toString())
+                                    onDetailListener?.onDetail(list)
+                                }
+                            }
+                        }
+                    },object : LoadMoreCommunicator{
+                        override fun loadMore() {
+                            viewModel.makeVideosListCall(object : OnPostDetailResponse<VideosListBase>{
+                                override fun onSuccess(responseBody: VideosListBase) {
+                                    (moreVidsRecyclerView.adapter as VideosAdapter).updateList(responseBody.list)
+                                }
+                                override fun onFailure(message: String) {
+
+                                }
+
+                                override fun onLoading(message: String) {
+
+                                }
+                            })
+                        }
+                    }
+                )
                 moreVidsRecyclerView.layoutManager=LinearLayoutManager(requireContext())
             }
         }
