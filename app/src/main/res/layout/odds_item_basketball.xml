@@ -110,6 +110,10 @@
             android:paddingHorizontal="@dimen/_1sdp"
             android:textSize="11sp"
             android:layout_height="match_parent"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/over_white_light_grey"/>
         <TextView
             android:id="@+id/home_three_odds"
             android:layout_width="0dp"
@@ -120,6 +124,10 @@
             android:paddingHorizontal="@dimen/_1sdp"
             android:textSize="11sp"
             android:layout_height="match_parent"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/over_white_light_grey"/>
         <TextView
             android:id="@+id/onepart_handicap_odds"
             android:layout_width="0dp"
@@ -130,6 +138,10 @@
             android:paddingHorizontal="@dimen/_1sdp"
             android:textSize="11sp"
             android:layout_height="match_parent"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/over_white_light_grey"/>
         <TextView
             android:id="@+id/away_three_odds"
             android:layout_width="0dp"
@@ -140,6 +152,10 @@
             android:paddingHorizontal="@dimen/_1sdp"
             android:textSize="11sp"
             android:layout_height="match_parent"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/over_white_light_grey"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

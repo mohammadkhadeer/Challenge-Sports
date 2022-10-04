@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:444200361105:android:816cf62641d8f816cf7330",
+        "mobilesdk_app_id": "1:444200361105:android:cd1a3336b09d3966cf7330",
         "android_client_info": {
-          "package_name": "com.example.myapplication"
+          "package_name": "com.corescore.football.live.score"
         }
       },
       "oauth_client": [

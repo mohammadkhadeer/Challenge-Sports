@@ -122,6 +122,18 @@
             android:paddingHorizontal="@dimen/_1sdp"
             android:textSize="11sp"
             android:layout_height="match_parent"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:text="@string/away"
+             android:ellipsize="end"
+         android:maxLines="2"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingHorizontal="@dimen/_1sdp"
+            android:textSize="11sp"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
     <View

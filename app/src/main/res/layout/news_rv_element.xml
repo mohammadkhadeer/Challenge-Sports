@@ -103,7 +103,7 @@
         android:id="@+id/more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="More"
+        android:text="@string/more"
         android:textColor="@color/white"
         android:background="@drawable/primary_rounded_rect"
         app:layout_constraintBottom_toBottomOf="parent"

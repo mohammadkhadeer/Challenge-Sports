@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/_5sdp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.video.VideoBaseFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/textView"
@@ -13,6 +12,8 @@
         android:layout_height="wrap_content"
         android:text="@string/match_highlights"
         android:textColor="@color/black"
+
+        android:visibility="gone"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/see_all"
+        android:visibility="gone"
         android:textColor="@color/grey_text"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
@@ -31,6 +33,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/highlights_recycler_view"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/_5sdp"
         app:layout_constraintHeight_percent="0.27"
@@ -52,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:visibility="gone"
         android:text="@string/see_all"
         android:textColor="@color/grey_text"
         android:textSize="@dimen/_10sdp"
@@ -65,6 +69,16 @@
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/_5sdp"
         android:nestedScrollingEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/loading_more_bar"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_editor_absoluteX="6dp" />
+
+    <ProgressBar
+        android:id="@+id/loading_more_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

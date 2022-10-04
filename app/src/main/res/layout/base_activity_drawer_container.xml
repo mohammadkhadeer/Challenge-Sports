@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="@dimen/_35sdp"
+            android:padding="@dimen/_7sdp"
+            android:visibility="gone"
+            android:src="@drawable/ic_back_bt" />
+        <ImageView
+            android:id="@+id/menu_icon"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="@dimen/_35sdp"
+            android:padding="@dimen/_7sdp"
+            android:src="@drawable/ic_menu" />
+        <ImageView
+            android:id="@+id/cross_icon"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_width="@dimen/_35sdp"
+            android:visibility="gone"
+            android:src="@drawable/ic_cross"
+            android:padding="@dimen/_5sdp"
+            android:layout_height="@dimen/_35sdp"/>
+        <TextView
+            android:id="@+id/top_heading_mainpage"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"/>
+        <EditText
+            android:id="@+id/search_matches"
+            android:textColor="@color/grey_text"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:background="@drawable/primary_rounded_rect"
+            android:backgroundTint="@color/white"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_here"/>
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_width="@dimen/_35sdp"
+            android:src="@drawable/ic_search_icon"
+            android:padding="@dimen/_5sdp"
+            android:layout_height="@dimen/_35sdp"/>
+
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/baseViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayoutMain"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/light_primary"
+        app:tabIconTint="@color/tab_icon_tint"
+        app:tabIndicatorFullWidth="false"
+
+        android:paddingTop="@dimen/_5sdp"
+        app:tabTextAppearance="@style/TabtextAppearence"
+        app:tabIndicatorColor="@color/transparent"
+
+        android:background="@color/white"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
