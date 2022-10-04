@@ -21,16 +21,19 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name="com.corescore.myapplication.view.OnboardingActivity"
+            android:name="com.corescore.myapplication.view.FullscreenActivity"
             android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name="com.corescore.myapplication.view.OnboardingActivity"
             android:configChanges="uiMode"
-            android:screenOrientation="portrait"
-            />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.corescore.myapplication.view.SplashScreen"
             android:exported="true"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,13 +44,13 @@
             android:name="com.corescore.myapplication.view.FirstActivity"
             android:configChanges="uiMode"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.corescore.myapplication.view.BaseActivity"
             android:configChanges="uiMode"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.corescore.myapplication.model.test_exo.TestActivity"
             android:configChanges="uiMode"

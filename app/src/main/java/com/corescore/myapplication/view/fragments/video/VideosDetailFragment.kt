@@ -1,5 +1,6 @@
 package com.corescore.myapplication.view.fragments.video
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.corescore.myapplication.model.data.videos.List
 import com.corescore.myapplication.utils.SharedPreference
 import com.corescore.myapplication.utils.Status
 import com.corescore.myapplication.utils.ViewModelFactory
+import com.corescore.myapplication.view.FullscreenActivity
 import com.corescore.myapplication.view.adapters.MultipurposeAdapter
 import com.corescore.myapplication.view.adapters.RecyclerViewOnclick
 import com.corescore.myapplication.viewmodel.MainViewModel
@@ -72,6 +74,10 @@ class VideosDetailFragment : Fragment() {
         dateView.text=date
         videoPlayer.player=player
 
+        view.findViewById<View>(R.id.full_screen_bt).setOnClickListener {
+            requireContext().startActivity(Intent(requireContext(),FullscreenActivity::class.java).putExtra("vid_link",videoLink))
+            player.pause()
+        }
 
         val viewModel= ViewModelProvider(requireActivity().viewModelStore,
             ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))

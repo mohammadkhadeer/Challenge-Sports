@@ -93,6 +93,15 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         baseViewPager.adapter=ViewPagerAdapter(supportFragmentManager,lifecycle,fragsList)
         baseViewPager.isUserInputEnabled=false
         baseViewPager.offscreenPageLimit=3
+        baseViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position!=0){
+                    searchIcon.visibility=View.GONE
+                }else{
+                    searchIcon.visibility=View.VISIBLE
+                }
+            }
+        })
         //baseViewPager.setPageTransformer(Pager2_GateTransformer())
         closeSearchIcon.setOnClickListener {
             if (searchBar.visibility==View.VISIBLE){
@@ -116,6 +125,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
                 0->{
                     tab.text=getString(R.string.home)
                     tab.icon=ContextCompat.getDrawable(this,R.drawable.ic_home)
+
                 }
                 1->{
                     tab.text=getString(R.string.news)
@@ -264,6 +274,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
             }
             GeneralTools.flipReplaceAnimation(findViewById(R.id.back_btn),findViewById(R.id.menu_icon))
             shouldChangeBackpress=false
+            findViewById<View>(R.id.search_icon).visibility=View.VISIBLE
         }else{
            GeneralTools.exitDialog(this)
         }
@@ -273,6 +284,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         this.currentFrag=currentFragment
         shouldChangeBackpress=true
         GeneralTools.flipReplaceAnimation(findViewById(R.id.menu_icon),findViewById(R.id.back_btn))
+        findViewById<View>(R.id.search_icon).visibility=View.GONE
 
     }
     private fun setLocale(locale: Locale) {
