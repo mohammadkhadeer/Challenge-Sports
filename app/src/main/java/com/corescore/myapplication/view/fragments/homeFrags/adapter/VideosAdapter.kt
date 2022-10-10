@@ -30,7 +30,7 @@ class VideosAdapter(var context: Context,var list: ArrayList<List>, var layout: 
 
     override fun onBindViewHolder(holder: VideosAdapter.viewHolder, position: Int) {
         holder.headline.text = list?.get(position)?.title
-        holder.tag.text =list?.get(position)?.createTime
+        holder.tag.text =list?.get(position)?.createTime.substringBefore("T")
         Glide.with(context)
             .load(list?.get(position)?.thumbnailPath)
             .into(holder.imageContainer)

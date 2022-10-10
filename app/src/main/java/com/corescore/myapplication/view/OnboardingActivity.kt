@@ -27,16 +27,12 @@ class OnboardingActivity : AppCompatActivity() {
         val languageToLoad = SharedPreference.getInstance().getStringValueFromPreference(
             SharedPreference.LOCALE_KEY,
             SharedPreference.ENGLISH,this) // your language
-        val config = resources.configuration
+        val config = applicationContext.resources.configuration
         val locale = Locale(languageToLoad)
         Locale.setDefault(locale)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            config.setLocale(locale)
-        else
-            config.locale = locale
-
+        config.setLocale(locale)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            createConfigurationContext(config)
+            applicationContext.createConfigurationContext(config)
         resources.updateConfiguration(config, resources.displayMetrics)
         setContentView(R.layout.activity_onboarding)
         val viewpager=findViewById<ViewPager2>(R.id.viewpager_onboarding)

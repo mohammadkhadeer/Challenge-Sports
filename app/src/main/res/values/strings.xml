@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">CoreScore</string>
+    <string name="app_name" translatable="false">Exo Score</string>
     <string name="account_email" translatable="false">jereldarenpfertofr@gmail.com</string>
     <string name="match_highlights">Match Highlights</string>
     <string name="see_all">See All</string>
@@ -229,5 +229,8 @@
     <string name="yes">yes</string>
     <string name="no">No</string>
     <string name="privacy_policy_link" translatable="false">https://corescorelive.blogspot.com/2022/10/privacy-policy.html</string>
+    <string name="latest_news">Latest News</string>
+    <string name="most_watched">Most Watched</string>
+    <string name="auto_play">Auto Play</string>
 
 </resources>

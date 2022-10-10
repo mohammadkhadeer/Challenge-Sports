@@ -54,7 +54,9 @@
         <activity
             android:name="com.corescore.myapplication.model.test_exo.TestActivity"
             android:configChanges="uiMode"
-            android:exported="true" />
+            android:exported="true" >
+
+        </activity>
 
         <receiver android:name="com.corescore.myapplication.utils.MatchReminder" />
 

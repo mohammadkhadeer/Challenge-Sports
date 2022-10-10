@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.homeFrags.BaseHomeFragments">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_game_filters"
@@ -75,46 +74,47 @@
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/top_layout"
         android:layout_height="wrap_content">
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout_local_filters"
             android:layout_width="match_parent"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabSelectedTextColor="@color/white"
-            app:tabIndicator="@null"
-            app:tabTextColor="@color/colorPrimary"
-            app:tabIndicatorColor="@color/transparent"
+            android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:layout_height="wrap_content">
+            app:tabBackground="@drawable/tab_selector"
+            app:tabIndicator="@null"
+            app:tabIndicatorColor="@color/transparent"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/colorPrimary">
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/all"
-                />
+                android:text="@string/all" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabLive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/live"
-                />
+                android:text="@string/live" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabSoon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/soon"
-                />
+                android:text="@string/soon" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabFt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ft"
-                />
+                android:text="@string/ft" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabOther"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/other"
-                />
+                android:text="@string/other" />
 
         </com.google.android.material.tabs.TabLayout>
         <androidx.recyclerview.widget.RecyclerView

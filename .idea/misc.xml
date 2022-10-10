@@ -9,13 +9,18 @@
         <entry key="app/src/main/res/drawable/ellipse_grey_outline.xml" value="0.3875" />
         <entry key="app/src/main/res/drawable/ic_add_highlights.xml" value="0.3885" />
         <entry key="app/src/main/res/drawable/ic_add_reminder.xml" value="0.3885" />
+        <entry key="app/src/main/res/drawable/ic_analysis.xml" value="0.2995" />
         <entry key="app/src/main/res/drawable/ic_arrow_right.xml" value="0.2405" />
+        <entry key="app/src/main/res/drawable/ic_briefing.xml" value="0.2995" />
+        <entry key="app/src/main/res/drawable/ic_event.xml" value="0.2995" />
         <entry key="app/src/main/res/drawable/ic_exit_app.xml" value="0.2405" />
         <entry key="app/src/main/res/drawable/ic_feedback.xml" value="0.2405" />
         <entry key="app/src/main/res/drawable/ic_foul.xml" value="0.397" />
         <entry key="app/src/main/res/drawable/ic_full_screen.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/ic_index.xml" value="0.2995" />
         <entry key="app/src/main/res/drawable/ic_index_icon.xml" value="0.246" />
         <entry key="app/src/main/res/drawable/ic_language.xml" value="0.2405" />
+        <entry key="app/src/main/res/drawable/ic_league.xml" value="0.2995" />
         <entry key="app/src/main/res/drawable/ic_outline_share_24.xml" value="0.2405" />
         <entry key="app/src/main/res/drawable/ic_pin.xml" value="0.3885" />
         <entry key="app/src/main/res/drawable/ic_privacy.xml" value="0.2405" />
@@ -24,11 +29,14 @@
         <entry key="app/src/main/res/drawable/league_selector_rect_background.xml" value="0.2405" />
         <entry key="app/src/main/res/drawable/less_rounded_rect.xml" value="0.246" />
         <entry key="app/src/main/res/drawable/orange_background_gradient.xml" value="0.397" />
+        <entry key="app/src/main/res/drawable/primary_light_not_rounded_rect.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/primary_light_rounded_rect.xml" value="0.3875" />
         <entry key="app/src/main/res/drawable/primary_more_rounded_rect.xml" value="0.3875" />
+        <entry key="app/src/main/res/drawable/primary_not_rounded.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/primary_rounded_rect.xml" value="0.3885" />
         <entry key="app/src/main/res/drawable/rounded_border_rect_black.xml" value="0.331" />
         <entry key="app/src/main/res/drawable/tab_selector.xml" value="0.3885" />
+        <entry key="app/src/main/res/drawable/tab_selector_news.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/table_content_bg.xml" value="0.3875" />
         <entry key="app/src/main/res/drawable/table_heading_bg.xml" value="0.3875" />
         <entry key="app/src/main/res/drawable/top_rounded_rect.xml" value="0.331" />
@@ -39,7 +47,7 @@
         <entry key="app/src/main/res/layout/activity_fullscreen.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_onboarding.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.30739632321504917" />
-        <entry key="app/src/main/res/layout/activity_test.xml" value="0.33133817870884996" />
+        <entry key="app/src/main/res/layout/activity_test.xml" value="0.18" />
         <entry key="app/src/main/res/layout/analysis_odds_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/app_bar_drawer_test.xml" value="0.16673792218896966" />
         <entry key="app/src/main/res/layout/base_activity_drawer_contaienr.xml" value="0.3180846515604959" />
@@ -65,6 +73,7 @@
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_match_options.xml" value="0.33133817870884996" />
         <entry key="app/src/main/res/layout/fragment_news.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/fragment_news_detail.xml" value="0.3189397178281317" />
         <entry key="app/src/main/res/layout/fragment_news_inner.xml" value="0.27824999633245173" />
         <entry key="app/src/main/res/layout/fragment_onboarding.xml" value="0.30739632321504917" />
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.3857708380868038" />
@@ -74,10 +83,11 @@
         <entry key="app/src/main/res/layout/fragment_video_base.xml" value="0.3189397178281317" />
         <entry key="app/src/main/res/layout/fragment_videos_detail.xml" value="0.33133817870884996" />
         <entry key="app/src/main/res/layout/home_match_item_basketball.xml" value="0.6454948301329394" />
-        <entry key="app/src/main/res/layout/home_page_item.xml" value="0.3271422541156606" />
+        <entry key="app/src/main/res/layout/home_page_item.xml" value="0.67" />
         <entry key="app/src/main/res/layout/language_dialog.xml" value="0.3180846515604959" />
         <entry key="app/src/main/res/layout/layout_match_pin.xml" value="0.5" />
         <entry key="app/src/main/res/layout/mother_rv_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/news_rv_element.xml" value="0.3189397178281317" />
         <entry key="app/src/main/res/layout/odds_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/odds_item_basketball.xml" value="0.75" />
         <entry key="app/src/main/res/layout/odds_item_view.xml" value="0.37742207245155857" />
@@ -92,6 +102,7 @@
         <entry key="app/src/main/res/layout/standings_fist_item.xml" value="0.37362365722656254" />
         <entry key="app/src/main/res/layout/standings_item.xml" value="0.33773803710937494" />
         <entry key="app/src/main/res/layout/technic_detail_item.xml" value="0.33133817870884996" />
+        <entry key="app/src/main/res/layout/trending_item_view.xml" value="0.3189397178281317" />
         <entry key="app/src/main/res/layout/video_item_view.xml" value="0.33133817870884996" />
         <entry key="app/src/main/res/xml/network_security_settings.xml" value="0.155622060709705" />
       </map>

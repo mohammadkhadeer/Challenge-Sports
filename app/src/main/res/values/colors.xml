@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#ff0000</color>
     <color name="grey_text">#4e4b66</color>
-    <color name="colorPrimary">#ff5f40</color>
-    <color name="light_primary">#32FF5F40</color>
+    <color name="colorPrimary">#40BFFF</color>
+    <color name="light_primary">#1A40BFFF</color>
     <color name="tablayout_color">#1F2937</color>
     <color name="transparent">#00000000</color>
     <color name="app_blue">#1A87DD</color>
@@ -21,4 +21,8 @@
     <color name="dark_grey_bg">#727272</color>
     <color name="solid_grey">#eaeaea</color>
     <color name="almost_white_grey_contrast">#F9F8F9</color>
+    <color name="alt_color">#270A29</color>
+    <color name="odds_bg_color">#75D7BE</color>
+    <color name="c_ht_bg_color">#FDF2E7</color>
+    <color name="c_ht_text_color">#F39C33</color>
 </resources>

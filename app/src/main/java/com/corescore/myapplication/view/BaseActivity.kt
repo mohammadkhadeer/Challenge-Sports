@@ -38,16 +38,12 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val languageToLoad = SharedPreference.getInstance().getStringValueFromPreference(
             SharedPreference.LOCALE_KEY,
             SharedPreference.ENGLISH,this) // your language
-        val config = resources.configuration
+        val config = applicationContext.resources.configuration
         val locale = Locale(languageToLoad)
         Locale.setDefault(locale)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            config.setLocale(locale)
-        else
-            config.locale = locale
-
+        config.setLocale(locale)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            createConfigurationContext(config)
+            applicationContext.createConfigurationContext(config)
         resources.updateConfiguration(config, resources.displayMetrics)
         setContentView(R.layout.activity_base_activty)
         val menuIcon=findViewById<View>(R.id.menu_icon)
@@ -274,6 +270,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
             }
             GeneralTools.flipReplaceAnimation(findViewById(R.id.back_btn),findViewById(R.id.menu_icon))
             shouldChangeBackpress=false
+            findViewById<TextView>(R.id.top_heading_mainpage).text=getString(R.string.app_name)
             findViewById<View>(R.id.search_icon).visibility=View.VISIBLE
         }else{
            GeneralTools.exitDialog(this)
@@ -287,6 +284,12 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         findViewById<View>(R.id.search_icon).visibility=View.GONE
 
     }
+
+    override fun changeBackPressBehaviour(currentFragment: Fragment, message: String) {
+        findViewById<TextView>(R.id.top_heading_mainpage).text=message
+        changeBackPressBehaviour(currentFragment)
+    }
+
     private fun setLocale(locale: Locale) {
         val resources: Resources = resources
         val configuration: Configuration = resources.configuration

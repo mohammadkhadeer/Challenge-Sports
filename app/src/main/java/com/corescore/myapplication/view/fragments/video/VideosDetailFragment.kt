@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
@@ -39,6 +41,9 @@ class VideosDetailFragment : Fragment() {
     private var titleDate: String? = null
     private var maxPage: Int? = null
     private var exo:ExoPlayer?=null
+    private var data:kotlin.collections.List<List>?=null
+    private var recyclerView:RecyclerView?=null
+    private var previousPosition=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +64,7 @@ class VideosDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val detailRecyclerview=view.findViewById<RecyclerView>(R.id.details_recommended_recycler)
+        recyclerView=detailRecyclerview
         val player: ExoPlayer = ExoPlayer.Builder(requireContext()).build()
         exo=player
         // Set the media item to be played.
@@ -86,6 +92,7 @@ class VideosDetailFragment : Fragment() {
         viewModel.videosLiveData.observe(requireActivity()){
             if (it.status==Status.SUCCESS){
                 val data=it?.data
+                this.data=data?.list
                 populateRv(detailRecyclerview,data?.list)
                 viewModel.videosLiveData.removeObservers(requireActivity())
             }
@@ -98,7 +105,13 @@ class VideosDetailFragment : Fragment() {
             override fun onPlaybackStateChanged(playbackState: Int) {
                 if (playbackState==Player.STATE_READY){
                     videoPlayer.hideController()
-
+                }
+                if (playbackState==Player.STATE_ENDED){
+                    if(view.findViewById<SwitchMaterial>(R.id.autoplay_switch).isChecked){
+                        val link=getNextLink(data)
+                        playThisVideo(link,geNextTitle(data),getNextTime(data))
+                        previousPosition++
+                    }
                 }
             }
         })
@@ -106,7 +119,36 @@ class VideosDetailFragment : Fragment() {
 
 
     }
-   fun playThisVideo(videoLink:String,title:String,date:String){
+
+    private fun getNextTime(data: kotlin.collections.List<List>?): String {
+        val prev=  previousPosition+1
+        return if (prev<data!!.size ){
+
+            data[prev].createTime
+        } else{
+            ""
+        }
+    }
+
+    private fun geNextTitle(data: kotlin.collections.List<List>?): String {
+        val prev=  previousPosition+1
+        return if (prev<data!!.size ){
+
+            data[prev].title
+        } else{
+            ""
+        }
+    }
+
+    private fun getNextLink(data: kotlin.collections.List<List>?): String {
+      val prev=  previousPosition+1
+        return if (prev<data!!.size ){
+            data[prev].path
+        } else{
+            ""
+        }
+    }
+    fun playThisVideo(videoLink:String,title:String,date:String){
        exo?.setMediaItem(MediaItem.fromUri(videoLink))
        exo?.seekToNextMediaItem()
        view?.findViewById<TextView>(R.id.video_title)?.text=title

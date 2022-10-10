@@ -98,7 +98,7 @@ class NewsInnerFragment : Fragment() {
     }
     private fun populateRecyclerViews(data: Resource<NewsBase>?) {
         val newsList=data?.data?.list
-        trendingRv.adapter=object : MultipurposeAdapter(requireContext(),R.layout.trending_item_view,object : RecyclerViewOnclick{
+        /*trendingRv.adapter=object : MultipurposeAdapter(requireContext(),R.layout.trending_item_view,object : RecyclerViewOnclick{
             override fun onClick(position: Int) {
                 val list=ArrayList<String>()
                 list.add(newsList?.get(position)?.id.toString())
@@ -117,7 +117,7 @@ class NewsInnerFragment : Fragment() {
             }
 
         }
-        trendingRv.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,true)
+        trendingRv.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,true)*/
 
        /* recommendedRV.adapter=object : MultipurposeAdapter(requireContext(),R.layout.recommended_item_view,object : RecyclerViewOnclick{
             override fun onClick(position: Int) {
@@ -162,7 +162,6 @@ class NewsInnerFragment : Fragment() {
                 list.add(newsList.get(position)?.id.toString())
                 onDetailListener?.onDetail(list)
             }
-
         })
         recommendedRV.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
 

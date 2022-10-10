@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
+import com.corescore.myapplication.utils.GeneralTools
 import corescore.myapplication.R
 import com.corescore.myapplication.utils.SharedPreference
 import java.util.*
@@ -25,19 +26,19 @@ class SplashScreen : AppCompatActivity() {
         val configuration = Configuration()
         configuration.setLocale(locale)
         configuration.setLayoutDirection(locale)*/
+        val localLocale=Locale.getDefault().language
+        if (localLocale.contains("zh")){
+            GeneralTools.setLocale(applicationContext,SharedPreference.CHINESE)
+        }
         val languageToLoad = SharedPreference.getInstance().getStringValueFromPreference(
             SharedPreference.LOCALE_KEY,
             SharedPreference.ENGLISH,this) // your language
-        val config = resources.configuration
+        val config = applicationContext.resources.configuration
         val locale = Locale(languageToLoad)
         Locale.setDefault(locale)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            config.setLocale(locale)
-        else
-            config.locale = locale
-
+        config.setLocale(locale)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            createConfigurationContext(config)
+           applicationContext.createConfigurationContext(config)
         resources.updateConfiguration(config, resources.displayMetrics)
 
         setContentView(R.layout.activity_splash_screen)

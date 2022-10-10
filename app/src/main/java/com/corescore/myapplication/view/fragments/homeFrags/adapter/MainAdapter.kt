@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import corescore.myapplication.R
 import com.corescore.myapplication.model.data.homepage.new2.Match
+import com.corescore.myapplication.utils.GeneralTools
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -97,12 +98,18 @@ import kotlin.collections.ArrayList
      }
 
 
+     override fun getItemViewType(position: Int): Int {
+         return position
+     }
 
     inner class MainPageAdapterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var leagueNameShort=itemView.findViewById<TextView>(R.id.group_indicator)
         var homeNameTv=itemView.findViewById<TextView>(R.id.team_1_name)
         var awayNameTv=itemView.findViewById<TextView>(R.id.team_2_name)
-        var scoreIndicator=itemView.findViewById<TextView>(R.id.score_indicator)
+        var scoreIndicatorHome=itemView.findViewById<TextView>(R.id.score_indicator_home)
+        var scoreIndicatorAway=itemView.findViewById<TextView>(R.id.score_indicator_away)
+        var redCard=itemView.findViewById<TextView>(R.id.red_card)
+        var yellowCard=itemView.findViewById<TextView>(R.id.yellow_cards)
         var stateNdate=itemView.findViewById<TextView>(R.id.match_date)
         var matchTimeTv=itemView.findViewById<TextView>(R.id.match_time)
         var indexC1R1=itemView.findViewById<TextView>(R.id.index_c1_r1)
@@ -111,7 +118,7 @@ import kotlin.collections.ArrayList
         var indexC2R2=itemView.findViewById<TextView>(R.id.index_c2_r2)
         var indexC3R1=itemView.findViewById<TextView>(R.id.index_c3_r1)
         var indexC3R2=itemView.findViewById<TextView>(R.id.index_c3_r2)
-        var cornerRatio=itemView.findViewById<TextView>(R.id.c_ratio)
+        var cornerRatio=itemView.findViewById<TextView>(R.id.c_ht_text)
         var halfRatio=itemView.findViewById<TextView>(R.id.ht_ratio)
         var index_btn=itemView.findViewById<View>(R.id.index_bt)
         var analysis_bt=itemView.findViewById<View>(R.id.analysis_bt)
@@ -119,7 +126,18 @@ import kotlin.collections.ArrayList
         var brief_bt=itemView.findViewById<View>(R.id.briefing_button)
         var league_bt=itemView.findViewById<View>(R.id.league_bt)
         var fragment_container=itemView.findViewById<FrameLayout>(R.id.fragment_container)
+        var normal_options_container=itemView.findViewById<View>(R.id.normal_options_container)
+        var bottom_options_container=itemView.findViewById<View>(R.id.bottom_options_container)
+        var odds_container=itemView.findViewById<View>(R.id.odds_container)
         init {
+            itemView.setOnClickListener {
+                if (normal_options_container.visibility==VISIBLE){
+                    GeneralTools.flipReplaceAnimation(normal_options_container,bottom_options_container)
+                }else{
+                    GeneralTools.flipReplaceAnimation(bottom_options_container,normal_options_container)
+                }
+
+            }
 
             itemView.setOnLongClickListener(View.OnLongClickListener {
                 communicator.onMessageFromAdapter(MainAdapterMessages.LONG_PRESS_ITEM,absoluteAdapterPosition,fragment_container.id)
@@ -160,6 +178,7 @@ import kotlin.collections.ArrayList
 
         if (!dataObject.havOdds){
             holder.index_btn.visibility= GONE
+            holder.odds_container.visibility= GONE
         }else{
             holder.index_btn.visibility= VISIBLE
         }
@@ -169,16 +188,17 @@ import kotlin.collections.ArrayList
             holder.brief_bt.visibility= VISIBLE
         }
 
-        holder.leagueNameShort.text=dataObject.leagueNameShort
+        holder.leagueNameShort.text=dataObject.leagueName
 
         holder.homeNameTv.text=dataObject.homeName
         holder.awayNameTv.text=dataObject.awayName
 
 
-        if (dataObject.state==0){
-            holder.scoreIndicator.text=context.getString(R.string.soon)
+        if (dataObject.state!=0){
+              holder.scoreIndicatorHome.text=dataObject.homeScore.toString()
+              holder.scoreIndicatorAway.text=dataObject.awayScore.toString()
         }else{
-            holder.scoreIndicator.text=dataObject.homeScore.toString() + " : "+dataObject.awayScore.toString()
+
         }
 
 
@@ -205,18 +225,18 @@ import kotlin.collections.ArrayList
                 holder.indexC2R1.text=dataObject.odds.handicap!![5].toString()
                 holder.indexC3R1.text=dataObject.odds.handicap!![7].toString()
 
-
                 holder.indexC1R2.text= dataObject.odds.overUnder!![6].toString()
                 holder.indexC2R2.text=dataObject.odds.overUnder!![5].toString()
                 holder.indexC3R2.text=dataObject.odds.overUnder!![7].toString()
-
-                holder.cornerRatio.text=dataObject.homeCorner.toString()+":"+dataObject.awayCorner.toString()
-                holder.halfRatio.text=dataObject.homeHalfScore.toString()+":"+dataObject.awayHalfScore.toString()
-            }
+                  }
             catch (e:Exception){
 
             }
         }
+        holder.redCard.text=context.getString(R.string.red_card)+" "+dataObject.homeRed+":"+dataObject.awayRed
+        holder.yellowCard.text=context.getString(R.string.yellow_card)+" "+dataObject.homeYellow+":"+dataObject.awayYellow
+        val c_ht="C= "+dataObject.homeCorner.toString()+":"+dataObject.awayCorner.toString()+" HT= "+dataObject.homeHalfScore.toString()+":"+dataObject.awayHalfScore.toString()
+        holder.cornerRatio.text=c_ht
         if (position==dataList.size-1&&loadMore)
         communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,position,0)
     }

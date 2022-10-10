@@ -53,7 +53,7 @@ class NewsFragment : Fragment() {
         val tabLayout=view.findViewById<TabLayout>(R.id.tabs_news)
         val tabsTitles=ArrayList<String>()
         tabsTitles.add(getString(R.string.news_articles))
-        tabsTitles.add(getString(R.string.vid_clips))
+        tabsTitles.add(getString(R.string.match_highlights))
         frag.setOnDetailListener(object : OnDetailListener {
             override fun onDetail(propertiesList: List<String>) {
                 showDetailFragment(propertiesList[0])
@@ -83,7 +83,7 @@ class NewsFragment : Fragment() {
         transaction.commit()
         currentFrag=newsDetailFragment
         fragContainer?.visibility=View.VISIBLE
-        onBackPressedListener?.changeBackPressBehaviour(this)
+        onBackPressedListener?.changeBackPressBehaviour(this,getString(R.string.news))
 
     }
     private fun showDetailFragment(videoLink: String, titleDate: String, maxPage: Int) {
@@ -95,7 +95,7 @@ class NewsFragment : Fragment() {
         transaction.commit()
         currentFrag=videosDetailFrag
         fragContainer?.visibility = View.VISIBLE
-        onBackPressedListener?.changeBackPressBehaviour(this)
+        onBackPressedListener?.changeBackPressBehaviour(this,getString(R.string.match_highlights))
     }
      fun hideDetailFrag(){
         val fragContainer=view?.findViewById<View>(R.id.news_detail_frag_container)

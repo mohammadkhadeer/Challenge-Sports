@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
@@ -19,71 +20,81 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/group_indicator"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:text="Group-A"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/match_date"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/top_divider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
+                android:visibility="gone"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/group_indicator" />
 
             <TextView
                 android:id="@+id/team_1_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:paddingHorizontal="@dimen/_2sdp"
                 android:text="Chicago Dtuch Lions FC"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/score_indicator"
-                app:layout_constraintEnd_toStartOf="@+id/score_indicator"
+                android:textColor="@color/grey_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/score_indicator" />
+                app:layout_constraintTop_toBottomOf="@+id/group_indicator" />
 
             <TextView
-                android:id="@+id/score_indicator"
+                android:id="@+id/score_indicator_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/primary_rounded_rect"
-                android:backgroundTint="@color/blue_light_transparent"
-                android:padding="@dimen/_3sdp"
-                android:text="SEGERA"
+                app:layout_constraintHorizontal_bias="0.7"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_divider" />
+                app:layout_constraintEnd_toStartOf="@+id/odds_container"
+                app:layout_constraintStart_toEndOf="@+id/team_1_name"
+                app:layout_constraintTop_toTopOf="@+id/team_1_name" />
+
+
+            <TextView
+                android:id="@+id/score_indicator_away"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/score_indicator_home"
+                app:layout_constraintTop_toBottomOf="@+id/score_indicator_home" />
 
             <TextView
                 android:id="@+id/team_2_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:maxLines="2"
                 android:paddingHorizontal="@dimen/_2sdp"
                 android:text="Devonport City Reserves"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/score_indicator"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/score_indicator"
-                app:layout_constraintTop_toTopOf="@id/score_indicator" />
+                android:textColor="@color/grey_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/team_1_name" />
 
 
             <TextView
@@ -95,116 +106,157 @@
                 android:paddingHorizontal="@dimen/_3sdp"
                 android:text="@string/index"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/match_time"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/score_indicator" />
+                app:layout_constraintTop_toBottomOf="@+id/score_indicator_home" />
 
-            <TextView
-                android:id="@+id/index_c1_r1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:maxLines="1"
-                android:paddingVertical="0dp"
+            <LinearLayout
+                android:id="@+id/odds_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="0.32"
+                android:orientation="vertical"
+                android:background="@drawable/primary_rounded_rect"
+                android:backgroundTint="@color/odds_bg_color"
+                app:layout_constraintBottom_toBottomOf="@+id/team_2_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/team_1_name">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/index_c1_r1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:text=""
+                        android:paddingVertical="0dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toStartOf="@+id/index_c2_r1"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/index_text"
+                        app:layout_constraintTop_toTopOf="@id/match_date" />
+                    <TextView
+                        android:id="@+id/index_c2_r1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:paddingVertical="0dp"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toStartOf="@+id/index_c3_r1"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/index_c1_r1"
+                        app:layout_constraintTop_toTopOf="@id/match_date" />
+                    <TextView
+                    android:id="@+id/index_c3_r1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                    android:paddingVertical="0dp"
+                    android:textColor="@color/white"
+                        android:gravity="center"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@+id/match_date"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/index_c2_r1"
+                    app:layout_constraintTop_toTopOf="@id/match_date" />
+                </LinearLayout>
 
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintEnd_toStartOf="@+id/index_c2_r1"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/index_text"
-                app:layout_constraintTop_toTopOf="@id/match_date" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/index_c1_r2"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="@id/match_time"
+                        app:layout_constraintEnd_toEndOf="@id/index_c1_r1"
+                        app:layout_constraintStart_toStartOf="@+id/index_c1_r1"
+                        app:layout_constraintTop_toBottomOf="@+id/index_c1_r1" />
 
-            <TextView
-                android:id="@+id/index_c1_r2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="@id/match_time"
-                app:layout_constraintEnd_toEndOf="@id/index_c1_r1"
-                app:layout_constraintStart_toStartOf="@+id/index_c1_r1"
-                app:layout_constraintTop_toBottomOf="@+id/index_c1_r1" />
 
-            <TextView
-                android:id="@+id/index_c2_r1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:maxLines="1"
-                android:paddingVertical="0dp"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintEnd_toStartOf="@+id/index_c3_r1"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/index_c1_r1"
-                app:layout_constraintTop_toTopOf="@id/match_date" />
 
-            <TextView
-                android:id="@+id/index_c2_r2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="@id/match_time"
-                app:layout_constraintEnd_toEndOf="@id/index_c2_r1"
-                app:layout_constraintStart_toStartOf="@+id/index_c2_r1"
-                app:layout_constraintTop_toBottomOf="@+id/index_c1_r1" />
+                    <TextView
+                        android:id="@+id/index_c2_r2"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
 
-            <TextView
-                android:id="@+id/index_c3_r1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:maxLines="1"
-                android:paddingVertical="0dp"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintEnd_toStartOf="@+id/match_date"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/index_c2_r1"
-                app:layout_constraintTop_toTopOf="@id/match_date" />
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="@id/match_time"
+                        app:layout_constraintEnd_toEndOf="@id/index_c2_r1"
+                        app:layout_constraintStart_toStartOf="@+id/index_c2_r1"
+                        app:layout_constraintTop_toBottomOf="@+id/index_c1_r1" />
 
-            <TextView
-                android:id="@+id/index_c3_r2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="@id/match_time"
-                app:layout_constraintEnd_toEndOf="@id/index_c3_r1"
-                app:layout_constraintStart_toStartOf="@id/index_c3_r1"
-                app:layout_constraintTop_toBottomOf="@+id/index_c1_r1" />
+
+
+                    <TextView
+                        android:id="@+id/index_c3_r2"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@id/match_time"
+                        app:layout_constraintEnd_toEndOf="@id/index_c3_r1"
+                        app:layout_constraintStart_toStartOf="@id/index_c3_r1"
+                        app:layout_constraintTop_toBottomOf="@+id/index_c1_r1" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/match_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sat, 21 Nov"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/score_indicator"
-                app:layout_constraintStart_toEndOf="@+id/team_1_name"
-                app:layout_constraintTop_toBottomOf="@+id/score_indicator" />
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/match_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="22:00"
+                android:visibility="gone"
                 android:textColor="@color/grey_text"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/score_indicator"
+                app:layout_constraintEnd_toEndOf="@+id/score_indicator_home"
                 app:layout_constraintStart_toEndOf="@+id/team_1_name"
                 app:layout_constraintTop_toBottomOf="@+id/match_date" />
 
             <LinearLayout
                 android:id="@+id/c_ht_container"
                 android:layout_width="0dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:background="@color/colorPrimary"
@@ -217,7 +269,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/_3sdp"
-
                     android:paddingVertical="0dp"
                     android:text="C"
                     android:textColor="@color/white"
@@ -247,6 +298,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_3sdp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/c_ht_container"
                 app:layout_constraintTop_toBottomOf="@+id/c_ht_container" />
 
@@ -255,6 +307,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_3sdp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/c_ht_container"
                 app:layout_constraintTop_toBottomOf="@+id/c_ht_container" />
 
@@ -262,20 +315,24 @@
                 android:id="@+id/bottom_divider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/match_time" />
+
+                app:layout_constraintTop_toBottomOf="@+id/team_2_name" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/bottom_options_container"
                 android:layout_width="match_parent"
+
+                android:background="@drawable/primary_rounded_rect"
+                android:backgroundTint="@color/c_ht_bg_color"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_divider">
-
                 <LinearLayout
                     android:id="@+id/index_bt"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -283,7 +340,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_index_icon" />
+                        android:src="@drawable/ic_index" />
 
                     <TextView
 
@@ -292,7 +349,7 @@
                         android:layout_marginTop="@dimen/_3sdp"
                         android:gravity="center"
                         android:text="@string/index"
-                        android:textColor="@color/grey_text_different"
+                        android:textColor="@color/c_ht_text_color"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -301,6 +358,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_weight="1"
+                    android:padding="@dimen/_3sdp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -315,7 +373,7 @@
                         android:layout_marginTop="@dimen/_3sdp"
                         android:gravity="center"
                         android:text="@string/analysis"
-                        android:textColor="@color/grey_text_different"
+                        android:textColor="@color/c_ht_text_color"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -323,6 +381,7 @@
                     android:id="@+id/league_bt"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -338,7 +397,7 @@
                         android:layout_marginTop="@dimen/_3sdp"
                         android:gravity="center"
                         android:text="@string/league"
-                        android:textColor="@color/grey_text_different"
+                        android:textColor="@color/c_ht_text_color"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -346,6 +405,7 @@
                     android:id="@+id/event_bt"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -361,7 +421,7 @@
                         android:layout_marginTop="@dimen/_3sdp"
                         android:gravity="center"
                         android:text="@string/event"
-                        android:textColor="@color/grey_text_different"
+                        android:textColor="@color/c_ht_text_color"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -370,6 +430,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_weight="1"
+                    android:padding="@dimen/_3sdp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -384,7 +445,7 @@
                         android:layout_marginTop="@dimen/_3sdp"
                         android:gravity="center"
                         android:text="@string/briefing"
-                        android:textColor="@color/grey_text_different"
+                        android:textColor="@color/c_ht_text_color"
                         android:textSize="11sp" />
 
                 </LinearLayout>
@@ -441,6 +502,54 @@
 
                 </LinearLayout>
 
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/normal_options_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:layout_constraintTop_toBottomOf="@+id/bottom_divider">
+                <TextView
+                    android:id="@+id/red_card"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/primary_rounded_rect"
+                    android:backgroundTint="@color/red"
+                    android:text="Red C: 6:7"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/c_ht_text"
+                    android:layout_width="0dp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1.2"
+                    android:background="@drawable/primary_rounded_rect"
+                    android:backgroundTint="@color/c_ht_bg_color"
+                    android:text="C=10:5 HT=6:7"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/c_ht_text_color"
+                    android:textSize="12sp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+
+                    android:id="@+id/yellow_cards"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/primary_rounded_rect"
+                    android:backgroundTint="@color/c_ht_text_color"
+                    android:text="Yellow C: 6:7"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

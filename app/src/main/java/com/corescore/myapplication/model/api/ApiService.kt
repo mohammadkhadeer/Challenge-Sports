@@ -92,5 +92,4 @@ interface ApiService {
     @GET("/api/lqbf-list-past-result/{date}")
     suspend fun getPastFutureMatchesBasketball(@Path("date") date: String): PastFutureBasketBall
 
-
 }

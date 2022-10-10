@@ -13,9 +13,10 @@ import com.corescore.myapplication.view.adapters.RecyclerViewOnclick
 
 class NewsAdapter (var context: Context, var  newsList:ArrayList<com.corescore.myapplication.model.data.news.List>, var loadMoreCommunicator:LoadMoreCommunicator, var onclick: RecyclerViewOnclick):RecyclerView.Adapter<NewsAdapter.viewHolder>(){
     inner class viewHolder(itemview: View): RecyclerView.ViewHolder(itemview){
-        var headline=itemview.findViewById<TextView>(R.id.headline_rv)
-        var tag=itemview.findViewById<TextView>(R.id.tag)
-        var imageContainer=itemview.findViewById<ImageView>(R.id.background_trending)
+        var headline=itemview.findViewById<TextView>(R.id.headline)
+        var tag=itemview.findViewById<TextView>(R.id.detail)
+        var imageContainer=itemview.findViewById<ImageView>(R.id.image_view_news)
+        var timeAgo=itemview.findViewById<TextView>(R.id.time)
         init {
             itemview.setOnClickListener{
                 onclick.onClick(absoluteAdapterPosition)
@@ -24,13 +25,13 @@ class NewsAdapter (var context: Context, var  newsList:ArrayList<com.corescore.m
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-        return viewHolder(LayoutInflater.from(context).inflate(R.layout.recommended_item_view,parent,false))
+        return viewHolder(LayoutInflater.from(context).inflate(R.layout.news_rv_element,parent,false))
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-
         holder.headline.text= newsList[position].title
-        holder.tag.text= newsList?.get(position)?.keywords?.substringBefore(",")
+        holder.tag.text= newsList?.get(position)?.description
+        holder.timeAgo.text=newsList?.get(position).createTime.substringBefore("T")
         Glide.with(context).load(newsList?.get(position)?.path).into(holder.imageContainer)
         if (position == (newsList?.size?.minus(1) ?: false)){
             loadMoreCommunicator.loadMore()
