@@ -1,4 +1,7 @@
 <resources>
+    <string name="result">Result</string>
+    <string name="today">Today</string>
+    <string name="schedule">Schedule</string>
     <string name="app_name" translatable="false">Exo Score</string>
     <string name="account_email" translatable="false">jereldarenpfertofr@gmail.com</string>
     <string name="match_highlights">Match Highlights</string>
@@ -87,7 +90,6 @@
     <string name="add_reminder">Add Reminder</string>
     <string name="add_to_highlights">Add to Highlights</string>
     <string name="pin_live_score">Pin Live Score</string>
-    <string name="schedule">Schedule</string>
     <string name="all">All</string>
     <string name="live">LIVE</string>
     <string name="ft">FT</string>

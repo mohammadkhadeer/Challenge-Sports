@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.app.ActivityCompat
@@ -54,8 +55,8 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
     private var mainAdapter: MainAdapter? = null
     private var pastFutureAdapter: PastFutureAdapter? = null
     var onBackPressedListener: OnBackPressedListener? = null
-    var leaguesList = ArrayList<String>()
-    var timeList = ArrayList<String>()
+    var footBallList = ArrayList<String>()
+    var leagueList = ArrayList<String>()
     var basketBallAdapter: MainAdapterBasketBall? = null
     var adapterTypeParent: Int = MainAdapterCommunicator.FOOTBALL_TYPE
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,46 +79,122 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
         val recyclerViewMain = view.findViewById<RecyclerView>(R.id.main_recycler_view)
         val vm = SpewViewModel.giveMeViewModel(requireActivity())
 
+        val tablayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
+        val daysRecyclerView =
+            view.findViewById<RecyclerView>(R.id.days_recycler_view)
+
+        val dateSelectedListener = object : OnPostDetailResponse<String> {
+            override fun onSuccess(responseBody: String) {
+                if (adapterTypeParent != MainAdapterCommunicator.BASKETBALL_TYPE) {
+                    vm.makePastFutureCall(responseBody)
+                } else {
+                    vm.makePastFutureCallBasketball(responseBody)
+                }
+            }
+
+            override fun onFailure(message: String) {
+
+            }
+
+            override fun onLoading(message: String) {
+
+            }
+        }
 
         vm.baseHomePageLiveData.observe(requireActivity()) {
             when (it.status) {
                 Status.SUCCESS -> {
                     try {
-                        leaguesList.add(getString(R.string.all_leagues))
+                        footBallList.add(getString(R.string.football))
+                        footBallList.add(getString(R.string.basketball))
+                        leagueList.add(getString(R.string.league))
                         for (leagues in it.data!!.todayHotLeague) {
                             if (GeneralTools.getLocale(requireContext())==SharedPreference.CHINESE){
-                                leaguesList.add(leagues.leagueChsShort)
+                                leagueList.add(leagues.leagueChsShort)
                             }else{
-                                leaguesList.add(leagues.leagueName)
+                                leagueList.add(leagues.leagueName)
                             }
                         }
-                        timeList.add(getString(R.string.today_matches))
-                        timeList.add(getString(R.string.prev_matches))
-                        timeList.add(getString(R.string.future_matches))
+
+
                         mainAdapter = MainAdapter(
                             requireContext(),
                             it.data?.matchList as ArrayList<Match>,
                             this
                         )
+
                         recyclerViewMain.adapter = mainAdapter
                         recyclerViewMain.layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                         view.findViewById<View>(R.id.loader_anim_container).visibility = View.GONE
-                        val spinnerLeague = view.findViewById<AppCompatSpinner>(R.id.league_spinner)
-                        val timeSpinner = view.findViewById<AppCompatSpinner>(R.id.time_spinner)
+
+                        val spinnerFootBallOrBasketBall = view.findViewById<AppCompatSpinner>(R.id.league_spinner)
+                        val spinnerLeague = view.findViewById<AppCompatSpinner>(R.id.time_spinner)
+//                        spinnerLeague
+                        spinnerFootBallOrBasketBall.adapter = ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_spinner_item,
+                            footBallList
+                        )
+
                         spinnerLeague.adapter = ArrayAdapter(
                             requireContext(),
                             android.R.layout.simple_spinner_item,
-                            leaguesList
-                        )
-                        timeSpinner.adapter = ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_spinner_item,
-                            timeList
+                            leagueList
                         )
                         val baseList = ArrayList<Match>()
                         baseList.addAll(it.data.matchList)
                         val baseDefaultAdapter = mainAdapter
+
+
+
+
+
+
+                        spinnerFootBallOrBasketBall.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    p0: AdapterView<*>?,
+                                    p1: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    when (position) {
+                                        0 -> {
+                                            recyclerViewMain.adapter = mainAdapter
+                                            recyclerViewMain.adapter?.notifyDataSetChanged()
+                                            adapterTypeParent = MainAdapterCommunicator.FOOTBALL_TYPE
+
+//                                            mainAdapter?.setNewList(baseList, true)
+//                                            recyclerViewMain.adapter?.notifyDataSetChanged()
+                                        }
+                                        else -> {
+
+//                                            val selectedList = ArrayList<Match>()
+//                                            for (match in it.data.todayHotLeagueList) {
+//                                                if (match.leagueId == it.data.todayHotLeague[position - 1].leagueId) {
+//                                                    selectedList.add(match)
+//                                                }
+//                                            }
+//                                            mainAdapter?.setNewList(selectedList, false)
+//                                            mainAdapter?.notifyDataSetChanged()
+
+                                            recyclerViewMain.adapter = basketBallAdapter
+                                            recyclerViewMain.adapter?.notifyDataSetChanged()
+                                            adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
+
+                                        }
+                                    }
+                                }
+
+                                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                                }
+                            }
+
+
+
+
                         spinnerLeague.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(
@@ -132,6 +209,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                             recyclerViewMain.adapter?.notifyDataSetChanged()
                                         }
                                         else -> {
+
                                             val selectedList = ArrayList<Match>()
                                             for (match in it.data.todayHotLeagueList) {
                                                 if (match.leagueId == it.data.todayHotLeague[position - 1].leagueId) {
@@ -140,6 +218,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                             }
                                             mainAdapter?.setNewList(selectedList, false)
                                             mainAdapter?.notifyDataSetChanged()
+
                                         }
                                     }
                                 }
@@ -149,82 +228,8 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                 }
                             }
 
-                        val tablayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
-                        val daysRecyclerView =
-                            view.findViewById<RecyclerView>(R.id.days_recycler_view)
-                        val dateSelectedListener = object : OnPostDetailResponse<String> {
-                            override fun onSuccess(responseBody: String) {
-                                if (adapterTypeParent != MainAdapterCommunicator.BASKETBALL_TYPE) {
-                                    vm.makePastFutureCall(responseBody)
-                                } else {
-                                    vm.makePastFutureCallBasketball(responseBody)
-                                }
-                            }
 
-                            override fun onFailure(message: String) {
 
-                            }
-
-                            override fun onLoading(message: String) {
-
-                            }
-                        }
-                        timeSpinner.onItemSelectedListener =
-                            object : AdapterView.OnItemSelectedListener {
-                                override fun onItemSelected(
-                                    p0: AdapterView<*>?,
-                                    p1: View?,
-                                    position: Int,
-                                    id: Long
-                                ) {
-                                    when (timeList[position]) {
-                                        getString(R.string.today_matches) -> {
-                                            GeneralTools.flipReplaceAnimation(
-                                                daysRecyclerView,
-                                                tablayout
-                                            )
-                                            recyclerViewMain.adapter = mainAdapter
-                                            recyclerViewMain.adapter?.notifyDataSetChanged()
-                                        }
-                                        getString(R.string.prev_matches) -> {
-                                            GeneralTools.flipReplaceAnimation(
-                                                tablayout,
-                                                daysRecyclerView
-                                            )
-                                            daysRecyclerView.adapter = DatesListAdapter(
-                                                requireContext(),
-                                                GeneralTools.getPastWeekDates(),
-                                                dateSelectedListener
-                                            )
-                                            daysRecyclerView.layoutManager = LinearLayoutManager(
-                                                context,
-                                                LinearLayoutManager.HORIZONTAL,
-                                                false
-                                            )
-                                        }
-                                        getString(R.string.future_matches)-> {
-                                            GeneralTools.flipReplaceAnimation(
-                                                tablayout,
-                                                daysRecyclerView
-                                            )
-                                            daysRecyclerView.adapter = DatesListAdapter(
-                                                requireContext(),
-                                                GeneralTools.getFutureDates(),
-                                                dateSelectedListener
-                                            )
-                                            daysRecyclerView.layoutManager = LinearLayoutManager(
-                                                context,
-                                                LinearLayoutManager.HORIZONTAL,
-                                                false
-                                            )
-                                        }
-                                    }
-                                }
-
-                                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                                }
-                            }
                         vm.pastFutureLiveData.observe(requireActivity()) { data ->
                             when (data.status) {
                                 Status.SUCCESS -> {
@@ -244,6 +249,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                 }
                             }
                         }
+
                         vm.pastFutureLiveDataBasketball.observe(requireActivity()) { data ->
                             when (data.status) {
                                 Status.SUCCESS -> {
@@ -278,6 +284,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                 }
             }
         }
+
         vm.basketBallLiveData.observe(requireActivity()) {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -295,6 +302,9 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                 }
             }
         }
+
+
+
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -331,28 +341,96 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
 
             }
         })
-        view.findViewById<TabLayout>(R.id.tab_layout_game_filters)
-            .addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    if (tab?.position != 0) {
-                        recyclerViewMain.adapter = basketBallAdapter
-                        recyclerViewMain.adapter?.notifyDataSetChanged()
-                        adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
-                    } else {
+
+
+
+
+        val timeTabLayout = view.findViewById<TabLayout>(R.id.tab_layout_time_filters)
+        timeTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> {
+
+                        GeneralTools.flipReplaceAnimation(
+                            tablayout,
+                            daysRecyclerView
+                        )
+                        daysRecyclerView.adapter = DatesListAdapter(
+                            requireContext(),
+                            GeneralTools.getPastWeekDates(),
+                            dateSelectedListener
+                        )
+                        daysRecyclerView.layoutManager = LinearLayoutManager(
+                            context,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+
+                    }
+                    1 -> {
+                        GeneralTools.flipReplaceAnimation(
+                            daysRecyclerView,
+                            tablayout
+                        )
                         recyclerViewMain.adapter = mainAdapter
                         recyclerViewMain.adapter?.notifyDataSetChanged()
-                        adapterTypeParent = MainAdapterCommunicator.FOOTBALL_TYPE
                     }
+                    2 -> {
+                        GeneralTools.flipReplaceAnimation(
+                            tablayout,
+                            daysRecyclerView
+                        )
+                        daysRecyclerView.adapter = DatesListAdapter(
+                            requireContext(),
+                            GeneralTools.getFutureDates(),
+                            dateSelectedListener
+                        )
+                        daysRecyclerView.layoutManager = LinearLayoutManager(
+                            context,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+
+                    }
+
                 }
+            }
 
-                override fun onTabUnselected(tab: TabLayout.Tab?) {
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
 
-                }
+            }
 
-                override fun onTabReselected(tab: TabLayout.Tab?) {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
 
-                }
-            })
+            }
+        })
+        timeTabLayout.getTabAt(1)?.select();
+
+
+
+        //football or basket tab
+//        view.findViewById<TabLayout>(R.id.tab_layout_game_filters)
+//            .addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//                override fun onTabSelected(tab: TabLayout.Tab?) {
+//                    if (tab?.position != 0) {
+//                        recyclerViewMain.adapter = basketBallAdapter
+//                        recyclerViewMain.adapter?.notifyDataSetChanged()
+//                        adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
+//                    } else {
+//                        recyclerViewMain.adapter = mainAdapter
+//                        recyclerViewMain.adapter?.notifyDataSetChanged()
+//                        adapterTypeParent = MainAdapterCommunicator.FOOTBALL_TYPE
+//                    }
+//                }
+//
+//                override fun onTabUnselected(tab: TabLayout.Tab?) {
+//
+//                }
+//
+//                override fun onTabReselected(tab: TabLayout.Tab?) {
+//
+//                }
+//            })
         vm.makeIndexNetworkCall("1",GeneralTools.getLocale(requireContext()))
         vm.makeIndexBasketBallCall()
         refreshHighlights()

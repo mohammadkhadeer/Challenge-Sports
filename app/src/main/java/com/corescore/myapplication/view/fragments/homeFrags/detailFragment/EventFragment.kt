@@ -77,6 +77,10 @@ class EventFragment : Fragment() {
         vm.makeEventListCall()
     }
 
+    private fun inti() {
+
+    }
+
     companion object {
 
         // TODO: Rename and change types and number of parameters

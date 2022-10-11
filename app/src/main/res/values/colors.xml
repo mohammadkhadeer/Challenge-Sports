@@ -25,4 +25,9 @@
     <color name="odds_bg_color">#75D7BE</color>
     <color name="c_ht_bg_color">#FDF2E7</color>
     <color name="c_ht_text_color">#F39C33</color>
+    <color name="text_color_tab">#919191</color>
+    <color name="text_color_tab_pressed">#000000</color>
+    <color name="selected_tab">#4840EE</color>
+    <color name="selected_time_tab">#FFC107</color>
+
 </resources>

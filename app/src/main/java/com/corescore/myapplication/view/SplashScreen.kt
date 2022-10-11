@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
+import android.widget.TextView
 import com.corescore.myapplication.utils.GeneralTools
 import corescore.myapplication.R
 import com.corescore.myapplication.utils.SharedPreference
+import com.google.android.material.tabs.TabLayout
 import java.util.*
 
 @SuppressLint("CustomSplashScreen")
@@ -42,6 +44,9 @@ class SplashScreen : AppCompatActivity() {
         resources.updateConfiguration(config, resources.displayMetrics)
 
         setContentView(R.layout.activity_splash_screen)
+
+//        val exo_tv=findViewById<TextView>(R.id.exo_score)
+
         object : CountDownTimer(2000,2000){
             override fun onTick(p0: Long) {
 

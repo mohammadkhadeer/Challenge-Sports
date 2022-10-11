@@ -1,53 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_game_filters"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabSelectedTextColor="@color/white"
-        app:tabIndicator="@null"
-        app:tabRippleColor="@color/transparent"
-        app:tabTextColor="@color/colorPrimary"
-        app:tabIndicatorColor="@color/transparent"
-        android:clipToPadding="false"
-        app:tabInlineLabel="true"
-        app:tabIconTint="@color/tab_selector_color"
-        android:layout_height="wrap_content">
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabSoccer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_football"
-            android:text="@string/soccer"
-            />
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabBasketball"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_basketball"
-            android:text="@string/basketball"
-            />
 
-    </com.google.android.material.tabs.TabLayout>
+
+
+
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--        android:id="@+id/tab_layout_game_filters"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:tabBackground="@drawable/tab_selector"-->
+<!--        app:tabSelectedTextColor="@color/white"-->
+<!--        app:tabIndicator="@null"-->
+<!--        app:tabRippleColor="@color/transparent"-->
+<!--        app:tabTextColor="@color/colorPrimary"-->
+<!--        app:tabIndicatorColor="@color/transparent"-->
+<!--        android:clipToPadding="false"-->
+<!--        app:tabInlineLabel="true"-->
+<!--        app:tabIconTint="@color/tab_selector_color"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/tabSoccer"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:icon="@drawable/ic_football"-->
+<!--            android:text="@string/soccer"-->
+<!--            />-->
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/tabBasketball"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:icon="@drawable/ic_basketball"-->
+<!--            android:text="@string/basketball"-->
+<!--            />-->
+
+<!--    </com.google.android.material.tabs.TabLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="99"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark_grey_bg"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_game_filters"
+        android:id="@+id/top_layout_cont"
+        />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout_game_filters"
-        android:layout_height="@dimen/_35sdp">
+        app:layout_constraintTop_toBottomOf="@+id/top_layout_cont"
+        android:layout_height="@dimen/_25sdp"
+        >
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/league_spinner"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_2sdp"
-            android:background="@drawable/ellipse_grey_outline"
             style="@style/dropdown_custom"
             android:gravity="center"
             app:layout_constraintEnd_toStartOf="@+id/time_spinner"
@@ -61,7 +95,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_2sdp"
-            android:background="@drawable/ellipse_grey_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/league_spinner"
@@ -69,62 +102,107 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <RelativeLayout
         android:id="@+id/tab_days_container"
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/top_layout"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout_local_filters"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabIndicator="@null"
-            app:tabIndicatorColor="@color/transparent"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/colorPrimary">
+            android:id="@+id/tab_layout_cont"
+            android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabAll"
-                android:layout_width="wrap_content"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_time_filters"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/all" />
+                android:background="@color/over_white_light_grey"
+                android:clipToPadding="false"
+                app:tabBackground="@drawable/time_tab_selector"
+                app:tabIndicatorColor="@color/selected_time_tab"
+                app:tabSelectedTextColor="@color/text_color_tab_pressed"
+                app:tabTextColor="@color/alt_grey"
+                >
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabLive"
-                android:layout_width="wrap_content"
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/result"
+                    />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabToday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/today" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabSchedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schedule" />
+
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_local_filters"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/live" />
+                android:clipToPadding="false"
+                app:tabIndicatorColor="@color/selected_tab"
+                app:tabSelectedTextColor="@color/text_color_tab_pressed"
+                app:tabTextColor="@color/alt_grey"
+                >
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabSoon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/soon" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all"
+                    />
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabFt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ft" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabLive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/live" />
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/other" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabSoon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/soon" />
 
-        </com.google.android.material.tabs.TabLayout>
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabFt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ft" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+        </LinearLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/days_recycler_view"
-            android:paddingHorizontal="@dimen/_10sdp"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content"/>
+            android:layout_marginTop="@dimen/_73sdp"
+            android:paddingHorizontal="@dimen/_10sdp" />
     </RelativeLayout>
-
 
     <androidx.viewpager2.widget.ViewPager2
         app:layout_constraintTop_toBottomOf="@+id/tab_days_container"
@@ -176,25 +254,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
     <FrameLayout
         android:id="@+id/fragment_container_base"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:background="@color/white"
         android:layout_height="match_parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loader_anim_container"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:visibility="gone"
         android:layout_height="match_parent">
-        <com.airbnb.lottie.LottieAnimationView
+      <!--  <com.airbnb.lottie.LottieAnimationView
             app:lottie_rawRes="@raw/main_loading_anim"
             app:lottie_loop="true"
             app:lottie_autoPlay="true"
             app:layout_constraintBottom_toTopOf="@+id/loading_text_botton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/>-->
         <TextView
             android:layout_marginBottom="@dimen/_10sdp"
             android:id="@+id/loading_text_botton"

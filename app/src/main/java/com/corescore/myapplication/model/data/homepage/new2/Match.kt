@@ -125,7 +125,7 @@ data class Match(
     @SerializedName("videoDetail")
     var videoDetail: VideoDetail? = VideoDetail(),
     @SerializedName("videoId")
-    var videoId: Int? = 0,
+    var videoId: String? = "0",
     @SerializedName("weather")
     var weather: String = ""
 )
