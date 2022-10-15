@@ -45,7 +45,9 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             applicationContext.createConfigurationContext(config)
         resources.updateConfiguration(config, resources.displayMetrics)
+
         setContentView(R.layout.activity_base_activty)
+
         val menuIcon=findViewById<View>(R.id.menu_icon)
         menuIcon.setOnClickListener {
             findViewById<DrawerLayout>(R.id.drawer_layout).openDrawer(GravityCompat.START)
@@ -73,6 +75,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val searchIcon=findViewById<View>(R.id.search_icon)
         val closeSearchIcon=findViewById<View>(R.id.cross_icon)
         val searchBar=findViewById<EditText>(R.id.search_matches)
+
         val heading=findViewById<TextView>(R.id.top_heading_mainpage)
         val baseViewPager=findViewById<ViewPager2>(R.id.baseViewPager)
         val newsFrag= NewsFragment.newInstance(false,":")
