@@ -1,9 +1,13 @@
 package com.corescore.myapplication.view
 
+import android.R.attr.endColor
+import android.R.attr.startColor
 import android.app.Dialog
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -16,7 +20,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import corescore.myapplication.R
 import com.corescore.myapplication.utils.GeneralTools
 import com.corescore.myapplication.utils.SharedPreference
 import com.corescore.myapplication.view.adapters.ViewPagerAdapter
@@ -26,6 +29,7 @@ import com.corescore.myapplication.view.fragments.news.NewsFragment
 import com.corescore.myapplication.view.fragments.standings.StandingBaseFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import corescore.myapplication.R
 import java.util.*
 
 
@@ -77,6 +81,15 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val searchBar=findViewById<EditText>(R.id.search_matches)
 
         val heading=findViewById<TextView>(R.id.top_heading_mainpage)
+        //gradient text color
+        val paint = heading.paint
+        val width = paint.measureText(heading.text.toString())
+        val textShader: Shader = LinearGradient(0f, 0f, width, heading.textSize, intArrayOf(
+            Color.parseColor("#EC3BDA"),
+            Color.parseColor("#F24CA2")
+        ), null, Shader.TileMode.REPEAT)
+        heading.paint.setShader(textShader)
+
         val baseViewPager=findViewById<ViewPager2>(R.id.baseViewPager)
         val newsFrag= NewsFragment.newInstance(false,":")
         val homeFragment=BaseHomeFragments.newInstance("","")
@@ -89,15 +102,31 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         fragsList.add(newsFrag)
         fragsList.add(StandingBaseFragment.newInstance("",""))
         newsFrag.setChangeBackPressBehaviourListener(this)
+
         baseViewPager.adapter=ViewPagerAdapter(supportFragmentManager,lifecycle,fragsList)
         baseViewPager.isUserInputEnabled=false
         baseViewPager.offscreenPageLimit=3
+
         baseViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                if (position!=0){
-                    searchIcon.visibility=View.GONE
-                }else{
-                    searchIcon.visibility=View.VISIBLE
+//                if (position!=0){
+//                    searchIcon.visibility=View.GONE
+//                }else{
+//                    searchIcon.visibility=View.VISIBLE
+//                }
+                if(position ==0)
+                {
+                    heading.setText(getString(R.string.football))
+                }
+
+                if(position ==1)
+                {
+                    heading.setText(getString(R.string.news))
+                }
+
+                if(position ==2)
+                {
+                    heading.setText(getString(R.string.standings))
                 }
             }
         })
@@ -122,16 +151,16 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         TabLayoutMediator(tabLayout,baseViewPager){tab,position->
             when(position){
                 0->{
-                    tab.text=getString(R.string.home)
+                    //tab.text=getString(R.string.home)
                     tab.icon=ContextCompat.getDrawable(this,R.drawable.ic_home)
 
                 }
                 1->{
-                    tab.text=getString(R.string.news)
+                    //tab.text=getString(R.string.news)
                     tab.icon=getDrawable(R.drawable.ic_news)
                 }
                 2->{
-                    tab.text=getString(R.string.standings)
+                    //tab.text=getString(R.string.standings)
                     tab.icon=ContextCompat.getDrawable(this,R.drawable.ic_standings)
                 }
             }

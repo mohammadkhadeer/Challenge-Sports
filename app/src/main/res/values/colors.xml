@@ -29,5 +29,7 @@
     <color name="text_color_tab_pressed">#000000</color>
     <color name="selected_tab">#4840EE</color>
     <color name="selected_time_tab">#FFC107</color>
+    <color name="brand_color">#F24CA2</color>
+    <color name="news_fragment_color">#6C44C0</color>
 
 </resources>

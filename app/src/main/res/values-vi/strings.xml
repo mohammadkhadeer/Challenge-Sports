@@ -1,4 +1,5 @@
 <resources>
+    <string name="highlights">Điểm nổi bật</string>
     <string name="result">kết quả</string>
     <string name="today">hôm nay</string>
     <string name = "match_highlights"> Điểm nổi bật về trận đấu </string>

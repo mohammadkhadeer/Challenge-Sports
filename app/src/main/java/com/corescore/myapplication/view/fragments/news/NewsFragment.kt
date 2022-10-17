@@ -52,8 +52,8 @@ class NewsFragment : Fragment() {
         val frag=NewsInnerFragment.newInstance(",","")
         val tabLayout=view.findViewById<TabLayout>(R.id.tabs_news)
         val tabsTitles=ArrayList<String>()
-        tabsTitles.add(getString(R.string.news_articles))
-        tabsTitles.add(getString(R.string.match_highlights))
+        tabsTitles.add(getString(R.string.news))
+        tabsTitles.add(getString(R.string.highlights))
         frag.setOnDetailListener(object : OnDetailListener {
             override fun onDetail(propertiesList: List<String>) {
                 showDetailFragment(propertiesList[0])

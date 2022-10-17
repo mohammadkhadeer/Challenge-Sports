@@ -1,4 +1,5 @@
 <resources>
+    <string name="highlights">Highlight</string>
     <string name="result">Hasil</string>
     <string name="today">Hari ini</string>
     <string name="match_highlights">Sorotan Pertandingan</string>

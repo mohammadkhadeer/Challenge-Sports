@@ -1,4 +1,5 @@
 <resources>
+    <string name="highlights">ไฮไลท์</string>
     <string name="result">ผลลัพธ์</string>
     <string name="today">วันนี้</string>
     <string name="match_highlights">ไฮไลท์ของการแข่งขัน</string>
