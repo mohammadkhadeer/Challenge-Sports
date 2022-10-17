@@ -34,5 +34,6 @@
 
     <color name="news_fragment_color">#6C44C0</color>
     <color name="news_video_color">#212121</color>
+    <color name="switch_theme_color">#6C44C0</color>
 
 </resources>
