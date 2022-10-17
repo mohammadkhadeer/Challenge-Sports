@@ -15,6 +15,7 @@
         app:tabTextColor="@color/white"
         app:tabTextAppearance="@style/TabtextAppearence"
         app:tabIndicatorColor="@color/news_fragment_color"
+        app:tabIndicatorHeight="@dimen/_4sdp"
         app:tabBackground="@drawable/tab_selector_news"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"

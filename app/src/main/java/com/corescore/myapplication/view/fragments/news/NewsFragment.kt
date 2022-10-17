@@ -54,6 +54,7 @@ class NewsFragment : Fragment() {
         val tabsTitles=ArrayList<String>()
         tabsTitles.add(getString(R.string.news))
         tabsTitles.add(getString(R.string.highlights))
+
         frag.setOnDetailListener(object : OnDetailListener {
             override fun onDetail(propertiesList: List<String>) {
                 showDetailFragment(propertiesList[0])
@@ -66,6 +67,7 @@ class NewsFragment : Fragment() {
                 showDetailFragment(propertiesList[0],propertiesList[1],propertiesList[2].toInt())
             }
         })
+
         fragsList.add(vidfrag)
         viewpager.adapter= ViewPagerAdapter(requireActivity().supportFragmentManager,requireActivity().lifecycle,fragsList)
         viewpager.isUserInputEnabled=false
@@ -79,8 +81,10 @@ class NewsFragment : Fragment() {
         val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
         val fragContainer=view?.findViewById<View>(R.id.news_detail_frag_container)
         val newsDetailFragment=NewsDetailFragment.newInstance(postID,"")
+
         transaction.replace(R.id.news_detail_frag_container, newsDetailFragment)
         transaction.commit()
+
         currentFrag=newsDetailFragment
         fragContainer?.visibility=View.VISIBLE
         onBackPressedListener?.changeBackPressBehaviour(this,getString(R.string.news))
@@ -95,7 +99,7 @@ class NewsFragment : Fragment() {
         transaction.commit()
         currentFrag=videosDetailFrag
         fragContainer?.visibility = View.VISIBLE
-        onBackPressedListener?.changeBackPressBehaviour(this,getString(R.string.match_highlights))
+        onBackPressedListener?.changeBackPressBehaviour(this,getString(R.string.highlights))
     }
      fun hideDetailFrag(){
         val fragContainer=view?.findViewById<View>(R.id.news_detail_frag_container)

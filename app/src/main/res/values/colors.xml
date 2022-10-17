@@ -30,6 +30,9 @@
     <color name="selected_tab">#4840EE</color>
     <color name="selected_time_tab">#FFC107</color>
     <color name="brand_color">#F24CA2</color>
+    <color name="brand_color_tab">#EC3BDA</color>
+
     <color name="news_fragment_color">#6C44C0</color>
+    <color name="news_video_color">#212121</color>
 
 </resources>

@@ -63,6 +63,7 @@ class VideoBaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val moreVidsRecyclerView = view.findViewById<RecyclerView>(R.id.more_vids_recycler_view)
         val loadingMoreBar=view.findViewById<View>(R.id.loading_more_bar)
+
         val viewModel = ViewModelProvider(
             requireActivity().viewModelStore,
             ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))
