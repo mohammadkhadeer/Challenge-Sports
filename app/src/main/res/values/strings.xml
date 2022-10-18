@@ -48,7 +48,7 @@
     <string name="event">Event</string>
     <string name="briefing">Briefing</string>
     <string name="animation">Animation</string>
-    <string name="soon">SOON</string>
+    <string name="soon">Soon</string>
     <string name="company">Company</string>
     <string name="home">Home</string>
     <string name="live_handicap">Live Handicap</string>
@@ -92,9 +92,9 @@
     <string name="add_to_highlights">Add to Highlights</string>
     <string name="pin_live_score">Pin Live Score</string>
     <string name="all">All</string>
-    <string name="live">LIVE</string>
+    <string name="live">Live</string>
     <string name="ft">FT</string>
-    <string name="other">OTHER</string>
+    <string name="other">Other</string>
     <string name="soccer">Soccer</string>
     <string name="basketball">Basketball</string>
     <string name="full_handicap">Full Handicap</string>

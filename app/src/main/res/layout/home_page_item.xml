@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:id="@+id/container_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,14 +17,15 @@
         android:layout_marginBottom="@dimen/_5sdp"
         android:paddingVertical="@dimen/_10sdp"
         app:cardElevation="@dimen/_10sdp"
+        android:background="@drawable/main_adapter_background"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="@dimen/_10sdp"
-            android:padding="@dimen/_5sdp"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
             <TextView
                 android:id="@+id/group_indicator"
@@ -29,12 +33,25 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="Group-A"
-                android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textColor="@color/main_adapter_background_color_comp2"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/match_date"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/not_selected_tab_border"
+                tools:ignore="MissingConstraints"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                app:layout_constraintTop_toBottomOf="@+id/group_indicator"
+                />
 
             <View
                 android:id="@+id/top_divider"
@@ -42,19 +59,21 @@
                 android:layout_height="0.5dp"
                 android:visibility="gone"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/group_indicator" />
+                android:layout_marginTop="@dimen/_2sdp"
+                app:layout_constraintTop_toBottomOf="@+id/group_indicator"
+                />
 
             <TextView
                 android:id="@+id/team_1_name"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:maxLines="1"
-                android:paddingHorizontal="@dimen/_2sdp"
+                android:paddingHorizontal="@dimen/_6sdp"
                 android:text="Chicago Dtuch Lions FC"
-                android:textColor="@color/grey_text"
-                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/group_indicator" />
@@ -64,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintHorizontal_bias="0.7"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/odds_container"
                 app:layout_constraintStart_toEndOf="@+id/team_1_name"
@@ -76,8 +95,8 @@
                 android:id="@+id/score_indicator_away"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/score_indicator_home"
                 app:layout_constraintTop_toBottomOf="@+id/score_indicator_home" />
@@ -88,10 +107,10 @@
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:maxLines="2"
-                android:paddingHorizontal="@dimen/_2sdp"
+                android:paddingHorizontal="@dimen/_6sdp"
                 android:text="Devonport City Reserves"
-                android:textColor="@color/grey_text"
-                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/team_1_name" />
@@ -119,10 +138,11 @@
                 app:layout_constraintWidth_percent="0.32"
                 android:orientation="vertical"
                 android:background="@drawable/primary_rounded_rect"
-                android:backgroundTint="@color/odds_bg_color"
+                android:backgroundTint="@color/main_adapter_background_color_comp1"
                 app:layout_constraintBottom_toBottomOf="@+id/team_2_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/team_1_name">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -234,9 +254,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sat, 21 Nov"
-                android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 android:textStyle="bold"
+                android:layout_marginEnd="@dimen/_6sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -503,56 +524,26 @@
                 </LinearLayout>
 
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/normal_options_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_5sdp"
-                app:layout_constraintTop_toBottomOf="@+id/bottom_divider">
-                <TextView
-                    android:id="@+id/red_card"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/primary_rounded_rect"
-                    android:backgroundTint="@color/red"
-                    android:text="Red C: 6:7"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:paddingVertical="@dimen/_5sdp"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/c_ht_text"
-                    android:layout_width="0dp"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_weight="1.2"
-                    android:background="@drawable/primary_rounded_rect"
-                    android:backgroundTint="@color/c_ht_bg_color"
-                    android:text="C=10:5 HT=6:7"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/c_ht_text_color"
-                    android:textSize="12sp"
-                    android:paddingVertical="@dimen/_5sdp"
-                    android:layout_height="wrap_content"/>
-                <TextView
 
-                    android:id="@+id/yellow_cards"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/primary_rounded_rect"
-                    android:backgroundTint="@color/c_ht_text_color"
-                    android:text="Yellow C: 6:7"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:paddingVertical="@dimen/_5sdp"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/c_ht_text"
+                android:layout_width="wrap_content"
+                android:backgroundTint="@color/c_ht_bg_color"
+                android:text="C=10:5 HT=6:7"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/bottom_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/_6sdp"
+                tools:ignore="MissingConstraints"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -561,6 +552,7 @@
         android:visibility="visible"
         android:layout_marginVertical="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/container_cardView"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

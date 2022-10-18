@@ -108,8 +108,8 @@ import kotlin.collections.ArrayList
         var awayNameTv=itemView.findViewById<TextView>(R.id.team_2_name)
         var scoreIndicatorHome=itemView.findViewById<TextView>(R.id.score_indicator_home)
         var scoreIndicatorAway=itemView.findViewById<TextView>(R.id.score_indicator_away)
-        var redCard=itemView.findViewById<TextView>(R.id.red_card)
-        var yellowCard=itemView.findViewById<TextView>(R.id.yellow_cards)
+        //var redCard=itemView.findViewById<TextView>(R.id.red_card)
+        //var yellowCard=itemView.findViewById<TextView>(R.id.yellow_cards)
         var stateNdate=itemView.findViewById<TextView>(R.id.match_date)
         var matchTimeTv=itemView.findViewById<TextView>(R.id.match_time)
         var indexC1R1=itemView.findViewById<TextView>(R.id.index_c1_r1)
@@ -126,16 +126,16 @@ import kotlin.collections.ArrayList
         var brief_bt=itemView.findViewById<View>(R.id.briefing_button)
         var league_bt=itemView.findViewById<View>(R.id.league_bt)
         var fragment_container=itemView.findViewById<FrameLayout>(R.id.fragment_container)
-        var normal_options_container=itemView.findViewById<View>(R.id.normal_options_container)
+        //var normal_options_container=itemView.findViewById<View>(R.id.normal_options_container)
         var bottom_options_container=itemView.findViewById<View>(R.id.bottom_options_container)
         var odds_container=itemView.findViewById<View>(R.id.odds_container)
         init {
             itemView.setOnClickListener {
-                if (normal_options_container.visibility==VISIBLE){
-                    GeneralTools.flipReplaceAnimation(normal_options_container,bottom_options_container)
-                }else{
-                    GeneralTools.flipReplaceAnimation(bottom_options_container,normal_options_container)
-                }
+//                if (normal_options_container.visibility==VISIBLE){
+//                    GeneralTools.flipReplaceAnimation(normal_options_container,bottom_options_container)
+//                }else{
+//                    GeneralTools.flipReplaceAnimation(bottom_options_container,normal_options_container)
+//                }
 
             }
 
@@ -194,9 +194,11 @@ import kotlin.collections.ArrayList
         holder.awayNameTv.text=dataObject.awayName
 
 
+
+
         if (dataObject.state!=0){
-              holder.scoreIndicatorHome.text=dataObject.homeScore.toString()
-              holder.scoreIndicatorAway.text=dataObject.awayScore.toString()
+              holder.scoreIndicatorHome.text=dataObject.homeScore.toString() +"  "+dataObject.homeYellow +"  "+dataObject.homeRed
+              holder.scoreIndicatorAway.text=dataObject.awayScore.toString() +"  "+dataObject.awayYellow +"  "+dataObject.awayRed
         }else{
 
         }
@@ -233,8 +235,10 @@ import kotlin.collections.ArrayList
 
             }
         }
-        holder.redCard.text=context.getString(R.string.red_card)+" "+dataObject.homeRed+":"+dataObject.awayRed
-        holder.yellowCard.text=context.getString(R.string.yellow_card)+" "+dataObject.homeYellow+":"+dataObject.awayYellow
+
+
+        //holder.redCard.text=context.getString(R.string.red_card)+" "+dataObject.homeRed+":"+dataObject.awayRed
+        //holder.yellowCard.text=context.getString(R.string.yellow_card)+" "+dataObject.homeYellow+":"+dataObject.awayYellow
         val c_ht="C= "+dataObject.homeCorner.toString()+":"+dataObject.awayCorner.toString()+" HT= "+dataObject.homeHalfScore.toString()+":"+dataObject.awayHalfScore.toString()
         holder.cornerRatio.text=c_ht
         if (position==dataList.size-1&&loadMore)

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -65,9 +66,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/dark_grey_bg"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout_game_filters"
         android:id="@+id/top_layout_cont"
-        />
+        tools:ignore="MissingConstraints" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -113,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tab_layout_cont"
+            android:background="@color/black"
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
@@ -122,9 +123,11 @@
                 android:background="@color/over_white_light_grey"
                 android:clipToPadding="false"
                 app:tabBackground="@drawable/time_tab_selector"
-                app:tabIndicatorColor="@color/selected_time_tab"
-                app:tabSelectedTextColor="@color/text_color_tab_pressed"
-                app:tabTextColor="@color/alt_grey"
+                app:tabIndicatorColor="@color/selected_tab"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/white"
+                app:tabIndicatorHeight="@dimen/_3sdp"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                 >
 
                 <com.google.android.material.tabs.TabItem
@@ -154,9 +157,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
-                app:tabIndicatorColor="@color/selected_tab"
+                android:layout_margin="@dimen/_3sdp"
                 app:tabSelectedTextColor="@color/text_color_tab_pressed"
-                app:tabTextColor="@color/alt_grey"
+                app:tabTextColor="@color/white"
+                style="@style/MyCustomTabLayout"
+                app:tabBackground="@drawable/s_time_tab_selector"
                 >
 
                 <com.google.android.material.tabs.TabItem
@@ -184,11 +189,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ft" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabOther"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/other" />
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:id="@+id/tabOther"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/other" />-->
 
             </com.google.android.material.tabs.TabLayout>
 
@@ -228,7 +233,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/schedule"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:layout_marginTop="@dimen/_10sdp"
         android:textStyle="bold"
