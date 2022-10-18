@@ -88,7 +88,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/odds_container"
                 app:layout_constraintStart_toEndOf="@+id/team_1_name"
-                app:layout_constraintTop_toTopOf="@+id/team_1_name" />
+                app:layout_constraintTop_toTopOf="@+id/team_1_name"
+                />
 
 
             <TextView
@@ -99,7 +100,8 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/score_indicator_home"
-                app:layout_constraintTop_toBottomOf="@+id/score_indicator_home" />
+                app:layout_constraintTop_toBottomOf="@+id/score_indicator_home"
+                />
 
             <TextView
                 android:id="@+id/team_2_name"
@@ -129,7 +131,8 @@
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/match_time"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/score_indicator_home" />
+                app:layout_constraintTop_toBottomOf="@+id/score_indicator_home"
+                />
 
             <LinearLayout
                 android:id="@+id/odds_container"
@@ -137,6 +140,7 @@
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="0.32"
                 android:orientation="vertical"
+                android:layout_marginEnd="@dimen/_4sdp"
                 android:background="@drawable/primary_rounded_rect"
                 android:backgroundTint="@color/main_adapter_background_color_comp1"
                 app:layout_constraintBottom_toBottomOf="@+id/team_2_name"
@@ -148,6 +152,7 @@
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     android:layout_weight="1">
+
                     <TextView
                         android:id="@+id/index_c1_r1"
                         android:layout_width="0dp"

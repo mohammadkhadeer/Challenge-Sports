@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import corescore.myapplication.R
@@ -34,6 +35,9 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
         var homeNameTv = itemView.findViewById<TextView>(R.id.team_1_name)
         var awayNameTv = itemView.findViewById<TextView>(R.id.team_2_name)
         var scoreIndicator = itemView.findViewById<TextView>(R.id.score_indicator)
+        var score_indicator_s = itemView.findViewById<TextView>(R.id.score_indicator_s)
+        var point_cont = itemView.findViewById<LinearLayout>(R.id.point_cont)
+
         var stateNdate = itemView.findViewById<TextView>(R.id.match_date)
         var matchTimeTv = itemView.findViewById<TextView>(R.id.match_time)
         var indexC1R1 = itemView.findViewById<TextView>(R.id.index_c1_r1)
@@ -42,11 +46,11 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
         var indexC2R2 = itemView.findViewById<TextView>(R.id.index_c2_r2)
         var indexC3R1 = itemView.findViewById<TextView>(R.id.index_c3_r1)
         var indexC3R2 = itemView.findViewById<TextView>(R.id.index_c3_r2)
-        var index_btn = itemView.findViewById<View>(R.id.index_bt)
-        var analysis_bt = itemView.findViewById<View>(R.id.analysis_bt)
-        var event_bt = itemView.findViewById<View>(R.id.event_bt)
-        var brief_bt = itemView.findViewById<View>(R.id.briefing_button)
-        var league_bt = itemView.findViewById<View>(R.id.league_bt)
+        //var index_btn = itemView.findViewById<View>(R.id.index_bt)
+        //var analysis_bt = itemView.findViewById<View>(R.id.analysis_bt)
+        //var event_bt = itemView.findViewById<View>(R.id.event_bt)
+        //var brief_bt = itemView.findViewById<View>(R.id.briefing_button)
+        //var league_bt = itemView.findViewById<View>(R.id.league_bt)
         var home_q1 = itemView.findViewById<TextView>(R.id.home_q1)
         var home_q2 = itemView.findViewById<TextView>(R.id.home_q2)
         var home_q3 = itemView.findViewById<TextView>(R.id.home_q3)
@@ -58,36 +62,36 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
         var away_q4 = itemView.findViewById<TextView>(R.id.away_q4)
         var away_f = itemView.findViewById<TextView>(R.id.away_f)
 
-        init {
-            index_btn.setOnClickListener {
-                communicator.onMessageFromAdapter(
-                    MainAdapterMessages.OPEN_INDEX,
-                    absoluteAdapterPosition,
-                    MainAdapterCommunicator.BASKETBALL_TYPE
-                )
-            }
-            analysis_bt.setOnClickListener {
-                communicator.onMessageFromAdapter(
-                    MainAdapterMessages.OPEN_ANALYSIS,
-                    absoluteAdapterPosition,
-                    MainAdapterCommunicator.BASKETBALL_TYPE
-                )
-            }
-            league_bt.setOnClickListener {
-                communicator.onMessageFromAdapter(
-                    MainAdapterMessages.OPEN_LEAGUE,
-                    absoluteAdapterPosition,
-                    MainAdapterCommunicator.BASKETBALL_TYPE
-                )
-            }
-            brief_bt.setOnClickListener {
-                communicator.onMessageFromAdapter(
-                    MainAdapterMessages.OPEN_BRIEF,
-                    absoluteAdapterPosition,
-                    MainAdapterCommunicator.BASKETBALL_TYPE
-                )
-            }
-        }
+//        init {
+//            index_btn.setOnClickListener {
+//                communicator.onMessageFromAdapter(
+//                    MainAdapterMessages.OPEN_INDEX,
+//                    absoluteAdapterPosition,
+//                    MainAdapterCommunicator.BASKETBALL_TYPE
+//                )
+//            }
+//            analysis_bt.setOnClickListener {
+//                communicator.onMessageFromAdapter(
+//                    MainAdapterMessages.OPEN_ANALYSIS,
+//                    absoluteAdapterPosition,
+//                    MainAdapterCommunicator.BASKETBALL_TYPE
+//                )
+//            }
+//            league_bt.setOnClickListener {
+//                communicator.onMessageFromAdapter(
+//                    MainAdapterMessages.OPEN_LEAGUE,
+//                    absoluteAdapterPosition,
+//                    MainAdapterCommunicator.BASKETBALL_TYPE
+//                )
+//            }
+//            brief_bt.setOnClickListener {
+//                communicator.onMessageFromAdapter(
+//                    MainAdapterMessages.OPEN_BRIEF,
+//                    absoluteAdapterPosition,
+//                    MainAdapterCommunicator.BASKETBALL_TYPE
+//                )
+//            }
+//        }
 
     }
 
@@ -105,14 +109,18 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
 
         val data = dataList[position]
         holder.apply {
-            event_bt.visibility = View.GONE
+            //event_bt.visibility = View.GONE
             leagueNameShort.text = data.leagueEn
             homeNameTv.text = data.homeTeamEn
             awayNameTv.text = data.awayTeamEn
             if (data.matchState == 0) {
                 scoreIndicator.text = context.getString(R.string.soon)
+                score_indicator_s.visibility = View.GONE
+                point_cont.visibility = View.GONE
+
             } else {
-                scoreIndicator.text = data.homeScore + ":" + data.awayScore
+                score_indicator_s.text = data.homeScore
+                scoreIndicator.text = data.awayScore
             }
             stateNdate.text = returnState(data)
             matchTimeTv.text = return24HrsOnly(returnTime(data))
@@ -148,11 +156,11 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
             away_q3.text = data.away3
             away_q4.text = data.away4
             away_f.text = data.awayScore
-            if (!data.havBriefing) {
-                brief_bt.visibility = View.GONE
-            } else {
-                brief_bt.visibility = View.VISIBLE
-            }
+//            if (!data.havBriefing) {
+//                brief_bt.visibility = View.GONE
+//            } else {
+//                brief_bt.visibility = View.VISIBLE
+//            }
         }
     }
 
