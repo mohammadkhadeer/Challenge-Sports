@@ -21,7 +21,9 @@ class PastFutureAdapter(var context: Context, var matches: List<Any>, var adapte
         val leagueNameTv = itemView.findViewById<TextView>(R.id.group_indicator)
         val ht_ratio = itemView.findViewById<TextView>(R.id.ht_ratio)
         val c_ratio = itemView.findViewById<TextView>(R.id.c_ratio)
-        val scoreIndicator = itemView.findViewById<TextView>(R.id.score_indicator)
+        var scoreIndicatorHome=itemView.findViewById<TextView>(R.id.score_indicator_home)
+        var scoreIndicatorAway=itemView.findViewById<TextView>(R.id.score_indicator_away)
+        //val scoreIndicator = itemView.findViewById<TextView>(R.id.score_indicator)
         val homeTeam = itemView.findViewById<TextView>(R.id.team_1_name)
         val awayTeam = itemView.findViewById<TextView>(R.id.team_2_name)
     }
@@ -109,10 +111,12 @@ class PastFutureAdapter(var context: Context, var matches: List<Any>, var adapte
                     match.homeHalfScore.toString() + ":" + match.awayHalfScore.toString()
                 c_ratio.text = match.homeCorner.toString() + ":" + match.awayCorner.toString()
                 if (match.state == 0) {
-                    scoreIndicator.text = context.getString(R.string.soon)
+                    scoreIndicatorHome.text = context.getString(R.string.soon)
+                    scoreIndicatorAway.visibility= View.GONE
                 } else {
-                    scoreIndicator.text =
-                        match.homeScore.toString() + " : " + match.awayScore.toString()
+                    scoreIndicatorHome.text=match.homeScore.toString() +"  "+match.homeYellow +"  "+match.homeRed
+                    scoreIndicatorAway.text=match.awayScore.toString() +"  "+match.awayYellow +"  "+match.awayRed
+
                 }
                 homeTeam.text =homeTeamT
                 awayTeam.text = awayTeamT

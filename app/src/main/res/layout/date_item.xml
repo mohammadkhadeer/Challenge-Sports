@@ -13,24 +13,27 @@
         android:id="@+id/day_of_week_tv"
         android:layout_width="wrap_content"
         android:text="M"
+        android:padding="@dimen/_10sdp"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:gravity="center"
         android:textSize="14sp"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"/>
 
-      <TextView
-        app:layout_constraintTop_toBottomOf="@id/day_of_week_tv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/date_tv"
-        android:layout_width="0dp"
-          android:padding="@dimen/_5sdp"
-        android:text="1"
-          android:gravity="center"
-        app:layout_constraintDimensionRatio="1:1"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_height="wrap_content"/>
+<!--      <TextView-->
+<!--        app:layout_constraintTop_toBottomOf="@id/day_of_week_tv"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:id="@+id/date_tv"-->
+<!--        android:layout_width="0dp"-->
+<!--          android:padding="@dimen/_5sdp"-->
+<!--        android:text="1"-->
+<!--          android:gravity="center"-->
+<!--        app:layout_constraintDimensionRatio="1:1"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_height="wrap_content"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

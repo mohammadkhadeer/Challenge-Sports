@@ -121,14 +121,14 @@ object GeneralTools {
     fun getPastWeekDates():List<String>{
         val datesList=ArrayList<String>()
         for (i in -1 downTo -8){
-            datesList.add(getCalculatedDate("E|yyyy-MM-dd",i))
+            datesList.add(getCalculatedDate("yyyy-MM-dd",i))
         }
         return datesList
     }
     fun getFutureDates():List<String>{
         val datesList=ArrayList<String>()
         for (i in 1 .. 8){
-            datesList.add(getCalculatedDate("E|yyyy-MM-dd",i))
+            datesList.add(getCalculatedDate("yyyy-MM-dd",i))
         }
         return datesList
     }
