@@ -7,14 +7,19 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.LinearGradient
+import android.graphics.PorterDuff
 import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -36,6 +41,9 @@ import java.util.*
 class BaseActivity : AppCompatActivity() , OnBackPressedListener{
     var shouldChangeBackpress=false
     var currentFrag:Fragment?=null
+    var footBallList = ArrayList<String>()
+    var baseHomeFragments:BaseHomeFragments?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -79,11 +87,49 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val searchIcon=findViewById<View>(R.id.search_icon)
         val closeSearchIcon=findViewById<View>(R.id.cross_icon)
         val searchBar=findViewById<EditText>(R.id.search_matches)
+        val spinnerFootBallOrBasketBall = findViewById<AppCompatSpinner>(R.id.league_spinner)
 
         val heading=findViewById<TextView>(R.id.top_heading_mainpage)
         //gradient text color
         val paint = heading.paint
         val width = paint.measureText(heading.text.toString())
+
+        footBallList.add(getString(R.string.football))
+        footBallList.add(getString(R.string.basketball))
+
+        spinnerFootBallOrBasketBall.getBackground().setColorFilter(Color.parseColor("#F24CA2"), PorterDuff.Mode.SRC_ATOP);
+        spinnerFootBallOrBasketBall.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            footBallList
+        )
+
+
+        spinnerFootBallOrBasketBall.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    p0: AdapterView<*>?,
+                    p1: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    when (position) {
+                        0 -> {
+                            baseHomeFragments?.footballCase()
+                        }
+                        else -> {
+                            baseHomeFragments?.basketballCase()
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+            }
+
+
+
         val textShader: Shader = LinearGradient(0f, 0f, width, heading.textSize, intArrayOf(
             Color.parseColor("#EC3BDA"),
             Color.parseColor("#F24CA2")
@@ -93,6 +139,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val baseViewPager=findViewById<ViewPager2>(R.id.baseViewPager)
         val newsFrag= NewsFragment.newInstance(false,":")
         val homeFragment=BaseHomeFragments.newInstance("","")
+        this.baseHomeFragments=homeFragment
         findViewById<View>(R.id.back_btn).setOnClickListener {
             onBackPressed()
         }
@@ -117,16 +164,22 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
                 if(position ==0)
                 {
                     heading.setText(getString(R.string.football))
+                    spinnerFootBallOrBasketBall.visibility=View.VISIBLE
+                    heading.visibility=View.GONE
                 }
 
                 if(position ==1)
                 {
                     heading.setText(getString(R.string.news))
+                    heading.visibility=View.VISIBLE
+                    spinnerFootBallOrBasketBall.visibility=View.GONE
                 }
 
                 if(position ==2)
                 {
                     heading.setText(getString(R.string.standings))
+                    heading.visibility=View.VISIBLE
+                    spinnerFootBallOrBasketBall.visibility=View.GONE
                 }
             }
         })
@@ -153,15 +206,16 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
                 0->{
                     //tab.text=getString(R.string.home)
                     tab.icon=ContextCompat.getDrawable(this,R.drawable.ic_home)
-
                 }
                 1->{
                     //tab.text=getString(R.string.news)
                     tab.icon=getDrawable(R.drawable.ic_news)
+
                 }
                 2->{
                     //tab.text=getString(R.string.standings)
                     tab.icon=ContextCompat.getDrawable(this,R.drawable.ic_standings)
+
                 }
             }
         }.attach()

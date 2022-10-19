@@ -36,14 +36,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/league_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/dropdown_custom2"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_95sdp"
+                    android:visibility="gone"
+                    android:textSize="@dimen/_18sdp"
+                    android:backgroundTint="@color/brand_color"
+                    android:spinnerMode="dropdown"
+                    />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
                     android:textSize="@dimen/_18sdp"
+                    android:visibility="visible"
                     android:textColor="@color/brand_color"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:id="@+id/top_heading_mainpage"/>
 
             </RelativeLayout>

@@ -58,6 +58,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
     var leagueList = ArrayList<String>()
     var basketBallAdapter: MainAdapterBasketBall? = null
     var adapterTypeParent: Int = MainAdapterCommunicator.FOOTBALL_TYPE
+    var recyclerViewMain= view?.findViewById<RecyclerView>(R.id.main_recycler_view)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -75,7 +76,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val recyclerViewMain = view.findViewById<RecyclerView>(R.id.main_recycler_view)
+        recyclerViewMain = view.findViewById<RecyclerView>(R.id.main_recycler_view)
         val vm = SpewViewModel.giveMeViewModel(requireActivity())
 
         val tablayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
@@ -122,8 +123,8 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                             this
                         )
 
-                        recyclerViewMain.adapter = mainAdapter
-                        recyclerViewMain.layoutManager =
+                        recyclerViewMain?.adapter = mainAdapter
+                        recyclerViewMain?.layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                         view.findViewById<View>(R.id.loader_anim_container).visibility = View.GONE
 
@@ -160,10 +161,8 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                 ) {
                                     when (position) {
                                         0 -> {
-                                            recyclerViewMain.adapter = mainAdapter
-                                            recyclerViewMain.adapter?.notifyDataSetChanged()
-                                            adapterTypeParent = MainAdapterCommunicator.FOOTBALL_TYPE
 
+                                            footballCase();
 //                                            mainAdapter?.setNewList(baseList, true)
 //                                            recyclerViewMain.adapter?.notifyDataSetChanged()
                                         }
@@ -178,9 +177,13 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
 //                                            mainAdapter?.setNewList(selectedList, false)
 //                                            mainAdapter?.notifyDataSetChanged()
 
-                                            recyclerViewMain.adapter = basketBallAdapter
-                                            recyclerViewMain.adapter?.notifyDataSetChanged()
-                                            adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
+
+//                                            recyclerViewMain?.adapter = basketBallAdapter
+//                                            recyclerViewMain?.adapter?.notifyDataSetChanged()
+//                                            adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
+
+                                            basketballCase();
+
 
                                         }
                                     }
@@ -205,7 +208,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                     when (position) {
                                         0 -> {
                                             mainAdapter?.setNewList(baseList, true)
-                                            recyclerViewMain.adapter?.notifyDataSetChanged()
+                                            recyclerViewMain?.adapter?.notifyDataSetChanged()
                                         }
                                         else -> {
 
@@ -237,8 +240,8 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                         data.data!!.matchList,
                                         15
                                     )
-                                    recyclerViewMain.adapter = pastFutureAdapter
-                                    recyclerViewMain.adapter?.notifyDataSetChanged()
+                                    recyclerViewMain?.adapter = pastFutureAdapter
+                                    recyclerViewMain?.adapter?.notifyDataSetChanged()
                                 }
                                 Status.ERROR -> {
 
@@ -257,8 +260,8 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                         data.data!!.matchList,
                                         MainAdapterCommunicator.BASKETBALL_TYPE
                                     )
-                                    recyclerViewMain.adapter = pastFutureAdapter
-                                    recyclerViewMain.adapter?.notifyDataSetChanged()
+                                    recyclerViewMain?.adapter = pastFutureAdapter
+                                    recyclerViewMain?.adapter?.notifyDataSetChanged()
                                 }
                                 Status.ERROR -> {
 
@@ -371,8 +374,8 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                             daysRecyclerView,
                             tablayout
                         )
-                        recyclerViewMain.adapter = mainAdapter
-                        recyclerViewMain.adapter?.notifyDataSetChanged()
+                        recyclerViewMain?.adapter = mainAdapter
+                        recyclerViewMain?.adapter?.notifyDataSetChanged()
                     }
                     2 -> {
                         GeneralTools.flipReplaceAnimation(
@@ -433,6 +436,18 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
         vm.makeIndexNetworkCall("1",GeneralTools.getLocale(requireContext()))
         vm.makeIndexBasketBallCall()
         refreshHighlights()
+    }
+
+    public fun footballCase() {
+        recyclerViewMain?.adapter = mainAdapter
+        recyclerViewMain?.adapter?.notifyDataSetChanged()
+        adapterTypeParent = MainAdapterCommunicator.FOOTBALL_TYPE
+    }
+
+    public fun basketballCase() {
+        recyclerViewMain?.adapter = basketBallAdapter
+        recyclerViewMain?.adapter?.notifyDataSetChanged()
+        adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
     }
 
     fun searchMatch(constraint: String) {
