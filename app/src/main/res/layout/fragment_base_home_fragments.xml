@@ -65,6 +65,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:visibility="gone"
         android:background="@color/dark_grey_bg"
         android:id="@+id/top_layout_cont"
         tools:ignore="MissingConstraints" />

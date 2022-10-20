@@ -98,9 +98,10 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         footBallList.add(getString(R.string.basketball))
 
         spinnerFootBallOrBasketBall.getBackground().setColorFilter(Color.parseColor("#F24CA2"), PorterDuff.Mode.SRC_ATOP);
+
         spinnerFootBallOrBasketBall.adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_item,
             footBallList
         )
 

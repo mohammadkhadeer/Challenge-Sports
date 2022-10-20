@@ -12,9 +12,10 @@
     </style>
 
 
-    <style name="dropdown_custom2" >
+    <style name="dropdown_custom2" parent="Base.Widget.AppCompat.Spinner">
         <item name="android:textColor">@color/brand_color</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">19sp</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">

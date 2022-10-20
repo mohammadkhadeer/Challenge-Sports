@@ -41,5 +41,7 @@
     <color name="main_adapter_background_color_comp1">#332771</color>
     <color name="main_adapter_background_color_comp2">#A89FDC</color>
     <color name="main_adapter_background_color_comp3">#A89FDC</color>
+    <color name="splash_screen_gradint_1">#2F2986</color>
+    <color name="splash_screen_gradint_2">#221D56</color>
 
 </resources>
