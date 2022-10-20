@@ -43,5 +43,6 @@
     <color name="main_adapter_background_color_comp3">#A89FDC</color>
     <color name="splash_screen_gradint_1">#2F2986</color>
     <color name="splash_screen_gradint_2">#221D56</color>
+    <color name="text_color">#BAB9BA</color>
 
 </resources>

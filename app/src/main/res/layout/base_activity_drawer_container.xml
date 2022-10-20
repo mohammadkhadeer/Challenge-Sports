@@ -82,19 +82,19 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="75"/>
+            android:layout_weight="80"/>
 
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/cancel_button_rl"
-            android:layout_weight="25">
+            android:layout_weight="20">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_1sdp"
                 android:padding="@dimen/_5sdp"
                 android:layout_centerInParent="true"
                 android:orientation="horizontal">
@@ -104,18 +104,18 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:src="@drawable/ic_search_icon"
-                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_1sdp"
                     app:tint="@color/white" />
 
-                <ImageView
-                    android:id="@+id/menu_icon"
-                    android:layout_width="@dimen/_20sdp"
-                    android:src="@drawable/ic_menu"
-                    android:layout_height="@dimen/_20sdp"
-                    app:tint="@color/white"
-                    android:layout_margin="@dimen/_2sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    />
+<!--                <ImageView-->
+<!--                    android:id="@+id/menu_icon"-->
+<!--                    android:layout_width="@dimen/_20sdp"-->
+<!--                    android:src="@drawable/ic_menu"-->
+<!--                    android:layout_height="@dimen/_20sdp"-->
+<!--                    app:tint="@color/white"-->
+<!--                    android:layout_margin="@dimen/_2sdp"-->
+<!--                    android:layout_marginEnd="@dimen/_16sdp"-->
+<!--                    />-->
 
             </LinearLayout>
 

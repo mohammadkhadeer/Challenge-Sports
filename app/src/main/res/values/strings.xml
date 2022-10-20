@@ -1,4 +1,6 @@
 <resources>
+    <string name="cancel">Cancel</string>
+    <string name="exit">Exit</string>
     <string name="result">Result</string>
     <string name="today">Today</string>
     <string name="schedule">Schedule</string>
@@ -228,7 +230,7 @@
     <string name="dangerous_attacks">Number of Dangerous Attacks</string>
     <string name="half_time_corners">Half-Time Corner Kick</string>
     <string name="posession">Half Court Possession</string>
-    <string name="exit_app_text">Are you sure you want to exit the app?</string>
+    <string name="exit_app_text">Are you sure you want to close application?</string>
     <string name="yes">yes</string>
     <string name="no">No</string>
     <string name="privacy_policy_link" translatable="false">https://corescorelive.blogspot.com/2022/10/privacy-policy.html</string>

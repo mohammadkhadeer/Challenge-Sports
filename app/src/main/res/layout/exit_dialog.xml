@@ -1,78 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#A9000000">
+    android:background="#A9000000"
+    >
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_5sdp"
         android:layout_marginHorizontal="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/exit_background"
         app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/exit_heading"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/exit_app"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/exit_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/exit_app_text"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exit_heading" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/header_cont"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/yes_bt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/yes"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/exit_text"
-                android:layout_marginTop="@dimen/_40sdp"
-                android:background="@drawable/red_ring_rect"
-                app:layout_constraintStart_toStartOf="@+id/exit_text"
-                android:backgroundTint="@color/colorPrimary"
-                android:paddingVertical="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/exit_text" />
-            <TextView
-                android:id="@+id/no_bt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/no"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/exit_text"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/red_ring_rect"
-                app:layout_constraintStart_toStartOf="@+id/exit_text"
-                android:paddingVertical="@dimen/_10sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/yes_bt" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerHorizontal="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="MissingConstraints"
+                        >
+
+                        <ImageView
+                            android:layout_width="@dimen/_17sdp"
+                            android:layout_height="@dimen/_17sdp"
+                            android:src="@drawable/new_exit_app_logo"
+                            android:tint="@color/white"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:id="@+id/exit_heading"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/exit_app"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:id="@+id/exit_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="@dimen/_60sdp"
+                        android:layout_marginEnd="@dimen/_60sdp"
+                        android:text="@string/exit_app_text"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_22sdp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerHorizontal="true"
+                        >
+
+                        <TextView
+                            android:id="@+id/yes_bt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/exit"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:paddingTop="@dimen/_6sdp"
+                            android:paddingBottom="@dimen/_6sdp"
+                            android:paddingStart="@dimen/_20sdp"
+                            android:paddingEnd="@dimen/_20sdp"
+                            android:background="@drawable/red_ring_rect"
+                            />
+
+                        <TextView
+                            android:id="@+id/no_bt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/cancel"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            android:paddingTop="@dimen/_6sdp"
+                            android:paddingBottom="@dimen/_6sdp"
+                            android:paddingStart="@dimen/_20sdp"
+                            android:paddingEnd="@dimen/_20sdp"
+                            android:background="@drawable/red_ring_rect"
+                            android:backgroundTint="@color/news_fragment_color"
+                            />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

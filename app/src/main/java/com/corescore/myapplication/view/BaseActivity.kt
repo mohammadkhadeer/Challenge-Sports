@@ -14,10 +14,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
@@ -60,28 +57,28 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 
         setContentView(R.layout.activity_base_activty)
 
-        val menuIcon=findViewById<View>(R.id.menu_icon)
-        menuIcon.setOnClickListener {
-            findViewById<DrawerLayout>(R.id.drawer_layout).openDrawer(GravityCompat.START)
-        }
+        //val menuIcon=findViewById<View>(R.id.menu_icon)
+//        menuIcon.setOnClickListener {
+//            findViewById<DrawerLayout>(R.id.drawer_layout).openDrawer(GravityCompat.START)
+//        }
 
         findViewById<View>(R.id.language_layout).setOnClickListener {
             showDialogForLanguages()
         }
         findViewById<View>(R.id.exit_app).setOnClickListener {
-            GeneralTools.exitDialog(this)
+            exatApp()
         }
         findViewById<View>(R.id.privacy_layout).setOnClickListener {
-            GeneralTools.privacyPolicy(this)
+            getToPrivacyPolicy()
         }
         findViewById<View>(R.id.feedback).setOnClickListener {
-            GeneralTools.feedback(this)
+            goToFeedBack()
         }
         findViewById<View>(R.id.share_app).setOnClickListener {
-            GeneralTools.shareApp(this)
+            goToShareApp()
         }
         findViewById<View>(R.id.rate_us).setOnClickListener {
-            GeneralTools.rateUs(this)
+            goToRateUs()
         }
 
         val searchIcon=findViewById<View>(R.id.search_icon)
@@ -178,7 +175,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 
                 if(position ==2)
                 {
-                    heading.setText(getString(R.string.standings))
+                    heading.setText(getString(R.string.settings))
                     heading.visibility=View.VISIBLE
                     spinnerFootBallOrBasketBall.visibility=View.GONE
                 }
@@ -188,14 +185,14 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         closeSearchIcon.setOnClickListener {
             if (searchBar.visibility==View.VISIBLE){
                 GeneralTools.flipReplaceAnimation(searchBar,heading)
-                GeneralTools.flipReplaceAnimation(it,menuIcon)
+                //GeneralTools.flipReplaceAnimation(it,menuIcon)
                 homeFragment.searchMatch("")
             }
         }
         searchIcon.setOnClickListener {
             if (searchBar.visibility==View.GONE){
                 GeneralTools.flipReplaceAnimation(heading,searchBar)
-                GeneralTools.flipReplaceAnimation(menuIcon,closeSearchIcon)
+                //GeneralTools.flipReplaceAnimation(menuIcon,closeSearchIcon)
             }else{
                 homeFragment.searchMatch(searchBar.editableText.toString())
             }
@@ -222,7 +219,27 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         }.attach()
     }
 
-    private fun showDialogForLanguages() {
+    public fun goToRateUs() {
+        GeneralTools.rateUs(this)
+    }
+
+    public fun goToShareApp() {
+        GeneralTools.shareApp(this)
+    }
+
+    public fun goToFeedBack() {
+        GeneralTools.feedback(this)
+    }
+
+    public fun getToPrivacyPolicy() {
+        GeneralTools.privacyPolicy(this)
+    }
+
+    public fun exatApp() {
+        GeneralTools.exitDialog(this)
+    }
+
+    public fun showDialogForLanguages() {
         var shouldRefresh=false
         val dialog=Dialog(this,android.R.style.ThemeOverlay)
         dialog.setContentView(R.layout.language_dialog)
@@ -232,80 +249,66 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val vietnam=dialog.findViewById<View>(R.id.vietnamese)
         val thai=dialog.findViewById<View>(R.id.thai)
 
+        val english_radio=dialog.findViewById<View>(R.id.english_radio)
+        val chinese_radio=dialog.findViewById<View>(R.id.chinese_radio)
+        val indonesian_radio=dialog.findViewById<View>(R.id.indonesian_radio)
+        val vietnam_radio=dialog.findViewById<View>(R.id.vietnamese_radio)
+        val thai_radio=dialog.findViewById<View>(R.id.thai_radio)
+        //val back_btn = dialog.findViewById<RelativeLayout>(R.id.back_btn_rl)
+
+        dialog.findViewById<View>(R.id.back_btn_rl).setOnClickListener {
+            dialog.dismiss()
+            if (shouldRefresh)
+                recreate()
+        }
         val english_text=dialog.findViewById<TextView>(R.id.english_text)
         val chinese_text=dialog.findViewById<TextView>(R.id.chinese_text)
         val indonesian_text=dialog.findViewById<TextView>(R.id.indonesian_text)
         val vietnamese_text=dialog.findViewById<TextView>(R.id.vietnamese_text)
         val thai_text=dialog.findViewById<TextView>(R.id.thai_text)
 
-        dialog.findViewById<View>(R.id.back_btn).setOnClickListener {
-            dialog.dismiss()
-            if (shouldRefresh)
-            recreate()
-        }
+
 
        fun toggleSelected(){
-           english.backgroundTintList =null
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-               english_text.setTextColor(Color.BLACK)
-           }
-           chinese.backgroundTintList =
-               null
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-               chinese_text.setTextColor(Color.BLACK)
-           }
-           indonesian.backgroundTintList =
-                null
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-               indonesian_text.setTextColor(Color.BLACK)
-           }
-           vietnam.backgroundTintList =
-                null
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-               vietnamese_text.setTextColor(Color.BLACK)
-           }
-           thai.backgroundTintList =
-                null
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-               thai_text.setTextColor(Color.BLACK)
-           }
 
            when(GeneralTools.getLocale(this)){
                SharedPreference.ENGLISH->{
-                   english.backgroundTintList =
-                       ContextCompat.getColorStateList(this, R.color.colorPrimary)
-                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                       english_text.setTextColor(getColor(R.color.white))
-                   }
+
+                   english_radio.visibility=View.VISIBLE
+                   chinese_radio.visibility=View.GONE
+                   indonesian_radio.visibility=View.GONE
+                   vietnam_radio.visibility=View.GONE
+                   thai_radio.visibility=View.GONE
                }
                SharedPreference.CHINESE->{
-                   chinese.backgroundTintList =
-                       ContextCompat.getColorStateList(this, R.color.colorPrimary)
-                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                       chinese_text.setTextColor(getColor(R.color.white))
-                   }
+
+                   chinese_radio.visibility=View.VISIBLE
+                   english_radio.visibility=View.GONE
+                   indonesian_radio.visibility=View.GONE
+                   vietnam_radio.visibility=View.GONE
+                   thai_radio.visibility=View.GONE
+
                }
                SharedPreference.INDONESIAN->{
-                   indonesian.backgroundTintList =
-                       ContextCompat.getColorStateList(this, R.color.colorPrimary)
-                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                       indonesian_text.setTextColor(getColor(R.color.white))
-                   }
+                   indonesian_radio.visibility=View.VISIBLE
+                   english_radio.visibility=View.GONE
+                   chinese_radio.visibility=View.GONE
+                   vietnam_radio.visibility=View.GONE
+                   thai_radio.visibility=View.GONE
                }
                SharedPreference.VIETNAMESE->{
-                   vietnam.backgroundTintList =
-                       ContextCompat.getColorStateList(this, R.color.colorPrimary)
-                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                       vietnamese_text.setTextColor(getColor(R.color.white))
-                   }
+                   vietnam_radio.visibility=View.VISIBLE
+                   indonesian_radio.visibility=View.GONE
+                   english_radio.visibility=View.GONE
+                   chinese_radio.visibility=View.GONE
+                   thai_radio.visibility=View.GONE
                }
                SharedPreference.THAI->{
-
-                   thai.backgroundTintList =
-                       ContextCompat.getColorStateList(this, R.color.colorPrimary)
-                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                       thai_text.setTextColor(getColor(R.color.white))
-                   }
+                   thai_radio.visibility=View.VISIBLE
+                   vietnam_radio.visibility=View.GONE
+                   indonesian_radio.visibility=View.GONE
+                   english_radio.visibility=View.GONE
+                   chinese_radio.visibility=View.GONE
                }
 
            }
@@ -355,7 +358,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
                     frag.hideFragment()
                 }
             }
-            GeneralTools.flipReplaceAnimation(findViewById(R.id.back_btn),findViewById(R.id.menu_icon))
+            //GeneralTools.flipReplaceAnimation(findViewById(R.id.back_btn),findViewById(R.id.menu_icon))
             shouldChangeBackpress=false
             findViewById<TextView>(R.id.top_heading_mainpage).text=getString(R.string.app_name)
             findViewById<View>(R.id.search_icon).visibility=View.VISIBLE
@@ -367,7 +370,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
     override fun changeBackPressBehaviour(currentFragment:Fragment) {
         this.currentFrag=currentFragment
         shouldChangeBackpress=true
-        GeneralTools.flipReplaceAnimation(findViewById(R.id.menu_icon),findViewById(R.id.back_btn))
+        //GeneralTools.flipReplaceAnimation(findViewById(R.id.menu_icon),findViewById(R.id.back_btn))
         findViewById<View>(R.id.search_icon).visibility=View.GONE
 
     }

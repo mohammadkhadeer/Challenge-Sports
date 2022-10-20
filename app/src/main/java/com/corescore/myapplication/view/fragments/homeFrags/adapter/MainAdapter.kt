@@ -217,9 +217,9 @@ import kotlin.collections.ArrayList
         else{
             val sdf=SimpleDateFormat("yyyy/M/dd HH:mm:ss")
             val sdf2=SimpleDateFormat("EEE, dd MMM")
-            holder.stateNdate.text= sdf2.format(sdf.parse(dataObject.matchTime).time)
+            //holder.stateNdate.text= sdf2.format(sdf.parse(dataObject.matchTime).time)
         }
-        holder.matchTimeTv.text=return24HrsOnly(returnTime(dataObject))
+        //holder.matchTimeTv.text=return24HrsOnly(returnTime(dataObject))
 
         if (dataObject.havOdds){
             try {
