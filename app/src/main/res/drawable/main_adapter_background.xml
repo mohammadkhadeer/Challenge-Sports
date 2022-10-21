@@ -7,17 +7,17 @@
             android:shape="rectangle">
 
             <solid
-                android:color="@color/not_selected_tab_border" >
+                android:color="@color/main_adapter_background_color" >
             </solid>
 
             <stroke
-                android:width="0.5dp"
-                android:color="@color/alt_grey" >
+                android:width="2dp"
+                android:color="@color/not_selected_tab_border" >
             </stroke>
 
             <corners
                 android:radius="4dp"
-                android:color="@color/alt_grey" >
+                android:color="@color/main_adapter_background_color" >
             </corners>
         </shape>
     </item><!-- pressed -->
@@ -28,17 +28,17 @@
             android:shape="rectangle">
 
             <solid
-                android:color="@color/not_selected_tab_border" >
+                android:color="@color/main_adapter_background_color" >
             </solid>
 
             <stroke
-                android:width="0.5dp"
-                android:color="@color/alt_grey" >
+                android:width="2dp"
+                android:color="@color/not_selected_tab_border" >
             </stroke>
 
             <corners
                 android:radius="4dp"
-                android:color="@color/alt_grey" >
+                android:color="@color/main_adapter_background_color" >
             </corners>
         </shape>
     </item><!-- focused -->

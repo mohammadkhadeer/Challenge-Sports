@@ -1,6 +1,7 @@
 package com.five.live.view
 
 import android.app.Dialog
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
@@ -57,24 +58,24 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 //            findViewById<DrawerLayout>(R.id.drawer_layout).openDrawer(GravityCompat.START)
 //        }
 
-        findViewById<View>(R.id.language_layout).setOnClickListener {
-            showDialogForLanguages()
-        }
-        findViewById<View>(R.id.exit_app).setOnClickListener {
-            exatApp()
-        }
-        findViewById<View>(R.id.privacy_layout).setOnClickListener {
-            getToPrivacyPolicy()
-        }
-        findViewById<View>(R.id.feedback).setOnClickListener {
-            goToFeedBack()
-        }
-        findViewById<View>(R.id.share_app).setOnClickListener {
-            goToShareApp()
-        }
-        findViewById<View>(R.id.rate_us).setOnClickListener {
-            goToRateUs()
-        }
+//        findViewById<View>(R.id.language_layout).setOnClickListener {
+//            showDialogForLanguages()
+//        }
+//        findViewById<View>(R.id.exit_app).setOnClickListener {
+//            exatApp()
+//        }
+//        findViewById<View>(R.id.privacy_layout).setOnClickListener {
+//            getToPrivacyPolicy()
+//        }
+//        findViewById<View>(R.id.feedback).setOnClickListener {
+//            goToFeedBack()
+//        }
+//        findViewById<View>(R.id.share_app).setOnClickListener {
+//            goToShareApp()
+//        }
+//        findViewById<View>(R.id.rate_us).setOnClickListener {
+//            goToRateUs()
+//        }
 
         val searchIcon=findViewById<View>(R.id.search_icon)
         val closeSearchIcon=findViewById<View>(R.id.cross_icon)
@@ -315,32 +316,43 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
             GeneralTools.setLocale(this,SharedPreference.ENGLISH)
             shouldRefresh=true
             toggleSelected()
+            restartApp()
         }
         chinese.setOnClickListener {
             GeneralTools.setLocale(this,SharedPreference.CHINESE)
             shouldRefresh=true
             toggleSelected()
+            restartApp()
         }
         indonesian.setOnClickListener {
             GeneralTools.setLocale(this,SharedPreference.INDONESIAN)
             shouldRefresh=true
             toggleSelected()
+            restartApp()
         }
         vietnam.setOnClickListener {
             GeneralTools.setLocale(this,SharedPreference.VIETNAMESE)
             shouldRefresh=true
             toggleSelected()
+            restartApp()
         }
         thai.setOnClickListener {
             GeneralTools.setLocale(this,SharedPreference.THAI)
             shouldRefresh=true
             toggleSelected()
+            restartApp()
         }
 
         dialog.show()
         dialog.setCancelable(false)
     }
 
+    private fun restartApp() {
+        val intent = Intent(this@BaseActivity, SplashScreen::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+        finish()
+    }
     override fun onBackPressed() {
         if (shouldChangeBackpress){
             when(currentFrag){

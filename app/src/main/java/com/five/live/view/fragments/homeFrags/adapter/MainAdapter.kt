@@ -138,10 +138,10 @@ import kotlin.collections.ArrayList
 
             }
 
-            itemView.setOnLongClickListener(View.OnLongClickListener {
-                communicator.onMessageFromAdapter(MainAdapterMessages.LONG_PRESS_ITEM,absoluteAdapterPosition,fragment_container.id)
-                return@OnLongClickListener true
-            })
+//            itemView.setOnLongClickListener(View.OnLongClickListener {
+//                communicator.onMessageFromAdapter(MainAdapterMessages.LONG_PRESS_ITEM,absoluteAdapterPosition,fragment_container.id)
+//                return@OnLongClickListener true
+//            })
 
             index_btn.setOnClickListener {
                 communicator.onMessageFromAdapter(MainAdapterMessages.OPEN_INDEX,layoutPosition,fragment_container.id)
