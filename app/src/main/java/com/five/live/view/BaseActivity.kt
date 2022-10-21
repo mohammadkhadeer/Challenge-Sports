@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.five.live.utils.GeneralTools
@@ -80,6 +81,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val searchIcon=findViewById<View>(R.id.search_icon)
         val closeSearchIcon=findViewById<View>(R.id.cross_icon)
         val searchBar=findViewById<EditText>(R.id.search_matches)
+        val edt_cont=findViewById<View>(R.id.edt_cont)
         val spinnerFootBallOrBasketBall = findViewById<AppCompatSpinner>(R.id.league_spinner)
 
         val heading=findViewById<TextView>(R.id.top_heading_mainpage)
@@ -89,6 +91,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 
         footBallList.add(getString(R.string.football))
         footBallList.add(getString(R.string.basketball))
+
 
         spinnerFootBallOrBasketBall.getBackground().setColorFilter(Color.parseColor("#F24CA2"), PorterDuff.Mode.SRC_ATOP);
 
@@ -180,6 +183,9 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         //baseViewPager.setPageTransformer(Pager2_GateTransformer())
         closeSearchIcon.setOnClickListener {
             if (searchBar.visibility==View.VISIBLE){
+                closeSearchIcon.visibility=View.GONE
+                edt_cont.visibility=View.GONE
+                spinnerFootBallOrBasketBall.visibility=View.VISIBLE
                 GeneralTools.flipReplaceAnimation(searchBar,heading)
                 //GeneralTools.flipReplaceAnimation(it,menuIcon)
                 homeFragment.searchMatch("")
@@ -187,13 +193,20 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         }
         searchIcon.setOnClickListener {
             if (searchBar.visibility==View.GONE){
+                edt_cont.visibility=View.VISIBLE
+                closeSearchIcon.visibility=View.VISIBLE
+                spinnerFootBallOrBasketBall.visibility=View.GONE
                 GeneralTools.flipReplaceAnimation(heading,searchBar)
                 //GeneralTools.flipReplaceAnimation(menuIcon,closeSearchIcon)
             }else{
+
                 homeFragment.searchMatch(searchBar.editableText.toString())
             }
         }
+        searchBar.addTextChangedListener {
+            homeFragment.searchMatch(it.toString())
 
+        }
         val tabLayout=findViewById<TabLayout>(R.id.tabLayoutMain)
         TabLayoutMediator(tabLayout,baseViewPager){tab,position->
             when(position){

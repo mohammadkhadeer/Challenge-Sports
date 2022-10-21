@@ -44,7 +44,7 @@
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_70sdp"
+                    android:layout_marginEnd="@dimen/_50sdp"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:visibility="gone"
                     android:textSize="@dimen/_18sdp"
@@ -128,52 +128,64 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:weightSum="100"
+        tools:ignore="MissingConstraints">
 
-
-
-<!--        <ImageView-->
-<!--            android:id="@+id/menu_icon"-->
-<!--            android:layout_width="@dimen/_35sdp"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:layout_height="@dimen/_35sdp"-->
-<!--            android:padding="@dimen/_7sdp"-->
-<!--            android:visibility="gone"-->
-<!--            android:src="@drawable/ic_menu"-->
-<!--            app:tint="@color/black" />-->
-
-        <ImageView
-            android:id="@+id/cross_icon"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_width="@dimen/_35sdp"
-            android:visibility="gone"
-            android:src="@drawable/ic_cross"
-            android:padding="@dimen/_5sdp"
-            android:layout_height="@dimen/_35sdp"
-            app:tint="@color/black" />
-
-        <EditText
-            android:id="@+id/search_matches"
-            android:textColor="@color/grey_text"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_weight="10">
+
+            <ImageView
+                android:id="@+id/cross_icon"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_width="@dimen/_35sdp"
+                android:visibility="gone"
+                android:src="@drawable/ic_cross"
+                android:padding="@dimen/_1sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerVertical="true"
+                app:tint="@color/white"
+                />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/main_adapter_background"
+            android:layout_margin="@dimen/_4sdp"
+            android:id="@+id/edt_cont"
             android:visibility="gone"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/_5sdp"
-            android:paddingVertical="@dimen/_5sdp"
-            android:background="@drawable/primary_rounded_rect"
-            android:backgroundTint="@color/white"
-            android:layout_height="wrap_content"
-            android:hint="@string/search_here"/>
+            android:layout_weight="89">
 
+            <EditText
+                android:id="@+id/search_matches"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:textCursorDrawable="@drawable/c"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:paddingVertical="@dimen/_8sdp"
+                android:background="@drawable/primary_rounded_rect"
+                android:backgroundTint="@color/main_adapter_background_color"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_here"/>
 
+        </RelativeLayout>
 
     </LinearLayout>
+
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/baseViewPager"
