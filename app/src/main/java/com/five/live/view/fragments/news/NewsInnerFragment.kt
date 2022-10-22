@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.api.ApiHelperImpl
 import com.five.live.model.api.RetroInstance
 import com.five.live.model.data.news.List

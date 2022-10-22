@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.utils.Formatters
 import com.five.live.utils.SpewViewModel
 import com.five.live.utils.Status

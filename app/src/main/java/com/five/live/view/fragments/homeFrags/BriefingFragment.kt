@@ -10,7 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.utils.SpewViewModel
 import com.five.live.utils.Status
 import com.five.live.view.fragments.homeFrags.adapter.MainAdapterCommunicator

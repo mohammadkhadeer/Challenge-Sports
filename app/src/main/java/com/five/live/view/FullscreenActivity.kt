@@ -6,7 +6,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import corescore.myapplication.R
+import sports.myapplication.R
 
 class FullscreenActivity : AppCompatActivity() {
     lateinit var exo:ExoPlayer

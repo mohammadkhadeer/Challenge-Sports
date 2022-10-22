@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.basketball.odds.BasketballOddsBase
 import com.five.live.model.data.homepage.liveOdds.BaseLiveOdds
 import com.five.live.utils.SpewViewModel

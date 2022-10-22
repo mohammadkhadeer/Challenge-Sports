@@ -9,7 +9,7 @@ import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.basketball.homepage.Match
 import java.text.SimpleDateFormat
 import java.util.*

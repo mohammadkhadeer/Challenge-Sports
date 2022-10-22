@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.view.adapters.RecyclerViewOnclick
 
 class NewsAdapter (var context: Context, var  newsList:ArrayList<com.five.live.model.data.news.List>, var loadMoreCommunicator:LoadMoreCommunicator, var onclick: RecyclerViewOnclick):RecyclerView.Adapter<NewsAdapter.viewHolder>(){

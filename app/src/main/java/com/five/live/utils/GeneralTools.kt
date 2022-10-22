@@ -27,8 +27,8 @@ import com.five.live.sharedPreferences.PromptFrequency.getPrompt_messageFromSP
 import com.five.live.sharedPreferences.PromptFrequency.getPrompt_titleFromSP
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import corescore.myapplication.BuildConfig
-import corescore.myapplication.R
+import sports.myapplication.BuildConfig
+import sports.myapplication.R
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.new2.Match
 import com.five.live.utils.GeneralTools
 import com.five.live.view.fragments.homeFrags.adapter.MainAdapter

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.new2.Match
 import com.five.live.view.fragments.homeFrags.adapter.MainAdapter
 import java.text.SimpleDateFormat

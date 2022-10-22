@@ -6,7 +6,7 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.utils.SharedPreference
 import com.five.live.view.fragments.authFrags.AuthFragmentCommunicationListener
 import com.five.live.view.fragments.authFrags.FragmentMessage

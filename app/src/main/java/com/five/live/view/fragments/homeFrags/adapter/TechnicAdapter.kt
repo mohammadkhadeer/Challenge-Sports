@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.event.formatted.FormattedTecnicEvent
 import com.five.live.utils.Formatters
 

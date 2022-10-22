@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.news.details.OnPostDetailResponse
 
 class DatesListAdapter(var context: Context,var dates:List<String>,var listener:OnPostDetailResponse<String>):RecyclerView.Adapter<DatesListAdapter.DatesListAdapterViewHolder>() {

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.five.live.model.data.homepage.new2.Match
 import com.five.live.model.data.news.details.OnPostDetailResponse

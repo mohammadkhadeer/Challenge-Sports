@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.five.live.model.data.homepage.new2.Match
 import com.five.live.model.data.news.details.OnPostDetailResponse

@@ -1,7 +1,7 @@
 package com.five.live.utils
 
 import android.content.Context
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.event.Event
 import com.five.live.model.data.homepage.event.EventBase
 import com.five.live.model.data.homepage.event.EventX

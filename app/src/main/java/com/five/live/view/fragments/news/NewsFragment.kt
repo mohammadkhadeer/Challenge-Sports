@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.view.adapters.ViewPagerAdapter
 import com.five.live.view.fragments.OnBackPressedListener
 import com.five.live.view.fragments.OnDetailListener

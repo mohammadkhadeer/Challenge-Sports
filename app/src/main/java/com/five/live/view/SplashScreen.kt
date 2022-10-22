@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.five.live.model.api.ApiReq.sentReq
 import com.five.live.utils.GeneralTools
 import com.five.live.utils.SharedPreference
-import corescore.myapplication.R
+import sports.myapplication.R
 import java.util.*
 
 @SuppressLint("CustomSplashScreen")

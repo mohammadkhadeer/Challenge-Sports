@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.basketball.analysis.AwayLastMatche
 import com.five.live.model.data.basketball.analysis.HeadToHead
 import com.five.live.model.data.basketball.analysis.HomeLastMatche

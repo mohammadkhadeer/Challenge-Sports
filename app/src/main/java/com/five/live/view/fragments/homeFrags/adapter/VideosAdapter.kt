@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.videos.List
 import com.five.live.view.adapters.RecyclerViewOnclick
 

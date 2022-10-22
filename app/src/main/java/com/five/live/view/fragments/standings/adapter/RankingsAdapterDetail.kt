@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.leagueInfo.TeamInfo
 import com.five.live.model.data.homepage.leagueInfo.TotalStanding
 import com.five.live.utils.GeneralTools

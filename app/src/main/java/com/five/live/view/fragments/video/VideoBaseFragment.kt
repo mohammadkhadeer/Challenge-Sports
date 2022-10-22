@@ -10,7 +10,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.api.ApiHelperImpl
 import com.five.live.model.api.RetroInstance
 import com.five.live.model.data.news.details.OnPostDetailResponse

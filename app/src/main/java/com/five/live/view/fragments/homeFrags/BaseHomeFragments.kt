@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.new2.Match
 import com.five.live.model.data.news.details.OnPostDetailResponse
 import com.five.live.utils.GeneralTools

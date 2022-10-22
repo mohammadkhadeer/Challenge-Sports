@@ -32,7 +32,7 @@ import com.five.live.view.fragments.news.NewsFragment
 import com.five.live.view.fragments.standings.StandingBaseFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import corescore.myapplication.R
+import sports.myapplication.R
 import java.util.*
 
 

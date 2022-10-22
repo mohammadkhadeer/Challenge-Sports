@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.five.live.view.BaseActivity
-import corescore.myapplication.R
+import sports.myapplication.R
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match

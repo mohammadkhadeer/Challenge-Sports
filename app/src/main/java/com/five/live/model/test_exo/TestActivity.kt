@@ -3,7 +3,7 @@ package com.five.live.model.test_exo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.view.fragments.homeFrags.IndexDisplayFragmnet
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem

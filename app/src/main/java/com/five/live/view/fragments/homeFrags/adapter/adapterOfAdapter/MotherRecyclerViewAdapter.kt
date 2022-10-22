@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.homepage.leagueInfo.any.LeagueStandingTypeGroupBase
 import com.five.live.utils.GeneralTools
 import com.five.live.utils.SharedPreference

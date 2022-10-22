@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import corescore.myapplication.R
+import sports.myapplication.R
 import com.five.live.model.data.basketball.odds.BasketballOddsBase
 import com.five.live.view.fragments.homeFrags.adapter.OddsRvPopulatorBasketball
 
