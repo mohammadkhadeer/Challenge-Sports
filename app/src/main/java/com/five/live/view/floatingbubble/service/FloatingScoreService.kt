@@ -41,7 +41,7 @@ class FloatingScoreService:FloatingBubbleService() {
         val display = (this.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
         val bubble= FloatingBubble.Builder()
             .with(this)
-            .setIcon(R.drawable.app_icon_round)
+            .setIcon(R.drawable.new_app_icon)
             .setRemoveIcon(R.drawable.ic_cross)
             .addFloatingBubbleTouchListener(object : FloatingBubble.TouchEvent {
                 override fun onDestroy() {

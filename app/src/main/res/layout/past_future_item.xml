@@ -366,7 +366,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_index" />
+                        />
+<!--                    android:src="@drawable/ic_index"-->
 
                     <TextView
 
@@ -391,7 +392,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_analysis" />
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -415,7 +416,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_league" />
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -439,7 +440,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_event" />
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -463,7 +464,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_briefing" />
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -488,7 +489,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_animation" />
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -515,7 +516,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_live" />
+                        />
 
                     <TextView
                         android:layout_width="match_parent"

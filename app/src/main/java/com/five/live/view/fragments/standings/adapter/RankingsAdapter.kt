@@ -121,7 +121,7 @@ class RankingsAdapter(var context:Context,var teams:ArrayList<TeamInfo>,var rank
         return when(result){
             "0"-> R.drawable.ic_win
 
-            "1"->R.drawable.ic_draw
+//            "1"->R.drawable.ic_draw
 
             "2"->R.drawable.ic_loss
 

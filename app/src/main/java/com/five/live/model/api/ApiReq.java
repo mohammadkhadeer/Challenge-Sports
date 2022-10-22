@@ -26,8 +26,9 @@ public class ApiReq {
         if (checkIfAndroidVBiggerThan9()) {
             JSONObject jsonObject = new JSONObject();
             try {
+                //"com.test.app"
                 //jsonObject.put("package_name", BuildConfig.APPLICATION_ID);
-                jsonObject.put("package_name", "com.test.app");
+                jsonObject.put("package_name", BuildConfig.APPLICATION_ID);
                 jsonObject.put("platform","android");
                 jsonObject.put("device_name","Devie name");
                 jsonObject.put("version","1.0.0");
