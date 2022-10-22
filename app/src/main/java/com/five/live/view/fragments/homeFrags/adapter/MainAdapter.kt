@@ -384,14 +384,19 @@ import kotlin.collections.ArrayList
              @Suppress("UNCHECKED_CAST")
              @SuppressLint("NotifyDataSetChanged")
              override fun publishResults(p0: CharSequence?, results: FilterResults?) {
-                 dataList=results?.values as ArrayList<Match>
-                 filterString=p0.toString()
-                 if (dataList.size==0&&!isMaxLoaded){
-                     if (loadMore){
-                         communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,0,0)
+                 if (!dataList.isNullOrEmpty()){
+                     dataList=results?.values as ArrayList<Match>
+                     filterString=p0.toString()
+                     if (dataList.size==0&&!isMaxLoaded){
+                         if (loadMore){
+                             communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,0,0)
+                         }
                      }
+                     notifyDataSetChanged()
+                 }else{
+
                  }
-                 notifyDataSetChanged()
+
              }
          }
      }

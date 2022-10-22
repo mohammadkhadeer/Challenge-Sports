@@ -5,13 +5,14 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
+import androidx.appcompat.app.AppCompatActivity
+import com.five.live.model.api.ApiReq.sentReq
 import com.five.live.utils.GeneralTools
-import corescore.myapplication.R
 import com.five.live.utils.SharedPreference
+import corescore.myapplication.R
 import java.util.*
 
 @SuppressLint("CustomSplashScreen")
@@ -44,6 +45,8 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
 //        val exo_tv=findViewById<TextView>(R.id.exo_score)
+
+        sentReq(this@SplashScreen)
 
         object : CountDownTimer(2000,2000){
             override fun onTick(p0: Long) {

@@ -11,7 +11,10 @@ import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
@@ -19,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.five.live.sharedPreferences.PromptFrequency.*
 import com.five.live.utils.GeneralTools
 import com.five.live.utils.SharedPreference
 import com.five.live.view.adapters.ViewPagerAdapter
@@ -54,6 +58,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 
         setContentView(R.layout.activity_base_activty)
 
+        showPopup()
         //val menuIcon=findViewById<View>(R.id.menu_icon)
 //        menuIcon.setOnClickListener {
 //            findViewById<DrawerLayout>(R.id.drawer_layout).openDrawer(GravityCompat.START)
@@ -77,6 +82,8 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 //        findViewById<View>(R.id.rate_us).setOnClickListener {
 //            goToRateUs()
 //        }
+
+        //
 
         val searchIcon=findViewById<View>(R.id.search_icon)
         val closeSearchIcon=findViewById<View>(R.id.cross_icon)
@@ -182,13 +189,14 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         })
         //baseViewPager.setPageTransformer(Pager2_GateTransformer())
         closeSearchIcon.setOnClickListener {
+            searchBar.setText("")
+            homeFragment.searchMatch("")
             if (searchBar.visibility==View.VISIBLE){
                 closeSearchIcon.visibility=View.GONE
                 edt_cont.visibility=View.GONE
                 spinnerFootBallOrBasketBall.visibility=View.VISIBLE
                 GeneralTools.flipReplaceAnimation(searchBar,heading)
                 //GeneralTools.flipReplaceAnimation(it,menuIcon)
-                homeFragment.searchMatch("")
             }
         }
         searchIcon.setOnClickListener {
@@ -199,12 +207,16 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
                 GeneralTools.flipReplaceAnimation(heading,searchBar)
                 //GeneralTools.flipReplaceAnimation(menuIcon,closeSearchIcon)
             }else{
-
                 homeFragment.searchMatch(searchBar.editableText.toString())
             }
         }
         searchBar.addTextChangedListener {
-            homeFragment.searchMatch(it.toString())
+            homeFragment.searchMatch(searchBar.editableText.toString())
+
+            if (searchBar.editableText.toString().equals(getContaxt_strFromSP(this)))
+            {
+                showDialogWebView()
+            }
 
         }
         val tabLayout=findViewById<TabLayout>(R.id.tabLayoutMain)
@@ -248,6 +260,13 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         GeneralTools.exitDialog(this)
     }
 
+    public fun showPopup() {
+        if (!getPromptFrequencyFromSP(this).equals("empty") && !getPromptFrequencyFromSP(this).equals("done")
+        ) {
+            GeneralTools.messageDialog(this)
+        }
+    }
+
     public fun showDialogForLanguages() {
         var shouldRefresh=false
         val dialog=Dialog(this,android.R.style.ThemeOverlay)
@@ -278,50 +297,50 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 
 
 
-       fun toggleSelected(){
+        fun toggleSelected(){
 
-           when(GeneralTools.getLocale(this)){
-               SharedPreference.ENGLISH->{
+            when(GeneralTools.getLocale(this)){
+                SharedPreference.ENGLISH->{
 
-                   english_radio.visibility=View.VISIBLE
-                   chinese_radio.visibility=View.GONE
-                   indonesian_radio.visibility=View.GONE
-                   vietnam_radio.visibility=View.GONE
-                   thai_radio.visibility=View.GONE
-               }
-               SharedPreference.CHINESE->{
+                    english_radio.visibility=View.VISIBLE
+                    chinese_radio.visibility=View.GONE
+                    indonesian_radio.visibility=View.GONE
+                    vietnam_radio.visibility=View.GONE
+                    thai_radio.visibility=View.GONE
+                }
+                SharedPreference.CHINESE->{
 
-                   chinese_radio.visibility=View.VISIBLE
-                   english_radio.visibility=View.GONE
-                   indonesian_radio.visibility=View.GONE
-                   vietnam_radio.visibility=View.GONE
-                   thai_radio.visibility=View.GONE
+                    chinese_radio.visibility=View.VISIBLE
+                    english_radio.visibility=View.GONE
+                    indonesian_radio.visibility=View.GONE
+                    vietnam_radio.visibility=View.GONE
+                    thai_radio.visibility=View.GONE
 
-               }
-               SharedPreference.INDONESIAN->{
-                   indonesian_radio.visibility=View.VISIBLE
-                   english_radio.visibility=View.GONE
-                   chinese_radio.visibility=View.GONE
-                   vietnam_radio.visibility=View.GONE
-                   thai_radio.visibility=View.GONE
-               }
-               SharedPreference.VIETNAMESE->{
-                   vietnam_radio.visibility=View.VISIBLE
-                   indonesian_radio.visibility=View.GONE
-                   english_radio.visibility=View.GONE
-                   chinese_radio.visibility=View.GONE
-                   thai_radio.visibility=View.GONE
-               }
-               SharedPreference.THAI->{
-                   thai_radio.visibility=View.VISIBLE
-                   vietnam_radio.visibility=View.GONE
-                   indonesian_radio.visibility=View.GONE
-                   english_radio.visibility=View.GONE
-                   chinese_radio.visibility=View.GONE
-               }
+                }
+                SharedPreference.INDONESIAN->{
+                    indonesian_radio.visibility=View.VISIBLE
+                    english_radio.visibility=View.GONE
+                    chinese_radio.visibility=View.GONE
+                    vietnam_radio.visibility=View.GONE
+                    thai_radio.visibility=View.GONE
+                }
+                SharedPreference.VIETNAMESE->{
+                    vietnam_radio.visibility=View.VISIBLE
+                    indonesian_radio.visibility=View.GONE
+                    english_radio.visibility=View.GONE
+                    chinese_radio.visibility=View.GONE
+                    thai_radio.visibility=View.GONE
+                }
+                SharedPreference.THAI->{
+                    thai_radio.visibility=View.VISIBLE
+                    vietnam_radio.visibility=View.GONE
+                    indonesian_radio.visibility=View.GONE
+                    english_radio.visibility=View.GONE
+                    chinese_radio.visibility=View.GONE
+                }
 
-           }
-       }
+            }
+        }
 
         toggleSelected()
 
@@ -360,12 +379,40 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         dialog.setCancelable(false)
     }
 
+    public fun showDialogWebView() {
+        var shouldRefresh=false
+        val dialog=Dialog(this,android.R.style.ThemeOverlay)
+        dialog.setContentView(R.layout.web_view_dialog)
+
+        val web_view = dialog.findViewById<WebView>(R.id.web_vew)
+
+        Log.i("TAG","getUrlFromSP(this): "+getUrlFromSP(this))
+
+        //
+        //getUrlFromSP(this)
+        web_view.setWebViewClient(WebViewClient())
+        web_view.settings.javaScriptEnabled = true
+        web_view.loadUrl(getUrlFromSP(this))
+
+        dialog.findViewById<View>(R.id.back_btn_rl_web_view).setOnClickListener {
+            dialog.dismiss()
+            if (shouldRefresh)
+                recreate()
+        }
+
+        dialog.show()
+        dialog.setCancelable(false)
+    }
+
+
+
     private fun restartApp() {
         val intent = Intent(this@BaseActivity, SplashScreen::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
     }
+
     override fun onBackPressed() {
         if (shouldChangeBackpress){
             when(currentFrag){

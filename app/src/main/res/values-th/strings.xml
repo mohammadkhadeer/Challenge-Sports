@@ -1,4 +1,5 @@
 <resources>
+    <string name="ok">ตกลง</string>
     <string name="cancel">ยกเลิก</string>
     <string name="exit">ทางออก</string>
     <string name="highlights">ไฮไลท์</string>

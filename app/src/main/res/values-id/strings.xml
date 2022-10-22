@@ -1,4 +1,5 @@
 <resources>
+    <string name="ok">Oke</string>
     <string name="cancel">membatalkan</string>
     <string name="exit">KELUAR</string>
     <string name="highlights">Highlight</string>

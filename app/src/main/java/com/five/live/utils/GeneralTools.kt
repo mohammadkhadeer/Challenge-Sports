@@ -17,11 +17,14 @@ import android.net.Uri
 import android.os.Build
 import android.os.Parcelable
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import com.five.live.model.data.homepage.new2.Match
 import com.five.live.view.fragments.homeFrags.adapter.MainAdapter
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.five.live.sharedPreferences.PromptFrequency.getPrompt_messageFromSP
+import com.five.live.sharedPreferences.PromptFrequency.getPrompt_titleFromSP
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import corescore.myapplication.BuildConfig
@@ -249,6 +252,21 @@ object GeneralTools {
             activity.finish()
         }
         dialog.findViewById<View>(R.id.no_bt).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    fun messageDialog(activity:Activity){
+
+        val dialog=Dialog(activity,android.R.style.ThemeOverlay)
+        dialog.setContentView(R.layout.popup_dialog)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog.findViewById<TextView>(R.id.title_message).setText(getPrompt_titleFromSP(activity.applicationContext))
+        dialog.findViewById<TextView>(R.id.message).setText(getPrompt_messageFromSP(activity.applicationContext))
+
+        dialog.findViewById<View>(R.id.ok_bt).setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()

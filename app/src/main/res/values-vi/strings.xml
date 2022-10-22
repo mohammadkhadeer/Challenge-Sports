@@ -1,4 +1,5 @@
 <resources>
+    <string name="ok">Được</string>
     <string name="cancel">sự hủy bỏ</string>
     <string name="exit">Lối ra</string>
     <string name="highlights">Điểm nổi bật</string>
