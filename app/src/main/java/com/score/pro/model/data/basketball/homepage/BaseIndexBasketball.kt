@@ -1,0 +1,9 @@
+package com.score.pro.model.data.basketball.homepage
+
+
+import com.google.gson.annotations.SerializedName
+
+data class BaseIndexBasketball(
+    @SerializedName("matchList")
+    var matchList: List<Match> = listOf()
+)

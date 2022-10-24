@@ -22,17 +22,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="com.five.live.view.FullscreenActivity"
+            android:name="com.score.pro.view.FullscreenActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
-            android:name="com.five.live.view.OnboardingActivity"
+            android:name="com.score.pro.view.OnboardingActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.five.live.view.SplashScreen"
+            android:name="com.score.pro.view.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -43,12 +43,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.five.live.view.FirstActivity"
+            android:name="com.score.pro.view.FirstActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.five.live.view.BaseActivity"
+            android:name="com.score.pro.view.BaseActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -56,15 +56,15 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.five.live.model.test_exo.TestActivity"
+            android:name="com.score.pro.model.test_exo.TestActivity"
             android:configChanges="uiMode"
             android:exported="true" >
 
         </activity>
 
-        <receiver android:name="com.five.live.utils.MatchReminder" />
+        <receiver android:name="com.score.pro.utils.MatchReminder" />
 
-        <service android:name="com.five.live.view.floatingbubble.service.FloatingScoreService" />
+        <service android:name="com.score.pro.view.floatingbubble.service.FloatingScoreService" />
     </application>
 
 </manifest>
