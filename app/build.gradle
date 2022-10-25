@@ -11,7 +11,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.score.pro"
+        applicationId "com.score.pro.ball"
         minSdk 21
         targetSdk 31
         versionCode 1
@@ -82,5 +82,5 @@ dependencies {
     implementation 'com.github.TorryDo:Floating-Bubble-View:0.3.1'
     implementation 'com.github.CodeBoy722:ViewPager2_Transformers:1.0.0'
     implementation'com.squareup.okhttp3:okhttp:4.9.0'
-
+    implementation 'com.google.android.material:material:1.2.0'
 }

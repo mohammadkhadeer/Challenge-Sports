@@ -1,9 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true"
-        android:drawable="@drawable/s_time_tab"/>
-
+    <!-- UNSELECTED TAB STATE -->
     <item android:state_selected="false"
-        android:drawable="@drawable/s_not_selected_time_tab" />
+        android:state_pressed="false">
+
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- Bottom indicator color for the UNSELECTED tab state -->
+            <item
+                android:bottom="@dimen/_5sdp"
+                android:left="@dimen/_5sdp"
+                android:right="@dimen/_5sdp"
+                android:top="@dimen/_5sdp">
+
+                <shape android:shape="rectangle">
+                    <stroke android:color="@color/colorPrimary"
+                        android:width="2dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+
+
+    <item android:state_selected="true"
+        android:state_pressed="true">
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- Bottom indicator color for the UNSELECTED tab state -->
+            <item
+                android:bottom="@dimen/_5sdp"
+                android:left="@dimen/_5sdp"
+                android:right="@dimen/_5sdp"
+                android:top="@dimen/_5sdp"
+                >
+
+                <shape android:shape="rectangle">
+                    <stroke android:color="@color/colorPrimary"
+                        android:width="2dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
 
 </selector>

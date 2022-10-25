@@ -27,6 +27,7 @@ import com.score.pro.sharedPreferences.PromptFrequency.getPrompt_messageFromSP
 import com.score.pro.sharedPreferences.PromptFrequency.getPrompt_titleFromSP
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.score.pro.sharedPreferences.FootballOrBasketball.cleanFootballOrBasketball
 import sports.myapplication.BuildConfig
 import sports.myapplication.R
 import java.text.SimpleDateFormat
@@ -249,6 +250,7 @@ object GeneralTools {
         dialog.setContentView(R.layout.exit_dialog)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.findViewById<View>(R.id.yes_bt).setOnClickListener {
+            cleanFootballOrBasketball(activity)
             activity.finish()
         }
         dialog.findViewById<View>(R.id.no_bt).setOnClickListener {

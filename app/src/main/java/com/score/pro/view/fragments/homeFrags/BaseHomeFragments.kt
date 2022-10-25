@@ -9,11 +9,14 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.app.ActivityCompat
@@ -21,12 +24,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.score.pro.model.data.homepage.new2.Match
 import com.score.pro.model.data.news.details.OnPostDetailResponse
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference
 import com.score.pro.utils.SpewViewModel
 import com.score.pro.utils.Status
+import com.score.pro.view.BaseActivity
 import com.score.pro.view.adapters.ViewPagerAdapter
 import com.score.pro.view.floatingbubble.service.FloatingScoreService
 import com.score.pro.view.fragments.OnBackPressedListener
@@ -37,7 +42,6 @@ import com.score.pro.view.fragments.homeFrags.adapter.MainAdapterMessages
 import com.score.pro.view.fragments.homeFrags.adapter.pastfuture.DatesListAdapter
 import com.score.pro.view.fragments.homeFrags.adapter.pastfuture.PastFutureAdapter
 import com.score.pro.view.fragments.homeFrags.detailFragment.HighlightedFragment
-import com.google.android.material.tabs.TabLayout
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
@@ -57,6 +61,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
     var leagueList = ArrayList<String>()
     var basketBallAdapter: MainAdapterBasketBall? = null
     var adapterTypeParent: Int = MainAdapterCommunicator.FOOTBALL_TYPE
+    var footballBasketDownMenu:FootballBasketDownMenu?=null
     var recyclerViewMain= view?.findViewById<RecyclerView>(R.id.main_recycler_view)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,8 +85,17 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
         val vm = SpewViewModel.giveMeViewModel(requireActivity())
 
         val tablayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
+        val new_spenner = view.findViewById<TextView>(R.id.lega_name_tv)
         val daysRecyclerView =
             view.findViewById<RecyclerView>(R.id.days_recycler_view)
+
+        val football_basketball_rl=view.findViewById<RelativeLayout>(R.id.football_basketball_rl)
+        //gradient text color
+        football_basketball_rl.setOnClickListener{
+            Log.i("TAG","football_basketball_rl")
+
+            (activity as BaseActivity?)?.downMenu()
+        }
 
         val dateSelectedListener = object : OnPostDetailResponse<String> {
             override fun onSuccess(responseBody: String) {
@@ -107,6 +121,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                     try {
                         footBallList.add(getString(R.string.football))
                         footBallList.add(getString(R.string.basketball))
+                        new_spenner.setText(getString(R.string.league))
                         leagueList.add(getString(R.string.league))
                         for (leagues in it.data!!.todayHotLeague) {
                             if (GeneralTools.getLocale(requireContext())==SharedPreference.CHINESE){

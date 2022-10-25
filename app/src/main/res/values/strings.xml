@@ -1,4 +1,7 @@
 <resources>
+    <string name="chose_your_game">Chose your game</string>
+    <string name="all_matches">All matches</string>
+
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="exit">Exit</string>

@@ -22,16 +22,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.score.pro.sharedPreferences.PromptFrequency.*
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference
 import com.score.pro.view.adapters.ViewPagerAdapter
 import com.score.pro.view.fragments.OnBackPressedListener
 import com.score.pro.view.fragments.homeFrags.BaseHomeFragments
+import com.score.pro.view.fragments.homeFrags.FootballBasketDownMenu
 import com.score.pro.view.fragments.news.NewsFragment
 import com.score.pro.view.fragments.standings.StandingBaseFragment
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import sports.myapplication.R
 import java.util.*
 
@@ -39,9 +40,9 @@ import java.util.*
 class BaseActivity : AppCompatActivity() , OnBackPressedListener{
     var shouldChangeBackpress=false
     var currentFrag:Fragment?=null
-    var footBallList = ArrayList<String>()
     var baseHomeFragments:BaseHomeFragments?=null
-
+    var footballBasketDownMenu: FootballBasketDownMenu?=null
+    var heading:TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,88 +58,15 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         resources.updateConfiguration(config, resources.displayMetrics)
 
         setContentView(R.layout.activity_base_activty)
-
+        statusBarColor()
         showPopup()
-        //val menuIcon=findViewById<View>(R.id.menu_icon)
-//        menuIcon.setOnClickListener {
-//            findViewById<DrawerLayout>(R.id.drawer_layout).openDrawer(GravityCompat.START)
-//        }
-
-//        findViewById<View>(R.id.language_layout).setOnClickListener {
-//            showDialogForLanguages()
-//        }
-//        findViewById<View>(R.id.exit_app).setOnClickListener {
-//            exatApp()
-//        }
-//        findViewById<View>(R.id.privacy_layout).setOnClickListener {
-//            getToPrivacyPolicy()
-//        }
-//        findViewById<View>(R.id.feedback).setOnClickListener {
-//            goToFeedBack()
-//        }
-//        findViewById<View>(R.id.share_app).setOnClickListener {
-//            goToShareApp()
-//        }
-//        findViewById<View>(R.id.rate_us).setOnClickListener {
-//            goToRateUs()
-//        }
-
-        //
 
         val searchIcon=findViewById<View>(R.id.search_icon)
         val closeSearchIcon=findViewById<View>(R.id.cross_icon)
         val searchBar=findViewById<EditText>(R.id.search_matches)
         val edt_cont=findViewById<View>(R.id.edt_cont)
-        val spinnerFootBallOrBasketBall = findViewById<AppCompatSpinner>(R.id.league_spinner)
 
-        val heading=findViewById<TextView>(R.id.top_heading_mainpage)
-        //gradient text color
-        val paint = heading.paint
-        val width = paint.measureText(heading.text.toString())
-
-        footBallList.add(getString(R.string.football))
-        footBallList.add(getString(R.string.basketball))
-
-
-        spinnerFootBallOrBasketBall.getBackground().setColorFilter(Color.parseColor("#F24CA2"), PorterDuff.Mode.SRC_ATOP);
-
-        spinnerFootBallOrBasketBall.adapter = ArrayAdapter(
-            this,
-            R.layout.spinner_item,
-            footBallList
-        )
-
-
-        spinnerFootBallOrBasketBall.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    p0: AdapterView<*>?,
-                    p1: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    when (position) {
-                        0 -> {
-                            baseHomeFragments?.footballCase()
-                        }
-                        else -> {
-                            baseHomeFragments?.basketballCase()
-                        }
-                    }
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                }
-            }
-
-
-
-        val textShader: Shader = LinearGradient(0f, 0f, width, heading.textSize, intArrayOf(
-            Color.parseColor("#EC3BDA"),
-            Color.parseColor("#F24CA2")
-        ), null, Shader.TileMode.REPEAT)
-        heading.paint.setShader(textShader)
+        heading=findViewById<TextView>(R.id.top_heading_mainpage)
 
         val baseViewPager=findViewById<ViewPager2>(R.id.baseViewPager)
         val newsFrag= NewsFragment.newInstance(false,":")
@@ -160,30 +88,19 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 
         baseViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-//                if (position!=0){
-//                    searchIcon.visibility=View.GONE
-//                }else{
-//                    searchIcon.visibility=View.VISIBLE
-//                }
                 if(position ==0)
                 {
-                    heading.setText(getString(R.string.football))
-                    spinnerFootBallOrBasketBall.visibility=View.VISIBLE
-                    heading.visibility=View.GONE
+                    heading?.setText(getString(R.string.football))
                 }
 
                 if(position ==1)
                 {
-                    heading.setText(getString(R.string.news))
-                    heading.visibility=View.VISIBLE
-                    spinnerFootBallOrBasketBall.visibility=View.GONE
+                    heading?.setText(getString(R.string.news))
                 }
 
                 if(position ==2)
                 {
-                    heading.setText(getString(R.string.settings))
-                    heading.visibility=View.VISIBLE
-                    spinnerFootBallOrBasketBall.visibility=View.GONE
+                    heading?.setText(getString(R.string.settings))
                 }
             }
         })
@@ -194,8 +111,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
             if (searchBar.visibility==View.VISIBLE){
                 closeSearchIcon.visibility=View.GONE
                 edt_cont.visibility=View.GONE
-                spinnerFootBallOrBasketBall.visibility=View.VISIBLE
-                GeneralTools.flipReplaceAnimation(searchBar,heading)
+                GeneralTools.flipReplaceAnimation(searchBar,heading!!)
                 //GeneralTools.flipReplaceAnimation(it,menuIcon)
             }
         }
@@ -203,8 +119,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
             if (searchBar.visibility==View.GONE){
                 edt_cont.visibility=View.VISIBLE
                 closeSearchIcon.visibility=View.VISIBLE
-                spinnerFootBallOrBasketBall.visibility=View.GONE
-                GeneralTools.flipReplaceAnimation(heading,searchBar)
+                GeneralTools.flipReplaceAnimation(heading!!,searchBar)
                 //GeneralTools.flipReplaceAnimation(menuIcon,closeSearchIcon)
             }else{
                 homeFragment.searchMatch(searchBar.editableText.toString())
@@ -240,6 +155,12 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         }.attach()
     }
 
+    public fun downMenu() {
+        FootballBasketDownMenu().apply {
+            show(supportFragmentManager, FootballBasketDownMenu.TAG)
+        }
+    }
+
     public fun goToRateUs() {
         GeneralTools.rateUs(this)
     }
@@ -258,6 +179,16 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 
     public fun exatApp() {
         GeneralTools.exitDialog(this)
+    }
+
+    public fun footballCase() {
+        heading?.setText(getString(R.string.football))
+        baseHomeFragments?.footballCase()
+    }
+
+    public fun basketballCase() {
+        heading?.setText(getString(R.string.basketball))
+        baseHomeFragments?.basketballCase()
     }
 
     public fun showPopup() {
@@ -457,5 +388,9 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         } else {
             resources.updateConfiguration(configuration, displayMetrics)
         }
+    }
+
+    private fun statusBarColor() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 }
