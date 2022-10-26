@@ -77,61 +77,64 @@
                         android:layout_height="match_parent"
                         android:background="@color/white">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:orientation="horizontal"
-                            android:weightSum="100">
+                            android:id="@+id/lega_rl"
+                            android:background="?android:attr/selectableItemBackground">
 
-                            <RelativeLayout
-                                android:layout_width="0dp"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="85">
+                                android:layout_marginStart="4dp"
+                                android:layout_marginEnd="4dp"
+                                android:orientation="horizontal"
+                                android:weightSum="100">
 
                                 <RelativeLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    >
+                                    android:layout_weight="85">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="lega name"
-                                        android:id="@+id/lega_name_tv"
-                                        android:textStyle="bold"
-                                        android:layout_marginStart="@dimen/_4sdp"
-                                        android:layout_centerVertical="true"
-                                        android:textSize="@dimen/_14sdp"
-                                        android:textColor="@color/black"
-                                        />
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="lega name"
+                                            android:id="@+id/lega_name_tv"
+                                            android:textStyle="bold"
+                                            android:layout_marginStart="@dimen/_4sdp"
+                                            android:layout_centerVertical="true"
+                                            android:textSize="@dimen/_14sdp"
+                                            android:textColor="@color/black"
+                                            />
+
+                                    </RelativeLayout>
+
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="15">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/drop_down_arrow"
+                                        android:padding="@dimen/_9sdp"/>
 
                                 </RelativeLayout>
 
 
-                            </RelativeLayout>
+                            </LinearLayout>
 
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="15">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/drop_down_arrow"
-                                    android:padding="@dimen/_9sdp"/>
-
-                            </RelativeLayout>
-
-
-                        </LinearLayout>
-
-
-
-
-
+                        </RelativeLayout>
 
 
                         <androidx.appcompat.widget.AppCompatSpinner

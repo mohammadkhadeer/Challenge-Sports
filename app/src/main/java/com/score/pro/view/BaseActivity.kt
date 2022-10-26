@@ -5,9 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.PorterDuff
-import android.graphics.Shader
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -17,20 +15,24 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.score.pro.model.data.LegaDetails
 import com.score.pro.sharedPreferences.PromptFrequency.*
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference
+import com.score.pro.view.adapters.RecyclerViewOnclick
 import com.score.pro.view.adapters.ViewPagerAdapter
 import com.score.pro.view.fragments.OnBackPressedListener
 import com.score.pro.view.fragments.homeFrags.BaseHomeFragments
 import com.score.pro.view.fragments.homeFrags.FootballBasketDownMenu
+import com.score.pro.view.fragments.homeFrags.adapter.LegasAdapter
 import com.score.pro.view.fragments.news.NewsFragment
 import com.score.pro.view.fragments.standings.StandingBaseFragment
 import sports.myapplication.R
@@ -393,4 +395,55 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
     private fun statusBarColor() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
+
+
+    public fun showLega(leagueList: ArrayList<LegaDetails>) {
+        var dialog=Dialog(this,android.R.style.ThemeOverlay)
+        dialog.setContentView(R.layout.league_list)
+
+        Log.i("TAG",leagueList.size.toString())
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val recycler_view = dialog.findViewById<RecyclerView>(R.id.leags_rv)
+        val search_leags_edt =  dialog.findViewById<EditText>(R.id.search_leags_edt)
+
+//        dialog.findViewById<View>(R.id.no_bt_tv).setOnClickListener {
+//            dialog.dismiss()
+//        }
+
+        recycler_view.adapter=LegasAdapter(this, leagueList!! as ArrayList<LegaDetails>,
+            object : RecyclerViewOnclick{
+                override fun onClick(position: Int) {
+
+                    Log.i("TAG", leagueList.get(position)?.lega_name)
+                }
+            })
+
+        recycler_view.layoutManager=
+            LinearLayoutManager(this.applicationContext, LinearLayoutManager.VERTICAL,false)
+
+
+        search_leags_edt.addTextChangedListener {
+
+            Log.i("TAG", search_leags_edt.text.toString())
+            val filterArrayList2: ArrayList<LegaDetails> = ArrayList<LegaDetails>()
+            for (leagDetails:LegaDetails in leagueList) {
+                if (leagDetails.lega_name.toLowerCase()
+                        .contains(search_leags_edt.text.toString().lowercase())
+                ) {
+                    filterArrayList2.add(leagDetails)
+                }
+            }
+
+            (recycler_view!!.adapter as LegasAdapter).filterList(filterArrayList2)
+        }
+
+
+
+
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(false)
+
+    }
+
+
 }

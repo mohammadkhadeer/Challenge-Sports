@@ -95,44 +95,6 @@ class NewsInnerFragment : Fragment() {
     }
     private fun populateRecyclerViews(data: Resource<NewsBase>?) {
         val newsList=data?.data?.list
-        /*trendingRv.adapter=object : MultipurposeAdapter(requireContext(),R.layout.trending_item_view,object : RecyclerViewOnclick{
-            override fun onClick(position: Int) {
-                val list=ArrayList<String>()
-                list.add(newsList?.get(position)?.id.toString())
-                onDetailListener?.onDetail(list)
-            }
-        }){
-            override fun onBindViewHolder(holder: viewHolder, position: Int) {
-                holder.headline.text= newsList?.get(position)?.title
-                holder.tag.text= newsList?.get(position)?.keywords?.substringBefore(",")
-                Glide.with(context).load(newsList?.get(position)?.path).into(holder.imageContainer)
-
-            }
-
-            override fun getItemCount(): Int {
-                return newsList?.size ?: 0
-            }
-
-        }
-        trendingRv.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,true)*/
-
-       /* recommendedRV.adapter=object : MultipurposeAdapter(requireContext(),R.layout.recommended_item_view,object : RecyclerViewOnclick{
-            override fun onClick(position: Int) {
-                val list=ArrayList<String>()
-                list.add(newsList?.get(position)?.id.toString())
-                onDetailListener?.onDetail(list)
-            }
-        }){
-            override fun onBindViewHolder(holder: viewHolder, position: Int) {
-                holder.headline.text= newsList?.get(position)?.title
-                holder.tag.text= newsList?.get(position)?.createTime?.substringBefore("T")
-                Glide.with(context).load(newsList?.get(position)?.path).into(holder.imageContainer)
-            }
-
-            override fun getItemCount(): Int {
-                return newsList?.size ?:0
-            }
-        }*/
         val vm=SpewViewModel.giveMeViewModel(requireActivity())
         recommendedRV.adapter=NewsAdapter(requireContext(), newsList!! as ArrayList<List>,object : LoadMoreCommunicator{
             override fun loadMore() {
@@ -160,9 +122,11 @@ class NewsInnerFragment : Fragment() {
                 onDetailListener?.onDetail(list)
             }
         })
+
         recommendedRV.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
 
     }
+
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

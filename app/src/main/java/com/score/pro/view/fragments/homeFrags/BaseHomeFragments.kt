@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.score.pro.model.data.LegaDetails
 import com.score.pro.model.data.homepage.new2.Match
 import com.score.pro.model.data.news.details.OnPostDetailResponse
 import com.score.pro.utils.GeneralTools
@@ -58,7 +58,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
     private var pastFutureAdapter: PastFutureAdapter? = null
     var onBackPressedListener: OnBackPressedListener? = null
     var footBallList = ArrayList<String>()
-    var leagueList = ArrayList<String>()
+    var leagueList = ArrayList<LegaDetails>()
     var basketBallAdapter: MainAdapterBasketBall? = null
     var adapterTypeParent: Int = MainAdapterCommunicator.FOOTBALL_TYPE
     var footballBasketDownMenu:FootballBasketDownMenu?=null
@@ -92,9 +92,11 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
         val football_basketball_rl=view.findViewById<RelativeLayout>(R.id.football_basketball_rl)
         //gradient text color
         football_basketball_rl.setOnClickListener{
-            Log.i("TAG","football_basketball_rl")
-
             (activity as BaseActivity?)?.downMenu()
+        }
+        val lega_rl=view.findViewById<RelativeLayout>(R.id.lega_rl)
+        lega_rl.setOnClickListener{
+            (activity as BaseActivity?)?.showLega(leagueList)
         }
 
         val dateSelectedListener = object : OnPostDetailResponse<String> {
@@ -122,12 +124,13 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                         footBallList.add(getString(R.string.football))
                         footBallList.add(getString(R.string.basketball))
                         new_spenner.setText(getString(R.string.league))
-                        leagueList.add(getString(R.string.league))
+
+                        leagueList.add(LegaDetails(getString(R.string.league), "image"))
                         for (leagues in it.data!!.todayHotLeague) {
                             if (GeneralTools.getLocale(requireContext())==SharedPreference.CHINESE){
-                                leagueList.add(leagues.leagueChsShort)
+                                leagueList.add(LegaDetails(leagues.leagueChsShort, "image"))
                             }else{
-                                leagueList.add(leagues.leagueName)
+                                leagueList.add(LegaDetails(leagues.leagueName, "image"))
                             }
                         }
 
