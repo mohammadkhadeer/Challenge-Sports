@@ -15,10 +15,9 @@
         android:bottomRightRadius="@dimen/_20sdp"
         android:topRightRadius="@dimen/_20sdp"
         />
-    <stroke
-        android:width="@dimen/_1sdp"
-        android:color="@color/not_selected_tab_border" >
-    </stroke>
+
+    <solid android:color="@color/colorPrimary"/>
+
 
 </shape>
 

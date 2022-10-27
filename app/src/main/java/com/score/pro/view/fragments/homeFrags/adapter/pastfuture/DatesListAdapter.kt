@@ -21,9 +21,11 @@ class DatesListAdapter(var context: Context,var dates:List<String>,var listener:
                 selected_position =absoluteAdapterPosition
                 for (i in 0 until dates.size) {
                     if (i==selectedPosition)
+                    {
                         dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_time_tab));
-                    else
+                    } else{
                         dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_not_selected_time_tab))
+                    }
                 }
                 selectedPosition=absoluteAdapterPosition
                 listener.onSuccess(dates[absoluteAdapterPosition])
@@ -51,9 +53,14 @@ class DatesListAdapter(var context: Context,var dates:List<String>,var listener:
 //            dateTv.text=dates[position]
             dayOfTheWeekTv.text=dates[position]
             if (position ==selected_position)
+            {
                 holder.dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_time_tab))
-            else
+                holder.dayOfTheWeekTv.setTextColor(context.getResources().getColor(R.color.brand_color));
+            } else{
                 holder.dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_not_selected_time_tab))
+                holder.dayOfTheWeekTv.setTextColor(context.getResources().getColor(R.color.bottom_tab_not_selected_color));
+
+            }
 
         }
 
