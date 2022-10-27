@@ -42,7 +42,6 @@ class LegasAdapter (var context: Context, var  legaList:ArrayList<com.score.pro.
 
     fun filterList(filterdNames: java.util.ArrayList<LegaDetails>) {
         this.legaList = filterdNames
-
         notifyDataSetChanged()
     }
 }

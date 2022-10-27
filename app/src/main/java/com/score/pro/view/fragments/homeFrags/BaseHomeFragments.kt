@@ -8,7 +8,9 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +22,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.score.pro.model.data.LegaDetails
@@ -46,12 +50,12 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
 import sports.myapplication.R
-import java.util.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
+class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
+    SwipeRefreshLayout.OnRefreshListener {
     private var param1: String? = null
     private var param2: String? = null
     private var mainAdapter: MainAdapter? = null
@@ -63,6 +67,8 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
     var adapterTypeParent: Int = MainAdapterCommunicator.FOOTBALL_TYPE
     var footballBasketDownMenu:FootballBasketDownMenu?=null
     var recyclerViewMain= view?.findViewById<RecyclerView>(R.id.main_recycler_view)
+
+    var onChangeType:OnPostDetailResponse<Int>?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -86,6 +92,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
 
         val tablayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
         val new_spenner = view.findViewById<TextView>(R.id.lega_name_tv)
+        val mSwipeRefreshLayout= view?.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh)
         val daysRecyclerView =
             view.findViewById<RecyclerView>(R.id.days_recycler_view)
 
@@ -94,6 +101,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
         football_basketball_rl.setOnClickListener{
             (activity as BaseActivity?)?.downMenu()
         }
+
         val lega_rl=view.findViewById<RelativeLayout>(R.id.lega_rl)
         lega_rl.setOnClickListener{
             (activity as BaseActivity?)?.showLega(leagueList)
@@ -116,6 +124,22 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
 
             }
         }
+
+        mSwipeRefreshLayout?.setOnRefreshListener(this)
+        mSwipeRefreshLayout?.setColorSchemeResources(
+            R.color.brand_color,
+            android.R.color.black,
+            R.color.brand_color,
+            R.color.brand_color
+        )
+
+        mSwipeRefreshLayout?.setOnRefreshListener {
+            Log.i("TAG","on setOnRefreshListener case")
+            Handler().postDelayed({ mSwipeRefreshLayout?.isRefreshing = false }, 500)
+        }
+
+
+
 
         vm.baseHomePageLiveData.observe(requireActivity()) {
             when (it.status) {
@@ -142,8 +166,12 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                         )
 
                         recyclerViewMain?.adapter = mainAdapter
+//                        recyclerViewMain?.layoutManager =
+//                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
                         recyclerViewMain?.layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                            GridLayoutManager(context, 2)
+
                         view.findViewById<View>(R.id.loader_anim_container).visibility = View.GONE
 
                         val spinnerFootBallOrBasketBall = view.findViewById<AppCompatSpinner>(R.id.league_spinner)
@@ -179,30 +207,10 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
                                 ) {
                                     when (position) {
                                         0 -> {
-
                                             footballCase();
-//                                            mainAdapter?.setNewList(baseList, true)
-//                                            recyclerViewMain.adapter?.notifyDataSetChanged()
                                         }
                                         else -> {
-
-//                                            val selectedList = ArrayList<Match>()
-//                                            for (match in it.data.todayHotLeagueList) {
-//                                                if (match.leagueId == it.data.todayHotLeague[position - 1].leagueId) {
-//                                                    selectedList.add(match)
-//                                                }
-//                                            }
-//                                            mainAdapter?.setNewList(selectedList, false)
-//                                            mainAdapter?.notifyDataSetChanged()
-
-
-//                                            recyclerViewMain?.adapter = basketBallAdapter
-//                                            recyclerViewMain?.adapter?.notifyDataSetChanged()
-//                                            adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
-
                                             basketballCase();
-
-
                                         }
                                     }
                                 }
@@ -214,39 +222,38 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
 
 
 
+                        onChangeType=object : OnPostDetailResponse<Int> {
+                            override fun onSuccess(position: Int) {
 
-                        spinnerLeague.onItemSelectedListener =
-                            object : AdapterView.OnItemSelectedListener {
-                                override fun onItemSelected(
-                                    p0: AdapterView<*>?,
-                                    p1: View?,
-                                    position: Int,
-                                    id: Long
-                                ) {
-                                    when (position) {
-                                        0 -> {
-                                            mainAdapter?.setNewList(baseList, true)
-                                            recyclerViewMain?.adapter?.notifyDataSetChanged()
-                                        }
-                                        else -> {
-
-                                            val selectedList = ArrayList<Match>()
-                                            for (match in it.data.todayHotLeagueList) {
-                                                if (match.leagueId == it.data.todayHotLeague[position - 1].leagueId) {
-                                                    selectedList.add(match)
-                                                }
+                                when (position) {
+                                    0 -> {
+                                        mainAdapter?.setNewList(baseList, true)
+                                        recyclerViewMain?.adapter?.notifyDataSetChanged()
+                                    }
+                                    else -> {
+                                      //  getLeagaMatches(position)
+                                        val selectedList = ArrayList<Match>()
+                                        for (match in it.data.todayHotLeagueList) {
+                                            if (match.leagueId == it.data.todayHotLeague[position - 1].leagueId) {
+                                                selectedList.add(match)
                                             }
-                                            mainAdapter?.setNewList(selectedList, false)
-                                            mainAdapter?.notifyDataSetChanged()
-
                                         }
+                                        mainAdapter?.setNewList(selectedList, false)
+                                        mainAdapter?.notifyDataSetChanged()
                                     }
                                 }
 
-                                override fun onNothingSelected(p0: AdapterView<*>?) {
 
-                                }
+
                             }
+
+                            override fun onFailure(message: String) {
+                            }
+
+                            override fun onLoading(message: String) {
+
+                            }
+                        }
 
 
 
@@ -456,16 +463,38 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
         refreshHighlights()
     }
 
+     fun getLeagaMatches(position:Int) {
+        val selectedList = ArrayList<Match>()
+         onChangeType?.onSuccess(position)
+//        for (match in it.data.todayHotLeagueList) {
+//            if (match.leagueId == it.data.todayHotLeague[position - 1].leagueId) {
+//                selectedList.add(match)
+//            }
+//        }
+//        mainAdapter?.setNewList(selectedList, false)
+//        mainAdapter?.notifyDataSetChanged()
+    }
+
     public fun footballCase() {
         recyclerViewMain?.adapter = mainAdapter
         recyclerViewMain?.adapter?.notifyDataSetChanged()
         adapterTypeParent = MainAdapterCommunicator.FOOTBALL_TYPE
+
+        recyclerViewMain?.layoutManager =
+            GridLayoutManager(context, 2)
     }
 
     public fun basketballCase() {
         recyclerViewMain?.adapter = basketBallAdapter
         recyclerViewMain?.adapter?.notifyDataSetChanged()
         adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
+
+        recyclerViewMain?.layoutManager =
+            LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
     }
 
     fun searchMatch(constraint: String) {
@@ -742,6 +771,12 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator {
         } catch (e: Exception) {
 
         }
+    }
+
+    override fun onRefresh() {
+        Log.i("TAG","on onRefresh case")
+
+        //mSwipeRefreshLayout?.isRefreshing = false
     }
 
 }

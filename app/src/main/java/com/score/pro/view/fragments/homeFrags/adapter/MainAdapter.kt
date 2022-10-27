@@ -11,21 +11,19 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import sports.myapplication.R
 import com.score.pro.model.data.homepage.new2.Match
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
- class MainAdapter(var context:Context,var dataList:ArrayList<Match>,var communicator: MainAdapterCommunicator) : RecyclerView.Adapter<MainAdapter.MainPageAdapterViewHolder>(),Filterable {
-     companion object{
-         val GMT_OFFSET_IN_MS:Long=28800000
-         val HOUR_CONSTANT:Long=3600000
-         val MINS_CONSTANT:Long=60000
-    }
-
+ class MainAdapter(var context:Context,var dataList:ArrayList<Match>,var communicator: MainAdapterCommunicator)
+     : RecyclerView.Adapter<MainAdapter.MainPageAdapterViewHolder>(),Filterable {
      var loadMore: Boolean=true
      var isMaxLoaded: Boolean=false
      var originalList=dataList
@@ -34,6 +32,119 @@ import kotlin.collections.ArrayList
      var ftMatches= ArrayList<Match>()
      var categoryFilterType:CategoryFilterType=CategoryFilterType.ALL
      private var filterString=""
+
+     companion object{
+         val GMT_OFFSET_IN_MS:Long=28800000
+         val HOUR_CONSTANT:Long=3600000
+         val MINS_CONSTANT:Long=60000
+    }
+
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainPageAdapterViewHolder {
+         //home_page_item the old adapter
+         return MainPageAdapterViewHolder(LayoutInflater.from(context).inflate(R.layout.football_adapter,parent,false))
+     }
+
+
+     override fun onBindViewHolder(holder: MainPageAdapterViewHolder, position: Int) {
+
+         val dataObject=dataList[position]
+
+         if (!dataObject.havOdds){
+             holder.index_btn.visibility= GONE
+             holder.odds_container.visibility= GONE
+         }else{
+             holder.index_btn.visibility= VISIBLE
+         }
+         if (!dataObject.havBriefing){
+             holder.brief_bt.visibility= GONE
+         }else{
+             holder.brief_bt.visibility= VISIBLE
+         }
+
+//         holder.leagueNameShort.text=dataObject.leagueName
+         holder.leagueNameShort.text=dataObject.leagueNameShort
+
+         holder.homeNameTv.text=dataObject.homeName
+         holder.awayNameTv.text=dataObject.awayName
+
+
+
+
+         if (dataObject.state!=0){
+             holder.score_team1.text=dataObject.homeScore.toString()
+             holder.score_team2.text=dataObject.awayScore.toString()
+
+             holder.yallow_card_Home.text=dataObject.homeYellow.toString()
+             holder.red_card_Home.text=dataObject.awayRed.toString()
+
+             holder.yallow_card_Away.text=dataObject.awayYellow.toString()
+             holder.red_card_Away.text=dataObject.awayRed.toString()
+
+             if (dataObject.homeLogo.isEmpty())
+                 Glide.with(context).load(R.drawable.football).into(holder.team_1_logo)
+             else
+                 Glide.with(context).load(dataObject.homeLogo).into(holder.team_1_logo)
+
+             if (dataObject.awayLogo.isEmpty())
+                 Glide.with(context).load(R.drawable.football).into(holder.team_2_logo)
+             else
+                 Glide.with(context).load(dataObject.awayLogo).into(holder.team_2_logo)
+
+         }else{
+             holder.cards_con.visibility=View.GONE
+         }
+
+
+         if (!dataObject.startTime.isNullOrEmpty()){
+             // "matchTime": "2022/8/25 16:30:00",
+             try {
+                 holder.stateNdate.text= returnStateDate(dataObject)
+             }
+             catch (e:Exception){
+                 Log.d("EXCEPTION!!!",e.toString())
+
+             }
+         }
+         else{
+             val sdf=SimpleDateFormat("yyyy/M/dd HH:mm:ss")
+             val sdf2=SimpleDateFormat("EEE, dd MMM")
+             holder.stateNdate.text= sdf2.format(sdf.parse(dataObject.matchTime).time)
+         }
+         holder.matchTimeTv.text=return24HrsOnly(returnTime(dataObject))
+
+         if (dataObject.havOdds){
+             try {
+                 holder.indexC1R1.text= dataObject.odds.handicap!![6].toString()
+                 holder.indexC2R1.text=dataObject.odds.handicap!![5].toString()
+                 holder.indexC3R1.text=dataObject.odds.handicap!![7].toString()
+
+                 holder.indexC1R2.text= dataObject.odds.overUnder!![6].toString()
+                 holder.indexC2R2.text=dataObject.odds.overUnder!![5].toString()
+                 holder.indexC3R2.text=dataObject.odds.overUnder!![7].toString()
+
+             }
+             catch (e:Exception){
+
+             }
+         }else{
+//             //I put space to keep card high same high for all cards
+//             holder.indexC1R1.text="4"
+//             holder.indexC1R2.text="3"
+         }
+
+
+         //holder.redCard.text=context.getString(R.string.red_card)+" "+dataObject.homeRed+":"+dataObject.awayRed
+         //holder.yellowCard.text=context.getString(R.string.yellow_card)+" "+dataObject.homeYellow+":"+dataObject.awayYellow
+//         val c_ht="C= "+dataObject.homeCorner.toString()+":"+dataObject.awayCorner.toString()+" HT= "+dataObject.homeHalfScore.toString()+":"+dataObject.awayHalfScore.toString()
+
+         val c_ht="HT= "+dataObject.homeHalfScore.toString()+":"+dataObject.awayHalfScore.toString()
+         holder.cRatio.text="C= "+dataObject.homeCorner.toString()+":"+dataObject.awayCorner.toString()
+         holder.cornerRatio.text=c_ht
+         if (position==dataList.size-1&&loadMore)
+             communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,position,0)
+     }
+
+
      init {
          sortMatchesOnCategory()
      }
@@ -105,8 +216,20 @@ import kotlin.collections.ArrayList
         var leagueNameShort=itemView.findViewById<TextView>(R.id.group_indicator)
         var homeNameTv=itemView.findViewById<TextView>(R.id.team_1_name)
         var awayNameTv=itemView.findViewById<TextView>(R.id.team_2_name)
-        var scoreIndicatorHome=itemView.findViewById<TextView>(R.id.score_indicator_home)
-        var scoreIndicatorAway=itemView.findViewById<TextView>(R.id.score_indicator_away)
+
+        var score_team1=itemView.findViewById<TextView>(R.id.score_team1)
+        var score_team2=itemView.findViewById<TextView>(R.id.score_team2)
+        var team_1_logo=itemView.findViewById<ImageView>(R.id.team_1_logo)
+        var team_2_logo=itemView.findViewById<ImageView>(R.id.team_2_logo)
+
+        var yallow_card_Home=itemView.findViewById<TextView>(R.id.yallow_card_Home)
+        var red_card_Home=itemView.findViewById<TextView>(R.id.red_card_Home)
+        var yallow_card_Away=itemView.findViewById<TextView>(R.id.yallow_card_Away)
+        var red_card_Away=itemView.findViewById<TextView>(R.id.red_card_Away)
+
+        var cards_con=itemView.findViewById<LinearLayout>(R.id.cards_con)
+
+
         //var redCard=itemView.findViewById<TextView>(R.id.red_card)
         //var yellowCard=itemView.findViewById<TextView>(R.id.yellow_cards)
         var stateNdate=itemView.findViewById<TextView>(R.id.match_date)
@@ -117,6 +240,7 @@ import kotlin.collections.ArrayList
         var indexC2R2=itemView.findViewById<TextView>(R.id.index_c2_r2)
         var indexC3R1=itemView.findViewById<TextView>(R.id.index_c3_r1)
         var indexC3R2=itemView.findViewById<TextView>(R.id.index_c3_r2)
+        var cRatio=itemView.findViewById<TextView>(R.id.c_text)
         var cornerRatio=itemView.findViewById<TextView>(R.id.c_ht_text)
         var halfRatio=itemView.findViewById<TextView>(R.id.ht_ratio)
         var index_btn=itemView.findViewById<View>(R.id.index_bt)
@@ -167,82 +291,6 @@ import kotlin.collections.ArrayList
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainPageAdapterViewHolder {
-        return MainPageAdapterViewHolder(LayoutInflater.from(context).inflate(R.layout.home_page_item,parent,false))
-    }
-
-    override fun onBindViewHolder(holder: MainPageAdapterViewHolder, position: Int) {
-
-        val dataObject=dataList[position]
-
-        if (!dataObject.havOdds){
-            holder.index_btn.visibility= GONE
-            holder.odds_container.visibility= GONE
-        }else{
-            holder.index_btn.visibility= VISIBLE
-        }
-        if (!dataObject.havBriefing){
-            holder.brief_bt.visibility= GONE
-        }else{
-            holder.brief_bt.visibility= VISIBLE
-        }
-
-        holder.leagueNameShort.text=dataObject.leagueName
-
-        holder.homeNameTv.text=dataObject.homeName
-        holder.awayNameTv.text=dataObject.awayName
-
-
-
-
-        if (dataObject.state!=0){
-              holder.scoreIndicatorHome.text=dataObject.homeScore.toString() +"  "+dataObject.homeYellow +"  "+dataObject.homeRed
-              holder.scoreIndicatorAway.text=dataObject.awayScore.toString() +"  "+dataObject.awayYellow +"  "+dataObject.awayRed
-        }else{
-
-        }
-
-
-        if (!dataObject.startTime.isNullOrEmpty()){
-            // "matchTime": "2022/8/25 16:30:00",
-            try {
-                holder.stateNdate.text= returnStateDate(dataObject)
-            }
-            catch (e:Exception){
-                Log.d("EXCEPTION!!!",e.toString())
-
-            }
-        }
-        else{
-            val sdf=SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-            val sdf2=SimpleDateFormat("EEE, dd MMM")
-            holder.stateNdate.text= sdf2.format(sdf.parse(dataObject.matchTime).time)
-        }
-        holder.matchTimeTv.text=return24HrsOnly(returnTime(dataObject))
-
-        if (dataObject.havOdds){
-            try {
-                holder.indexC1R1.text= dataObject.odds.handicap!![6].toString()
-                holder.indexC2R1.text=dataObject.odds.handicap!![5].toString()
-                holder.indexC3R1.text=dataObject.odds.handicap!![7].toString()
-
-                holder.indexC1R2.text= dataObject.odds.overUnder!![6].toString()
-                holder.indexC2R2.text=dataObject.odds.overUnder!![5].toString()
-                holder.indexC3R2.text=dataObject.odds.overUnder!![7].toString()
-                  }
-            catch (e:Exception){
-
-            }
-        }
-
-
-        //holder.redCard.text=context.getString(R.string.red_card)+" "+dataObject.homeRed+":"+dataObject.awayRed
-        //holder.yellowCard.text=context.getString(R.string.yellow_card)+" "+dataObject.homeYellow+":"+dataObject.awayYellow
-        val c_ht="C= "+dataObject.homeCorner.toString()+":"+dataObject.awayCorner.toString()+" HT= "+dataObject.homeHalfScore.toString()+":"+dataObject.awayHalfScore.toString()
-        holder.cornerRatio.text=c_ht
-        if (position==dataList.size-1&&loadMore)
-        communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,position,0)
-    }
 
     private fun return24HrsOnly(matchTime:String):String{
         val splitDateTime=matchTime.split(" ")[1].split(":")

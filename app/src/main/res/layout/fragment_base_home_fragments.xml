@@ -282,8 +282,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/_80sdp"
-            android:paddingHorizontal="@dimen/_10sdp"
-            />
+            android:paddingHorizontal="@dimen/_10sdp" />
 
     </RelativeLayout>
 
@@ -319,13 +318,32 @@
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_recycler_view"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintBottom_toTopOf="@+id/loading_more_bar"
-        app:layout_constraintTop_toBottomOf="@id/rest_matches_heading" />
+        app:layout_constraintTop_toBottomOf="@id/rest_matches_heading">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/swipe_to_refresh">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+
+
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/loading_more_bar"

@@ -185,14 +185,14 @@
         android:layout_height="?actionBarSize"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="@color/light_primary"
+        app:tabSelectedTextColor="@color/brand_color"
+        app:tabTextColor="@color/bottom_tab_not_selected_color"
         app:tabIconTint="@color/tab_icon_tint"
         app:tabIndicatorFullWidth="false"
         android:paddingTop="@dimen/_1sdp"
         app:tabTextAppearance="@style/TabtextAppearence"
-        app:tabIndicatorColor="@color/black"
-        android:background="@color/black"
+        app:tabIndicatorColor="@color/white"
+        android:background="@color/white"
         android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent">
 

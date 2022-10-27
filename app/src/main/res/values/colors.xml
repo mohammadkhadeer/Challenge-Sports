@@ -32,7 +32,6 @@
     <color name="text_color_tab_pressed">#000000</color>
     <color name="selected_tab">#4840EE</color>
     <color name="selected_time_tab">#FFC107</color>
-    <color name="brand_color">#B7De6E</color>
     <color name="brand_color_tab">#EC3BDA</color>
 
     <color name="news_fragment_color">#6C44C0</color>
@@ -48,9 +47,14 @@
     <color name="splash_screen_gradint_2">#221D56</color>
     <color name="text_color">#BAB9BA</color>
 
+
+    <color name="brand_color">#B7De6E</color>
+    <color name="brand_color_lit">#F7FFE4</color>
+
     <color name="main_tab_not_selected_color">#6F6F6F</color>
     <color name="time_tab_not_selected_color">#D9D9D9</color>
     <color name="dark_text">#2F3D1B</color>
     <color name="space_between_leags">#F7F7F7</color>
+    <color name="bottom_tab_not_selected_color">#9F9F9F</color>
 
 </resources>

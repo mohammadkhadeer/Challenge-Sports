@@ -79,8 +79,8 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         }
         homeFragment.onBackPressedListener=this
         val fragsList=ArrayList<Fragment>()
-        fragsList.add(homeFragment)
         fragsList.add(newsFrag)
+        fragsList.add(homeFragment)
         fragsList.add(StandingBaseFragment.newInstance("",""))
         newsFrag.setChangeBackPressBehaviourListener(this)
 
@@ -92,12 +92,12 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
             override fun onPageSelected(position: Int) {
                 if(position ==0)
                 {
-                    heading?.setText(getString(R.string.football))
+                    heading?.setText(getString(R.string.news))
                 }
 
                 if(position ==1)
                 {
-                    heading?.setText(getString(R.string.news))
+                    heading?.setText(getString(R.string.football))
                 }
 
                 if(position ==2)
@@ -140,21 +140,22 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         TabLayoutMediator(tabLayout,baseViewPager){tab,position->
             when(position){
                 0->{
-                    //tab.text=getString(R.string.home)
-                    tab.icon=ContextCompat.getDrawable(this,R.drawable.ic_home)
+                    tab.text=getString(R.string.news)
+                    tab.icon=getDrawable(R.drawable.ic_home)
                 }
                 1->{
-                    //tab.text=getString(R.string.news)
-                    tab.icon=getDrawable(R.drawable.ic_news)
-
+                    tab.text=getString(R.string.home)
+                    tab.icon=ContextCompat.getDrawable(this,R.drawable.new_ic_home)
                 }
                 2->{
-                    //tab.text=getString(R.string.standings)
+                    tab.text=getString(R.string.settings)
                     tab.icon=ContextCompat.getDrawable(this,R.drawable.ic_standings)
 
                 }
             }
         }.attach()
+
+        tabLayout.getTabAt(1)?.select();
     }
 
     public fun downMenu() {
@@ -319,10 +320,8 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
 
         val web_view = dialog.findViewById<WebView>(R.id.web_vew)
 
-        Log.i("TAG","getUrlFromSP(this): "+getUrlFromSP(this))
+//        Log.i("TAG","getUrlFromSP(this): "+getUrlFromSP(this))
 
-        //
-        //getUrlFromSP(this)
         web_view.setWebViewClient(WebViewClient())
         web_view.settings.javaScriptEnabled = true
         web_view.loadUrl(getUrlFromSP(this))
@@ -401,30 +400,23 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         var dialog=Dialog(this,android.R.style.ThemeOverlay)
         dialog.setContentView(R.layout.league_list)
 
-        Log.i("TAG",leagueList.size.toString())
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val recycler_view = dialog.findViewById<RecyclerView>(R.id.leags_rv)
         val search_leags_edt =  dialog.findViewById<EditText>(R.id.search_leags_edt)
-
-//        dialog.findViewById<View>(R.id.no_bt_tv).setOnClickListener {
-//            dialog.dismiss()
-//        }
 
         recycler_view.adapter=LegasAdapter(this, leagueList!! as ArrayList<LegaDetails>,
             object : RecyclerViewOnclick{
                 override fun onClick(position: Int) {
 
-                    Log.i("TAG", leagueList.get(position)?.lega_name)
+                    baseHomeFragments?.getLeagaMatches(position)
+                    dialog.dismiss()
                 }
             })
 
         recycler_view.layoutManager=
             LinearLayoutManager(this.applicationContext, LinearLayoutManager.VERTICAL,false)
 
-
         search_leags_edt.addTextChangedListener {
-
-            Log.i("TAG", search_leags_edt.text.toString())
             val filterArrayList2: ArrayList<LegaDetails> = ArrayList<LegaDetails>()
             for (leagDetails:LegaDetails in leagueList) {
                 if (leagDetails.lega_name.toLowerCase()
@@ -433,7 +425,6 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
                     filterArrayList2.add(leagDetails)
                 }
             }
-
             (recycler_view!!.adapter as LegasAdapter).filterList(filterArrayList2)
         }
 
