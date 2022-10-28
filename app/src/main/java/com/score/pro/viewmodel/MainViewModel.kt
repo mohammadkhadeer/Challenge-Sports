@@ -37,6 +37,7 @@ import kotlin.Exception
 
 class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     val pastFutureLiveData=MutableLiveData<Resource<PastFutureBaseCall>>()
+    val scheduleFutureLiveData=MutableLiveData<Resource<PastFutureBaseCall>>()
     val pastFutureLiveDataBasketball=MutableLiveData<Resource<PastFutureBasketBall>>()
     val basketballBriefingLiveData=MutableLiveData<Resource<BasketballBriefingBase>>()
     val analysisLiveDataBasketball=MutableLiveData<Resource<AnalysisBasktetballBase>>()
@@ -478,6 +479,18 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
                 pastFutureLiveDataBasketball.postValue(Resource.success(pasFutureBase))
             }catch (e:Exception){
                 pastFutureLiveDataBasketball.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+
+    fun makeScheduleCall(date:String){
+        viewModelScope.launch {
+            try {
+                scheduleFutureLiveData.postValue(Resource.loading(null))
+                val pasScheduleFutureBase=apiHelper.getPastFutureMatches(date)
+                scheduleFutureLiveData.postValue(Resource.success(pasScheduleFutureBase))
+            }catch (e:Exception){
+                scheduleFutureLiveData.postValue(Resource.error(e.toString(),null))
             }
         }
     }

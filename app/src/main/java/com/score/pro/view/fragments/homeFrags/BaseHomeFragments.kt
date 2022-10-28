@@ -39,10 +39,7 @@ import com.score.pro.view.BaseActivity
 import com.score.pro.view.adapters.ViewPagerAdapter
 import com.score.pro.view.floatingbubble.service.FloatingScoreService
 import com.score.pro.view.fragments.OnBackPressedListener
-import com.score.pro.view.fragments.homeFrags.adapter.MainAdapter
-import com.score.pro.view.fragments.homeFrags.adapter.MainAdapterBasketBall
-import com.score.pro.view.fragments.homeFrags.adapter.MainAdapterCommunicator
-import com.score.pro.view.fragments.homeFrags.adapter.MainAdapterMessages
+import com.score.pro.view.fragments.homeFrags.adapter.*
 import com.score.pro.view.fragments.homeFrags.adapter.pastfuture.DatesListAdapter
 import com.score.pro.view.fragments.homeFrags.adapter.pastfuture.PastFutureAdapter
 import com.score.pro.view.fragments.homeFrags.detailFragment.HighlightedFragment
@@ -58,8 +55,10 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
     SwipeRefreshLayout.OnRefreshListener {
     private var param1: String? = null
     private var param2: String? = null
+    private var result_schedule: String? =null
     private var mainAdapter: MainAdapter? = null
     private var pastFutureAdapter: PastFutureAdapter? = null
+    private var pastScheduleAdapter: ScheduleAdapter? = null
     var onBackPressedListener: OnBackPressedListener? = null
     var footBallList = ArrayList<String>()
     var leagueList = ArrayList<LegaDetails>()
@@ -109,8 +108,20 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
 
         val dateSelectedListener = object : OnPostDetailResponse<String> {
             override fun onSuccess(responseBody: String) {
+                Log.i("TAG","result_schedule: "+result_schedule)
+
                 if (adapterTypeParent != MainAdapterCommunicator.BASKETBALL_TYPE) {
-                    vm.makePastFutureCall(responseBody)
+                    if (result_schedule.equals("result"))
+                    {
+                        vm.makePastFutureCall(responseBody)
+                        recyclerViewMain?.layoutManager = GridLayoutManager(context, 2)
+                    }
+                    else{
+                        vm.makeScheduleCall(responseBody)
+                        recyclerViewMain?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    }
+
+
                 } else {
                     vm.makePastFutureCallBasketball(responseBody)
                 }
@@ -277,6 +288,27 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
                             }
                         }
 
+
+                        vm.scheduleFutureLiveData.observe(requireActivity()) { data ->
+                            when (data.status) {
+                                Status.SUCCESS -> {
+                                    pastScheduleAdapter = ScheduleAdapter(
+                                        requireContext(),
+                                        data.data!!.matchList,
+                                        15
+                                    )
+                                    recyclerViewMain?.adapter = pastScheduleAdapter
+                                    recyclerViewMain?.adapter?.notifyDataSetChanged()
+                                }
+                                Status.ERROR -> {
+
+                                }
+                                Status.LOADING -> {
+
+                                }
+                            }
+                        }
+
                         vm.pastFutureLiveDataBasketball.observe(requireActivity()) { data ->
                             when (data.status) {
                                 Status.SUCCESS -> {
@@ -382,41 +414,26 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
                             tablayout,
                             daysRecyclerView
                         )
-                        daysRecyclerView.adapter = DatesListAdapter(
-                            requireContext(),
-                            GeneralTools.getPastWeekDates(),
-                            dateSelectedListener
-                        )
-                        daysRecyclerView.layoutManager = LinearLayoutManager(
-                            context,
-                            LinearLayoutManager.HORIZONTAL,
-                            false
-                        )
-
+                        daysRecyclerView.adapter = DatesListAdapter(requireContext(), GeneralTools.getPastWeekDates(), dateSelectedListener)
+                        //create this value to can check where is user press the time on result or schedule to change ui
+                        result_schedule = "result"
+                        daysRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     }
                     1 -> {
-                        GeneralTools.flipReplaceAnimation(
-                            daysRecyclerView,
-                            tablayout
-                        )
+                        GeneralTools.flipReplaceAnimation(daysRecyclerView, tablayout)
                         recyclerViewMain?.adapter = mainAdapter
                         recyclerViewMain?.adapter?.notifyDataSetChanged()
+                        //change layout manger
+                        recyclerViewMain?.layoutManager = GridLayoutManager(context, 2)
                     }
                     2 -> {
                         GeneralTools.flipReplaceAnimation(
                             tablayout,
                             daysRecyclerView
                         )
-                        daysRecyclerView.adapter = DatesListAdapter(
-                            requireContext(),
-                            GeneralTools.getFutureDates(),
-                            dateSelectedListener
-                        )
-                        daysRecyclerView.layoutManager = LinearLayoutManager(
-                            context,
-                            LinearLayoutManager.HORIZONTAL,
-                            false
-                        )
+                        daysRecyclerView.adapter = DatesListAdapter(requireContext(), GeneralTools.getFutureDates(), dateSelectedListener)
+                        result_schedule = "schedule"
+                        daysRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
                     }
 
