@@ -15,6 +15,7 @@
         android:layout_marginHorizontal="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/exit_background"
+        android:backgroundTint="@color/white"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +48,7 @@
                             android:layout_width="@dimen/_17sdp"
                             android:layout_height="@dimen/_17sdp"
                             android:src="@drawable/new_exit_app_logo"
-                            android:tint="@color/white"
+                            android:tint="@color/brand_color_dark"
                             android:layout_marginTop="@dimen/_12sdp"
                             tools:ignore="UseAppTint" />
 
@@ -58,7 +59,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/exit_app"
                             android:layout_marginStart="@dimen/_16sdp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
                             android:textSize="18sp"
                             />
 
@@ -81,7 +83,7 @@
                         android:layout_marginStart="@dimen/_60sdp"
                         android:layout_marginEnd="@dimen/_60sdp"
                         android:text="@string/exit_app_text"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/bottom_tab_not_selected_color"
                         android:textSize="14sp"
                         />
 
@@ -107,14 +109,13 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:text="@string/exit"
-                            android:textColor="@color/white"
+                            android:textColor="@color/brand_color_dark"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:paddingTop="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingStart="@dimen/_20sdp"
                             android:paddingEnd="@dimen/_20sdp"
-                            android:background="@drawable/red_ring_rect"
                             />
 
                         <TextView
@@ -132,7 +133,7 @@
                             android:paddingStart="@dimen/_20sdp"
                             android:paddingEnd="@dimen/_20sdp"
                             android:background="@drawable/red_ring_rect"
-                            android:backgroundTint="@color/news_fragment_color"
+                            android:backgroundTint="@color/brand_color_dark"
                             />
 
 

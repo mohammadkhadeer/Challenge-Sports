@@ -27,11 +27,11 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:textColor">@color/text_color_tab_pressed</item>
+        <item name="android:textColor">@color/colorPrimary</item>
 
-        <item name="colorPrimary">@color/text_color_tab_pressed</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/text_color_tab_pressed</item>
+        <item name="colorAccent">@color/colorPrimary</item>
 
     </style>
 
