@@ -37,6 +37,7 @@ class OnboardingActivity : AppCompatActivity() {
         resources.updateConfiguration(config, resources.displayMetrics)
 
         setContentView(R.layout.activity_onboarding)
+        statusBarColor()
 
         val viewpager=findViewById<ViewPager2>(R.id.viewpager_onboarding)
         val wormDots=findViewById<WormDotsIndicator>(R.id.onbaording_dots_indicator)
@@ -199,5 +200,9 @@ class OnboardingActivity : AppCompatActivity() {
 
         dialog.show()
         dialog.setCancelable(false)
+    }
+
+    private fun statusBarColor() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 }

@@ -28,8 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:padding="@dimen/_67sdp"
-                android:src="@drawable/exo_logo"/>
+                android:padding="@dimen/_43sdp"
+                android:src="@drawable/score_bro"/>
 
         </RelativeLayout>
 
