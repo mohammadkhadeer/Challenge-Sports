@@ -76,6 +76,7 @@ class VideosDetailFragment : Fragment() {
         val title=titleDate?.substringBefore(getString(R.string.titledateSeperator))
         val date=titleDate?.substringAfter(getString(R.string.titledateSeperator))
         videoTitle.text=title
+
         dateView.text=date
         videoPlayer.player=player
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/_8sdp"
@@ -14,90 +14,103 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/_4sdp"
-        android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:cardCornerRadius="@dimen/_8sdp"
-            app:layout_constraintDimensionRatio="30:16"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/background_trending"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@color/red"/>
-        </androidx.cardview.widget.CardView>
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/headline_rv"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_5sdp"
-            tools:ignore="MissingConstraints">
+            android:orientation="vertical"
+            >
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:layout_constraintDimensionRatio="30:16"
                 >
 
                 <ImageView
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
-                    android:src="@drawable/ic_clock"
-                    android:layout_centerInParent="true"
-                    app:tint="@color/white"
-                    />
+                    android:id="@+id/background_trending"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@color/red"/>
 
-            </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/headline_rv"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                tools:ignore="MissingConstraints">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="@dimen/_12sdp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_clock"
+                        app:tint="@color/main_tab_not_selected_color" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:text="435"
+                    android:textColor="@color/main_tab_not_selected_color"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:textSize="11sp"
+                    tools:ignore="MissingConstraints" />
+            </LinearLayout>
 
 
             <TextView
-                android:id="@+id/tag"
+                android:id="@+id/headline_rv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:text=""
-                android:layout_marginStart="@dimen/_2sdp"
-                android:textSize="12sp"
-                tools:ignore="MissingConstraints" />
+                android:layout_marginStart="@dimen/_6sdp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardview" />
+
+            <TextView
+                android:id="@+id/time_ago"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text=""
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/headline_rv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="12sp"/>
+
+
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/headline_rv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardview" />
-
-        <TextView
-            android:id="@+id/time_ago"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:text=""
-            app:layout_constraintTop_toBottomOf="@+id/headline_rv"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="12sp"/>
+    </RelativeLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     >
 
 
@@ -13,14 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/_25sdp"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="@dimen/_5sdp">
+            >
 
 
 
@@ -28,21 +27,58 @@
                 android:id="@+id/cover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintDimensionRatio="4:3"
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
-            <TextView
-                android:id="@+id/heading"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/cover"
-                />
+                android:layout_marginTop="@dimen/_minus12sdp"
+                app:cardCornerRadius="@dimen/_16sdp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/heading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@+id/cover"
+                        />
+
+                    <TextView
+                        android:id="@+id/body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:textColor="@color/main_tab_not_selected_color"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@+id/cover" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/tags_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/body" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
 <!--            <TextView-->
 <!--                android:id="@+id/date_posted"-->
@@ -66,21 +102,9 @@
 <!--                app:layout_constraintTop_toTopOf="parent"-->
 <!--                />-->
 
-            <TextView
-                android:id="@+id/body"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/cover" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tags_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                app:layout_constraintTop_toBottomOf="@+id/body" />
+
+
 
         </LinearLayout>
 
