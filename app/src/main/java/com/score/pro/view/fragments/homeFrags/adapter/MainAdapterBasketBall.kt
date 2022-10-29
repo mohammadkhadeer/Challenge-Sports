@@ -100,7 +100,7 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
         viewType: Int
     ): MainAdapterBasketBallViewHolder {
         return MainAdapterBasketBallViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.home_match_item_basketball, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.home_match_item_basketball_new, parent, false)
         )
     }
 

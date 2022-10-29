@@ -71,7 +71,7 @@ class PastFutureAdapter(var context: Context, var matches: List<Any>, var adapte
             MainAdapterCommunicator.BASKETBALL_TYPE -> {
                 PastFutureAdapterBasketball(
                     LayoutInflater.from(context)
-                        .inflate(R.layout.past_future_item_basketball, parent, false)
+                        .inflate(R.layout.home_match_item_basketball_new, parent, false)
                 )
             }
             else -> {

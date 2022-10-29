@@ -409,8 +409,6 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
         })
 
 
-
-
         val timeTabLayout = view.findViewById<TabLayout>(R.id.tab_layout_time_filters)
         timeTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -459,30 +457,6 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
         timeTabLayout.getTabAt(1)?.select();
 
 
-
-        //football or basket tab
-//        view.findViewById<TabLayout>(R.id.tab_layout_game_filters)
-//            .addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//                override fun onTabSelected(tab: TabLayout.Tab?) {
-//                    if (tab?.position != 0) {
-//                        recyclerViewMain.adapter = basketBallAdapter
-//                        recyclerViewMain.adapter?.notifyDataSetChanged()
-//                        adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
-//                    } else {
-//                        recyclerViewMain.adapter = mainAdapter
-//                        recyclerViewMain.adapter?.notifyDataSetChanged()
-//                        adapterTypeParent = MainAdapterCommunicator.FOOTBALL_TYPE
-//                    }
-//                }
-//
-//                override fun onTabUnselected(tab: TabLayout.Tab?) {
-//
-//                }
-//
-//                override fun onTabReselected(tab: TabLayout.Tab?) {
-//
-//                }
-//            })
         vm.makeIndexNetworkCall("1",GeneralTools.getLocale(requireContext()))
         vm.makeIndexBasketBallCall()
         refreshHighlights()
@@ -515,11 +489,14 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
         adapterTypeParent = MainAdapterCommunicator.BASKETBALL_TYPE
 
         recyclerViewMain?.layoutManager =
-            LinearLayoutManager(
-                context,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
+            GridLayoutManager(context, 2)
+
+//        recyclerViewMain?.layoutManager =
+//            LinearLayoutManager(
+//                context,
+//                LinearLayoutManager.VERTICAL,
+//                false
+//            )
     }
 
     fun searchMatch(constraint: String) {
