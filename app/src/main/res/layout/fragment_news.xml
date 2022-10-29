@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.tabs.TabLayout
@@ -13,10 +13,9 @@
         android:layout_height="wrap_content"
         app:tabSelectedTextColor="@color/white"
         app:tabRippleColor="@null"
-        app:tabTextColor="@color/white"
-        app:tabIndicatorColor="@color/news_fragment_color"
-        app:tabIndicatorHeight="@dimen/_4sdp"
-        app:tabBackground="@drawable/tab_selector_news"
+        app:tabTextColor="@color/main_tab_not_selected_color"
+        app:tabBackground="@drawable/time_tab_selector"
+        app:tabIndicatorColor="@color/colorPrimary"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"

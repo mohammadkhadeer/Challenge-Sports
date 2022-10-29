@@ -43,6 +43,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     val analysisLiveDataBasketball=MutableLiveData<Resource<AnalysisBasktetballBase>>()
     var basketballLiveOdds= MutableLiveData<Resource<BasketballOddsBase>>()
     var newsLiveData = MutableLiveData<Resource<NewsBase>>()
+    var newsLiveData2 = MutableLiveData<Resource<NewsBase>>()
     var videosLiveData = MutableLiveData<Resource<VideosListBase>>()
     var currentPageNumberNews=1
     var lastPageNumberNews=100
@@ -83,7 +84,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         }
     }
 
-    fun makeNewsCall(pageNumber: String,lang:String) {
+    fun makeNewsCallHorizontal(pageNumber: String,lang:String) {
         viewModelScope.launch {
             newsLiveData.postValue(Resource.loading(null))
             try {
@@ -94,6 +95,19 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
             }
         }
     }
+
+    fun makeNewsCall(pageNumber: String,lang:String) {
+        viewModelScope.launch {
+            newsLiveData2.postValue(Resource.loading(null))
+            try {
+                val news = apiHelper.getNews(lang, pageNumber)
+                newsLiveData2.postValue(Resource.success(news))
+            } catch (e: Exception) {
+                newsLiveData2.postValue(Resource.error(e.toString(), null))
+            }
+        }
+    }
+
     fun makeNewsCall(listener: OnPostDetailResponse<NewsBase>,lang: String) {
         viewModelScope.launch {
             listener.onLoading("Loading")

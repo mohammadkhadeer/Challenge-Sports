@@ -66,8 +66,10 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
     var adapterTypeParent: Int = MainAdapterCommunicator.FOOTBALL_TYPE
     var footballBasketDownMenu:FootballBasketDownMenu?=null
     var recyclerViewMain= view?.findViewById<RecyclerView>(R.id.main_recycler_view)
+    var rest_matches_heading= view?.findViewById<TextView>(R.id.rest_matches_heading)
 
     var onChangeType:OnPostDetailResponse<Int>?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -87,6 +89,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerViewMain = view.findViewById<RecyclerView>(R.id.main_recycler_view)
+        rest_matches_heading= view?.findViewById<TextView>(R.id.rest_matches_heading)
         val vm = SpewViewModel.giveMeViewModel(requireActivity())
 
         val tablayout = view.findViewById<TabLayout>(R.id.tab_layout_local_filters)
@@ -109,11 +112,15 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
         val dateSelectedListener = object : OnPostDetailResponse<String> {
             override fun onSuccess(responseBody: String) {
                 Log.i("TAG","result_schedule: "+result_schedule)
+                Log.i("TAG","responseBody Date: "+responseBody)
 
                 if (adapterTypeParent != MainAdapterCommunicator.BASKETBALL_TYPE) {
+                    rest_matches_heading?.text=responseBody
+
                     if (result_schedule.equals("result"))
                     {
                         vm.makePastFutureCall(responseBody)
+                        //can move it to observer onCreate
                         recyclerViewMain?.layoutManager = GridLayoutManager(context, 2)
                     }
                     else{
@@ -420,6 +427,7 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
                         daysRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     }
                     1 -> {
+                        rest_matches_heading?.text=resources.getString(R.string.all_matches)
                         GeneralTools.flipReplaceAnimation(daysRecyclerView, tablayout)
                         recyclerViewMain?.adapter = mainAdapter
                         recyclerViewMain?.adapter?.notifyDataSetChanged()

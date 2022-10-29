@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_3sdp"
+    android:layout_marginTop="@dimen/_2sdp"
+    android:layout_marginEnd="@dimen/_3sdp"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/image_container"
+        android:layout_width="@dimen/_230sdp"
+        android:layout_height="@dimen/_215sdp"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/brand_color_dark"
+            >
+            <ImageView
+                android:id="@+id/image_view_news"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150sdp"
+                android:background="@color/black"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_alignParentBottom="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/clock_icon"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_clock"
+                        android:tint="@color/white"
+                        tools:ignore="UseAppTint"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_4sdp">
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20m Ago"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/white"
+                        />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:maxLines="2"
+            android:layout_marginTop="@dimen/_155sdp"
+            android:text="iskdjfviusdnfviusd niej gaoidfjg oisdfjgoi sdjfgipo sjdfglk  fkdsfj ghsdjkf gskjdfg jskdfh gjsdk fhsjkdh f"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/_11sdp"
+            />
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="iskdjfviusdnfviusd niej gaoidfjg oisdfjgoi sdjfgipo sjdfglk  fkdsfj ghsdjkf gskjdfg jskdfh gjsdk fhsjkdh f"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image_container"
+        />
+
+    <ImageView
+        android:id="@+id/red_dot"
+        android:layout_width="@dimen/_5sdp"
+        android:layout_height="@dimen/_5sdp"
+        android:visibility="gone"
+        android:src="@drawable/red_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/author"
+        app:layout_constraintEnd_toStartOf="@+id/author"
+        app:layout_constraintStart_toStartOf="@+id/detail"
+        app:layout_constraintTop_toTopOf="@+id/author" />
+
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text=""
+        android:layout_marginStart="@dimen/_2sdp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/red_dot"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail"/>
+
+
+
+    <TextView
+        android:id="@+id/more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/more"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:background="@drawable/primary_rounded_rect"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingVertical="@dimen/_2sdp"
+        android:paddingHorizontal="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</RelativeLayout>

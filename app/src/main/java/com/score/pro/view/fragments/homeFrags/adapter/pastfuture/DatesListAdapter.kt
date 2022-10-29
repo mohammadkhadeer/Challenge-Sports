@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import sports.myapplication.R
 import com.score.pro.model.data.news.details.OnPostDetailResponse
 
-class DatesListAdapter(var context: Context,var dates:List<String>,var listener:OnPostDetailResponse<String>):RecyclerView.Adapter<DatesListAdapter.DatesListAdapterViewHolder>() {
+class DatesListAdapter(var context: Context,var dates:List<String>
+,var listener:OnPostDetailResponse<String>):RecyclerView.Adapter<DatesListAdapter.DatesListAdapterViewHolder>() {
     var selectedPosition:Int?=null
     var selected_position =0;
+
     inner class DatesListAdapterViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         var dayOfTheWeekTv=itemView.findViewById<TextView>(R.id.day_of_week_tv)
@@ -22,7 +24,7 @@ class DatesListAdapter(var context: Context,var dates:List<String>,var listener:
                 for (i in 0 until dates.size) {
                     if (i==selectedPosition)
                     {
-                        dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_time_tab));
+                        dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_time_tab_new));
                     } else{
                         dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_not_selected_time_tab))
                     }
@@ -51,10 +53,11 @@ class DatesListAdapter(var context: Context,var dates:List<String>,var listener:
 //                dateTv.setBackgroundResource(0)
 //            }
 //            dateTv.text=dates[position]
+
             dayOfTheWeekTv.text=dates[position]
             if (position ==selected_position)
             {
-                holder.dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_time_tab))
+                holder.dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_time_tab_new))
                 holder.dayOfTheWeekTv.setTextColor(context.getResources().getColor(R.color.brand_color));
             } else{
                 holder.dayOfTheWeekTv.setBackground(ContextCompat.getDrawable(context, R.drawable.s_not_selected_time_tab))

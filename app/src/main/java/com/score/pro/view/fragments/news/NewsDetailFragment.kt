@@ -63,6 +63,7 @@ class NewsDetailFragment : Fragment() {
                 }
                 val rv= view.findViewById<RecyclerView>(R.id.tags_rv)
                 val keywords= responseBody.keywords.split(",")
+
                 rv.adapter=object : RecyclerView.Adapter<viewHolder>() {
                     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
                         return viewHolder(LayoutInflater.from(context).inflate(R.layout.tags_item,parent,false))
@@ -99,7 +100,6 @@ class NewsDetailFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic fun newInstance(postID: String, unused: String) =
                 NewsDetailFragment().apply {
                     arguments = Bundle().apply {

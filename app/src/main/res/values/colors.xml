@@ -49,6 +49,7 @@
 
 
     <color name="brand_color">#B7De6E</color>
+    <color name="brand_color_dark">#89CB4C</color>
     <color name="brand_color_lit">#F7FFE4</color>
 
     <color name="main_tab_not_selected_color">#6F6F6F</color>

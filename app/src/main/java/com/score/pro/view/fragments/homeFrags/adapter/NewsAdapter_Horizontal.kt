@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import sports.myapplication.R
 import com.score.pro.view.adapters.RecyclerViewOnclick
 
-class NewsAdapter (var context: Context, var  newsList:ArrayList<com.score.pro.model.data.news.List>, var loadMoreCommunicator:LoadMoreCommunicator, var onclick: RecyclerViewOnclick):RecyclerView.Adapter<NewsAdapter.viewHolder>(){
+class NewsAdapter_Horizontal (var context: Context, var  newsList:ArrayList<com.score.pro.model.data.news.List>, var onclick: RecyclerViewOnclick):RecyclerView.Adapter<NewsAdapter_Horizontal.viewHolder>(){
     inner class viewHolder(itemview: View): RecyclerView.ViewHolder(itemview){
         var headline=itemview.findViewById<TextView>(R.id.headline)
         var tag=itemview.findViewById<TextView>(R.id.detail)
@@ -25,7 +25,7 @@ class NewsAdapter (var context: Context, var  newsList:ArrayList<com.score.pro.m
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-        return viewHolder(LayoutInflater.from(context).inflate(R.layout.news_rv_element,parent,false))
+        return viewHolder(LayoutInflater.from(context).inflate(R.layout.news_rv_element_horizontal,parent,false))
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
@@ -50,6 +50,3 @@ class NewsAdapter (var context: Context, var  newsList:ArrayList<com.score.pro.m
 
 }
 
-interface LoadMoreCommunicator {
-    fun loadMore()
-}

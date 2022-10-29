@@ -60,7 +60,9 @@ class NewsFragment : Fragment() {
                 showDetailFragment(propertiesList[0])
             }
         })
+
         fragsList.add(frag)
+
        val vidfrag= VideoBaseFragment.newInstance("","")
         vidfrag.setOnDetailListener(object : OnDetailListener {
             override fun onDetail(propertiesList: List<String>) {
@@ -71,6 +73,7 @@ class NewsFragment : Fragment() {
         fragsList.add(vidfrag)
         viewpager.adapter= ViewPagerAdapter(requireActivity().supportFragmentManager,requireActivity().lifecycle,fragsList)
         viewpager.isUserInputEnabled=false
+
         TabLayoutMediator(tabLayout,viewpager){tab,position->
             tab.text=tabsTitles[position]
         }.attach()
