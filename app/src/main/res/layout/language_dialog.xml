@@ -334,7 +334,7 @@
             android:layout_width="match_parent"
             android:text="@string/language"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/brand_color_dark"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_height="wrap_content"/>

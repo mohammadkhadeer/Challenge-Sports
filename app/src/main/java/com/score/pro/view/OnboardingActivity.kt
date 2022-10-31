@@ -78,11 +78,11 @@ class OnboardingActivity : AppCompatActivity() {
         val paint = skip.paint
         val width = paint.measureText(skip.text.toString())
 
-        val textShader: Shader = LinearGradient(0f, 0f, width, skip.textSize, intArrayOf(
-            Color.parseColor("#EC3BDA"),
-            Color.parseColor("#F24CA2")
-        ), null, Shader.TileMode.REPEAT)
-        skip.paint.setShader(textShader)
+//        val textShader: Shader = LinearGradient(0f, 0f, width, skip.textSize, intArrayOf(
+//            Color.parseColor("#EC3BDA"),
+//            Color.parseColor("#F24CA2")
+//        ), null, Shader.TileMode.REPEAT)
+//        skip.paint.setShader(textShader)
 
         skip.setOnClickListener {
             SharedPreference.getInstance().saveBooleanToPreferences(SharedPreference.IS_FIRST_TIME,false,this)
