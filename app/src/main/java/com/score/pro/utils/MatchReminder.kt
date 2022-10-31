@@ -9,7 +9,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import sports.myapplication.R
+import score.pro.R
 
 class MatchReminder: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {

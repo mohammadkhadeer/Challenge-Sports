@@ -10,7 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.utils.SpewViewModel
 import com.score.pro.utils.Status
 import com.score.pro.view.fragments.homeFrags.adapter.MainAdapterCommunicator

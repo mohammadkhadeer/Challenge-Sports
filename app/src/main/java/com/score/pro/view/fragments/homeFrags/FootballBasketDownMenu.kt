@@ -10,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.score.pro.sharedPreferences.FootballOrBasketball.getFootballOrBasketballFromSP
 import com.score.pro.sharedPreferences.FootballOrBasketball.saveFootballOrBasketballInSP
 import com.score.pro.view.BaseActivity
-import sports.myapplication.R
+import score.pro.R
 
 class FootballBasketDownMenu : BottomSheetDialogFragment() {
 

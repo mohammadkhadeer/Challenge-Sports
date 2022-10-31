@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.score.pro.model.data.homepage.new2.Match
 import com.score.pro.model.data.news.details.OnPostDetailResponse

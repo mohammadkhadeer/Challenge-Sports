@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.score.pro.model.data.LegaDetails
 import com.score.pro.view.adapters.RecyclerViewOnclick
-import sports.myapplication.R
+import score.pro.R
 
 class LegasAdapter (var context: Context, var  legaList:ArrayList<com.score.pro.model.data.LegaDetails>
                     , var onclick: RecyclerViewOnclick):RecyclerView.Adapter<LegasAdapter.viewHolder>(){

@@ -10,7 +10,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.api.ApiHelperImpl
 import com.score.pro.model.api.RetroInstance
 import com.score.pro.model.data.homepage.event.EventBase

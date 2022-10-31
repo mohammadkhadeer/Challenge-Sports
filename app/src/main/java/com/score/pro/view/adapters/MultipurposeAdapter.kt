@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import sports.myapplication.R
+import score.pro.R
 
 abstract class MultipurposeAdapter(var context:Context,var layout: Int,var onclick: RecyclerViewOnclick): RecyclerView.Adapter<MultipurposeAdapter.viewHolder>() {
     inner class viewHolder(itemview: View):RecyclerView.ViewHolder(itemview){

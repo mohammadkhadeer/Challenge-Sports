@@ -3,7 +3,7 @@ package com.score.pro.model.test_exo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.view.fragments.homeFrags.IndexDisplayFragmnet
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem

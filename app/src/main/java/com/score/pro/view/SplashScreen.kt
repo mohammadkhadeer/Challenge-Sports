@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.score.pro.model.api.ApiReq.sentReq
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference
-import sports.myapplication.R
+import score.pro.R
 import java.util.*
 
 @SuppressLint("CustomSplashScreen")

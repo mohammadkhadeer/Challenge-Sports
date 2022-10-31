@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.past.future.Match
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference

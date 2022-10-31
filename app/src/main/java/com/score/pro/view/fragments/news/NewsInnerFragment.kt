@@ -23,7 +23,7 @@ import com.score.pro.view.fragments.homeFrags.adapter.LoadMoreCommunicator
 import com.score.pro.view.fragments.homeFrags.adapter.NewsAdapter
 import com.score.pro.view.fragments.homeFrags.adapter.NewsAdapter_Horizontal
 import com.score.pro.viewmodel.MainViewModel
-import sports.myapplication.R
+import score.pro.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

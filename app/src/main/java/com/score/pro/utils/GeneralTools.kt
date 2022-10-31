@@ -28,8 +28,8 @@ import com.score.pro.sharedPreferences.PromptFrequency.getPrompt_titleFromSP
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.score.pro.sharedPreferences.FootballOrBasketball.cleanFootballOrBasketball
-import sports.myapplication.BuildConfig
-import sports.myapplication.R
+import score.pro.BuildConfig
+import score.pro.R
 import java.text.SimpleDateFormat
 import java.util.*
 

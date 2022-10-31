@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.view.adapters.ViewPagerAdapter
 import com.score.pro.view.fragments.OnBackPressedListener
 import com.score.pro.view.fragments.OnDetailListener

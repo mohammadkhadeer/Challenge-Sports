@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="sports.myapplication">
+    package="score.pro">
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.SET_ALARM" />
@@ -21,6 +21,7 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name="com.score.pro.view.FullscreenActivity"
             android:exported="false"
@@ -31,6 +32,7 @@
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="com.score.pro.view.SplashScreen"
             android:exported="true"
@@ -42,11 +44,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.score.pro.view.FirstActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="com.score.pro.view.BaseActivity"
             android:configChanges="uiMode"

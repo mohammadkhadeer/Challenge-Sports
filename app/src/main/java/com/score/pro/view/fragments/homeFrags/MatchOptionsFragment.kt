@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.new2.Match
 import com.score.pro.utils.GeneralTools
 import com.score.pro.view.fragments.homeFrags.adapter.MainAdapter

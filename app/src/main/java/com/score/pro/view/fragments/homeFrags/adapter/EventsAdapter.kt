@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.event.formatted.EventKind
 import com.score.pro.model.data.homepage.event.formatted.FormattedEventG_S_F
 import com.score.pro.utils.Formatters

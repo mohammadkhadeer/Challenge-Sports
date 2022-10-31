@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.videos.List
 import com.score.pro.view.adapters.RecyclerViewOnclick
 

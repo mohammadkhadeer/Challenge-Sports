@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.event.formatted.FormattedTecnicEvent
 import com.score.pro.utils.Formatters
 

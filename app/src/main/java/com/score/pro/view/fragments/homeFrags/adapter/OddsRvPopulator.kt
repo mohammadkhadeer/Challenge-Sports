@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import sports.myapplication.R
+import score.pro.R
 
 class OddsRvPopulator(var context: Context, var dataList: List<Any>, var typeOdds: String) :
     RecyclerView.Adapter<OddsRvPopulator.OddsViewHolder>() {

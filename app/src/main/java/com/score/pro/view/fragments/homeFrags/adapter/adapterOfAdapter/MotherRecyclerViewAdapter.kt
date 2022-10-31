@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.leagueInfo.any.LeagueStandingTypeGroupBase
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference

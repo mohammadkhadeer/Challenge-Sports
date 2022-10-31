@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import sports.myapplication.R;
+import score.pro.R;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

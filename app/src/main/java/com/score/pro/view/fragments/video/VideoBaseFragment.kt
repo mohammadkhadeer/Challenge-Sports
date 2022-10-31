@@ -10,7 +10,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.api.ApiHelperImpl
 import com.score.pro.model.api.RetroInstance
 import com.score.pro.model.data.news.details.OnPostDetailResponse

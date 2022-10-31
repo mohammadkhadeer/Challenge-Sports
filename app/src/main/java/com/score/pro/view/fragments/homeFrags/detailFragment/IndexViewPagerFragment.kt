@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.liveOdds.BaseLiveOdds
 import com.score.pro.view.fragments.homeFrags.adapter.OddsRvPopulator
 

@@ -12,7 +12,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.onboarding.OnboardingObject
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference

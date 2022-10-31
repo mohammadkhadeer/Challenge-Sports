@@ -1,7 +1,7 @@
 package com.score.pro.utils
 
 import android.content.Context
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.event.Event
 import com.score.pro.model.data.homepage.event.EventBase
 import com.score.pro.model.data.homepage.event.EventX

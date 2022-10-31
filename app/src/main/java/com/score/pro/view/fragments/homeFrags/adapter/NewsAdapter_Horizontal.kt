@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.view.adapters.RecyclerViewOnclick
 
 class NewsAdapter_Horizontal (var context: Context, var  newsList:ArrayList<com.score.pro.model.data.news.List>, var onclick: RecyclerViewOnclick):RecyclerView.Adapter<NewsAdapter_Horizontal.viewHolder>(){

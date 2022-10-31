@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.utils.SpewViewModel
 import com.score.pro.utils.Status
 

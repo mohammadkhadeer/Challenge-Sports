@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.analysis.analysisOdds.FormattedAnalysisOdds
 
 class SortedOddsAdapter(var context:Context,var oddsList:List<FormattedAnalysisOdds>):RecyclerView.Adapter<SortedOddsAdapter.SortedOddsAdapterViewHolder>() {

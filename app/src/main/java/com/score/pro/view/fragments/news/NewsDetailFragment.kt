@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.api.ApiHelperImpl
 import com.score.pro.model.api.RetroInstance
 import com.score.pro.model.data.news.details.NewsPostBase

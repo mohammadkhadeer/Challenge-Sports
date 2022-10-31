@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.basketball.odds.BasketballOddsBase
 import com.score.pro.model.data.homepage.liveOdds.BaseLiveOdds
 import com.score.pro.utils.SpewViewModel

@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import sports.myapplication.BuildConfig;
+import score.pro.BuildConfig;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

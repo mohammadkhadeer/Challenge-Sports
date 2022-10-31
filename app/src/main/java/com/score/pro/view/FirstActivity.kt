@@ -6,7 +6,7 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.utils.SharedPreference
 import com.score.pro.view.fragments.authFrags.AuthFragmentCommunicationListener
 import com.score.pro.view.fragments.authFrags.FragmentMessage

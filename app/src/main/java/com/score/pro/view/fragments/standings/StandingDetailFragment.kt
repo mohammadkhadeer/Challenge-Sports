@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
 import com.score.pro.model.data.homepage.leagueInfo.LeagueStanding
 import com.score.pro.model.data.homepage.leagueInfo.any.LeagueStandingTypeGroupBase

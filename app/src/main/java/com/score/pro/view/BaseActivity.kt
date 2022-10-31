@@ -35,7 +35,7 @@ import com.score.pro.view.fragments.homeFrags.FootballBasketDownMenu
 import com.score.pro.view.fragments.homeFrags.adapter.LegasAdapter
 import com.score.pro.view.fragments.news.NewsFragment
 import com.score.pro.view.fragments.standings.StandingBaseFragment
-import sports.myapplication.R
+import score.pro.R
 import java.util.*
 
 
@@ -109,7 +109,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         //baseViewPager.setPageTransformer(Pager2_GateTransformer())
         closeSearchIcon.setOnClickListener {
             searchBar.setText("")
-            homeFragment.searchMatch("")
+            homeFragment.searchMatch(" ")
             if (searchBar.visibility==View.VISIBLE){
                 closeSearchIcon.visibility=View.GONE
                 edt_cont.visibility=View.GONE

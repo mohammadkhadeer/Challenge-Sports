@@ -46,7 +46,7 @@ import com.score.pro.view.fragments.homeFrags.detailFragment.HighlightedFragment
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
-import sports.myapplication.R
+import score.pro.R
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.new2.Match
 import com.score.pro.view.fragments.homeFrags.adapter.MainAdapter
 import java.text.SimpleDateFormat

@@ -16,7 +16,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import sports.myapplication.R
+import score.pro.R
 import com.score.pro.model.data.homepage.new2.Match
 import java.text.SimpleDateFormat
 import java.util.*

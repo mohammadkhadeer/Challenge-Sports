@@ -20,11 +20,20 @@
             android:layout_weight="55"
             >
 
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/boarding_cover"
+                />
+            
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager_onboarding"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
 
         </RelativeLayout>
 

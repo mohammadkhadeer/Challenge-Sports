@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import sports.myapplication.R
+import score.pro.R
 
 class MatchesPopulatingAdapter(var context: Context, var data: List<List<String>>) :
     RecyclerView.Adapter<MatchesPopulatingAdapter.MatchesPopulatingAdapterViewHolder>() {
