@@ -1,4 +1,11 @@
 <resources>
+    <string name="chose_your_game">Chọn trò chơi của bạn</string>
+    <string name="all_matches">Tất cả các trận đấu</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="hand_picks">Chọn tay</string>
+    <string name="latest">Muộn nhất</string>
+    <string name="related_videos">Các video liên quan</string>
+
     <string name="ok">Được</string>
     <string name="cancel">sự hủy bỏ</string>
     <string name="exit">Lối ra</string>

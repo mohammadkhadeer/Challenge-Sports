@@ -1,4 +1,11 @@
 <resources>
+    <string name="chose_your_game"></string>
+    <string name="all_matches">Pilih permainan Anda</string>
+    <string name="search">Mencari</string>
+    <string name="hand_picks">Pilihan tangan</string>
+    <string name="latest">Terbaru</string>
+    <string name="related_videos">Video yang berhubungan</string>
+
     <string name="ok">Oke</string>
     <string name="cancel">membatalkan</string>
     <string name="exit">KELUAR</string>
