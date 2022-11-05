@@ -73,7 +73,7 @@
                 android:maxLines="2"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textStyle="bold"
-                android:text="iskdjfviusdnfviusd niej gaoidfjg oisdfjgoi sdjfgipo sjdfglk  fkdsfj ghsdjkf gskjdfg jskdfh gjsdk fhsjkdh f"
+                android:text="iskdjfviusdnfviusd niej gaoidfjg oisdfjgoi sdjfgipo sjdfglk  fkdsfj ghsdjkf gskjdfg gskjdfg gskjdfg jskdfh gjsdk fhsjkdh f"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
                  />

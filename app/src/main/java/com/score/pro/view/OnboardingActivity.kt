@@ -46,7 +46,7 @@ class OnboardingActivity : AppCompatActivity() {
         val skip=findViewById<TextView>(R.id.skip_bt)
         val list=ArrayList<OnboardingObject>()
         if (!SharedPreference.getInstance().getBooleanValueFromPreference(SharedPreference.HAS_SELECTED_FIRST_LANG,false,this)){
-            showDialogForLanguages()
+            //showDialogForLanguages()
         }
         list.add(OnboardingObject(R.drawable.onboarding_1,getString(R.string.welcome),getString(R.string.onboarding_body_1)))
         list.add(OnboardingObject(R.drawable.onboarding_2,getString(R.string.football),getString(R.string.onboarding_body_2)))

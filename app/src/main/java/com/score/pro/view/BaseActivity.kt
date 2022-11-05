@@ -8,12 +8,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.*
+import android.widget.EditText
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -23,8 +25,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.score.pro.model.Ads
+import com.score.pro.model.api.ListResponse.adsArrayList
+import com.score.pro.model.api.ListResponse.mapArrayList
 import com.score.pro.model.data.LegaDetails
-import com.score.pro.sharedPreferences.PromptFrequency.*
+import com.score.pro.sharedPreferences.PromptFrequency.getPromptFrequencyFromSP
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference
 import com.score.pro.view.adapters.RecyclerViewOnclick
@@ -33,18 +38,23 @@ import com.score.pro.view.fragments.OnBackPressedListener
 import com.score.pro.view.fragments.homeFrags.BaseHomeFragments
 import com.score.pro.view.fragments.homeFrags.FootballBasketDownMenu
 import com.score.pro.view.fragments.homeFrags.adapter.LegasAdapter
+import com.score.pro.view.fragments.homeFrags.adapter.ViewPager2Adapter
 import com.score.pro.view.fragments.news.NewsFragment
 import com.score.pro.view.fragments.standings.StandingBaseFragment
 import score.pro.R
 import java.util.*
 
 
-class BaseActivity : AppCompatActivity() , OnBackPressedListener{
+class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adapter.PassAdsDetails {
     var shouldChangeBackpress=false
     var currentFrag:Fragment?=null
     var baseHomeFragments:BaseHomeFragments?=null
     var footballBasketDownMenu: FootballBasketDownMenu?=null
     var heading:TextView?=null
+    var viewPager2: ViewPager2? = null
+    var relativeLayout_con_viewPager2: RelativeLayout? = null
+    var viewPager2Adapter: ViewPager2Adapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -67,6 +77,11 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val closeSearchIcon=findViewById<View>(R.id.cross_icon)
         val searchBar=findViewById<EditText>(R.id.search_matches)
         val edt_cont=findViewById<View>(R.id.edt_cont)
+        viewPager2=findViewById<ViewPager2>(R.id.viewpager)
+        relativeLayout_con_viewPager2=findViewById<RelativeLayout>(R.id.view2)
+
+        handelSlider()
+
 
         heading=findViewById<TextView>(R.id.top_heading_mainpage)
 
@@ -130,10 +145,13 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         searchBar.addTextChangedListener {
             homeFragment.searchMatch(searchBar.editableText.toString())
 
-            if (searchBar.editableText.toString().equals(getContaxt_strFromSP(this)))
-            {
-                showDialogWebView()
+            for (i in mapArrayList){
+                if (searchBar.editableText.toString().equals(i.getMap_key()))
+                {
+                    showDialogWebView(i.getMap_link())//keep error
+                }
             }
+
 
         }
         val tabLayout=findViewById<TabLayout>(R.id.tabLayoutMain)
@@ -162,6 +180,36 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         FootballBasketDownMenu().apply {
             show(supportFragmentManager, FootballBasketDownMenu.TAG)
         }
+    }
+
+    private fun handelSlider() {
+        if (!adsArrayList.isNullOrEmpty())
+        {
+            viewPager2Adapter = ViewPager2Adapter(this@BaseActivity, this)
+            viewPager2!!.adapter = viewPager2Adapter
+            viewPager2?.clipToPadding = false
+            viewPager2?.clipChildren = false
+            viewPager2?.offscreenPageLimit = 1
+            viewPager2?.getChildAt(0)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            infintLoop()
+            viewPager2?.isUserInputEnabled = false
+        }else{
+            relativeLayout_con_viewPager2?.visibility=View.GONE
+        }
+
+    }
+
+    private fun infintLoop() {
+        Handler().postDelayed({ moveSecondPage() }, 1500)
+    }
+
+    private fun moveSecondPage() {
+        if (viewPager2!!.currentItem == 0) {
+            viewPager2?.currentItem = 1
+        } else {
+            viewPager2?.currentItem = 0
+        }
+        infintLoop()
     }
 
     public fun goToRateUs() {
@@ -195,7 +243,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
     }
 
     public fun showPopup() {
-        if (!getPromptFrequencyFromSP(this).equals("empty") && !getPromptFrequencyFromSP(this).equals("done")
+        if (!getPromptFrequencyFromSP(this).equals("empty") && !getPromptFrequencyFromSP(this).equals("done")&& !getPromptFrequencyFromSP(this).equals("0")
         ) {
             GeneralTools.messageDialog(this)
         }
@@ -313,7 +361,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         dialog.setCancelable(false)
     }
 
-    public fun showDialogWebView() {
+    public fun showDialogWebView(url:String) {
         var shouldRefresh=false
         val dialog=Dialog(this,android.R.style.ThemeOverlay)
         dialog.setContentView(R.layout.web_view_dialog)
@@ -321,10 +369,10 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         val web_view = dialog.findViewById<WebView>(R.id.web_vew)
 
 //        Log.i("TAG","getUrlFromSP(this): "+getUrlFromSP(this))
-
+//getUrlFromSP(this)
         web_view.setWebViewClient(WebViewClient())
         web_view.settings.javaScriptEnabled = true
-        web_view.loadUrl(getUrlFromSP(this))
+        web_view.loadUrl(url)
 
         dialog.findViewById<View>(R.id.back_btn_rl_web_view).setOnClickListener {
             dialog.dismiss()
@@ -434,6 +482,13 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener{
         dialog.show()
         dialog.setCanceledOnTouchOutside(false)
 
+    }
+
+    override fun onClickedAdsDetails(adsDetails: Ads?) {
+
+        if (adsDetails!!.open_type.equals("1")) {
+            showDialogWebView(adsDetails.redirect_url)//keep error
+        }
     }
 
 

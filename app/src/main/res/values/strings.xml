@@ -1,4 +1,9 @@
 <resources>
+
+
+    <string name="account_email" translatable="false">tianquan109@gmail.com</string>
+    <string name="privacy_policy_link" translatable="false">https://scorepro4.wordpress.com/2022/11/01/privacy-policy/</string>
+
     <string name="chose_your_game">Choose your game</string>
     <string name="all_matches">All matches</string>
     <string name="search">Search</string>
@@ -13,7 +18,8 @@
     <string name="today">Today</string>
     <string name="schedule">Schedule</string>
     <string name="app_name" translatable="false">Score Pro</string>
-    <string name="account_email" translatable="false">xinyu.dev778@gmail.com</string>
+
+
     <string name="match_highlights">Match Highlights</string>
     <string name="highlights">Highlights</string>
     <string name="see_all">See All</string>
@@ -241,7 +247,6 @@
     <string name="exit_app_text">Are you sure you want to close application?</string>
     <string name="yes">yes</string>
     <string name="no">No</string>
-    <string name="privacy_policy_link" translatable="false">https://775sportsprivacypolicy.wordpress.com/2022/10/22/privacy-policy/</string>
     <string name="latest_news">Latest News</string>
     <string name="most_watched">Most Watched</string>
     <string name="auto_play">Auto Play</string>

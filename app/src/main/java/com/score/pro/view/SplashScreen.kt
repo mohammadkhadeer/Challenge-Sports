@@ -10,14 +10,17 @@ import android.os.CountDownTimer
 import android.util.DisplayMetrics
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.score.pro.model.api.AdsResponseSuccessful
 import com.score.pro.model.api.ApiReq.sentReq
+import com.score.pro.model.api.ApiReqBannerAds
+import com.score.pro.model.api.ApiReqBannerAds.sentReqBanner
 import com.score.pro.utils.GeneralTools
 import com.score.pro.utils.SharedPreference
 import score.pro.R
 import java.util.*
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreen : AppCompatActivity() {
+class SplashScreen : AppCompatActivity() ,AdsResponseSuccessful {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
      /*   val locale = Locale(
@@ -47,7 +50,7 @@ class SplashScreen : AppCompatActivity() {
 
         val exo_tv=findViewById<TextView>(R.id.exo_score)
 
-        sentReq(this@SplashScreen)
+        sentReqBanner(this@SplashScreen,this);
 
         object : CountDownTimer(2000,2000){
             override fun onTick(p0: Long) {
@@ -57,7 +60,7 @@ class SplashScreen : AppCompatActivity() {
             override fun onFinish() {
 
                 if (SharedPreference.getInstance().getBooleanValueFromPreference(SharedPreference.IS_FIRST_TIME,true,this@SplashScreen))
-                startActivity(Intent(this@SplashScreen,OnboardingActivity::class.java))
+                    startActivity(Intent(this@SplashScreen,OnboardingActivity::class.java))
                 else{
                     startActivity(Intent(this@SplashScreen,BaseActivity::class.java))
                 }
@@ -65,6 +68,8 @@ class SplashScreen : AppCompatActivity() {
             }
 
         }.start()
+
+
     }
     private fun setLocale(locale: Locale) {
         val resources: Resources = resources
@@ -76,5 +81,9 @@ class SplashScreen : AppCompatActivity() {
         } else {
             resources.updateConfiguration(configuration, displayMetrics)
         }
+    }
+
+    override fun adsSuccessful(pass: Boolean) {
+
     }
 }

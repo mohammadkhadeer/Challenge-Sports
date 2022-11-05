@@ -31,55 +31,94 @@
             android:layout_marginStart="@dimen/_4sdp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/group_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Group-A"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:textColor="@color/brand_color_dark"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints"
-                />
-
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/header_con"
                 android:orientation="horizontal"
-                tools:ignore="MissingConstraints"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_6sdp"
-                >
+                android:weightSum="100"
+                tools:ignore="MissingConstraints">
 
-                <TextView
-                    android:id="@+id/match_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sat, 21 Nov"
-                    android:textSize="12sp"
-                    android:layout_marginTop="@dimen/_6sdp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50">
 
-                <TextView
-                    android:id="@+id/match_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="22:00"
-                    android:layout_marginTop="@dimen/_6sdp"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:textStyle="bold"
+                    <TextView
+                        android:id="@+id/group_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Group-A Group-A Group-A Group-A "
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:textColor="@color/brand_color_dark"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="MissingConstraints"
+                        />
 
-                    />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="MissingConstraints"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        >
+
+                        <TextView
+                            android:id="@+id/match_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sat, 21 Nov"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textSize="12sp"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/match_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="22:00"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:layout_marginStart="@dimen/_6sdp"
+                            android:textStyle="bold"
+
+                            />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
 
             </LinearLayout>
+
+
+
+
+
 
 
 <!--            <View-->
@@ -95,22 +134,32 @@
                 android:background="@color/white"
                 tools:ignore="MissingConstraints"
                 android:id="@+id/space"
-                app:layout_constraintTop_toBottomOf="@+id/group_indicator"
+                app:layout_constraintTop_toBottomOf="@+id/header_con"
                 />
 
-            <TextView
-                android:id="@+id/team_1_name"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxLines="2"
-                android:text="Chicago Dtuch Lions FC"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="11sp"
+                android:id="@+id/first_team_cont"
                 app:layout_constraintTop_toBottomOf="@+id/space"
-                android:layout_marginTop="@dimen/_8sdp"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/team_1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_marginEnd="@dimen/_60sdp"
+                    android:text="Chicago Dtuch Lions FC Chicago Dtuch Lions FC  Dtuch Lions FC "
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints" />
+
+            </RelativeLayout>
+
 
 
             <LinearLayout
@@ -128,7 +177,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="10sp"
+                    android:textSize="13sp"
+                    android:text="454"
                     android:textStyle="bold" />
 
                 <TextView
@@ -136,24 +186,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="10sp"
+                    android:text="454"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
 
-
-            <TextView
-                android:id="@+id/team_2_name"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxLines="2"
-                android:text="Devonport City Reserves"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintTop_toBottomOf="@+id/team_1_name"
-                tools:ignore="MissingConstraints" />
+                android:id="@+id/second_team_cont"
+                app:layout_constraintTop_toBottomOf="@+id/first_team_cont"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/team_2_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_marginEnd="@dimen/_60sdp"
+                    android:text="Devonport City Reserves Devonport City Reserves Devonport City Reserves Devonport City Reserves"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    tools:ignore="MissingConstraints" />
+
+            </RelativeLayout>
+
+
 
 
             <LinearLayout
@@ -165,7 +226,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/primary_rounded_rect"
                 android:backgroundTint="@color/brand_color_lit"
-                app:layout_constraintTop_toBottomOf="@+id/team_2_name"
+                app:layout_constraintTop_toBottomOf="@+id/second_team_cont"
                 android:layout_marginStart="@dimen/_45sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 tools:ignore="MissingConstraints">
@@ -611,6 +672,7 @@
                 android:id="@+id/bottom_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_4sdp"
                 app:layout_constraintTop_toBottomOf="@+id/q_away_container" />
 
 <!--            android:background="@color/solid_grey"-->

@@ -40,7 +40,7 @@ class ScheduleAdapter(var context: Context, var matches: List<Any>, var adapterT
         var awayNameTv = itemView.findViewById<TextView>(R.id.team_2_name)
         var scoreIndicator = itemView.findViewById<TextView>(R.id.score_indicator)
         var stateNdate = itemView.findViewById<TextView>(R.id.match_date)
-        var matchTimeTv = itemView.findViewById<TextView>(R.id.match_time)
+        var matchTimeTv = itemView.findViewById<TextView>(R.id.time)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -169,9 +169,9 @@ class ScheduleAdapter(var context: Context, var matches: List<Any>, var adapterT
                 awayNameTv.text = awayTeam
 
                 if (match.matchState == 0) {
-                    scoreIndicator.text = context.getString(R.string.soon)
+                    //scoreIndicator.text = context.getString(R.string.soon)
                 } else {
-                    scoreIndicator.text = match.homeScore + " : " + match.awayScore
+                    //scoreIndicator.text = match.homeScore + " : " + match.awayScore
                 }
 
             }

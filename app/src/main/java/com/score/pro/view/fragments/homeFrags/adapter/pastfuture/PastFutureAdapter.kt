@@ -156,7 +156,9 @@ class PastFutureAdapter(var context: Context, var matches: List<Any>, var adapte
                 homeTeam.text =homeTeamT
                 awayTeam.text = awayTeamT
             }
-        } else {
+        }
+
+        else {
             val mHolder = holder as PastFutureAdapterBasketball
             mHolder.apply {
                 val match =

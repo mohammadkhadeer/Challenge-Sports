@@ -23,11 +23,11 @@ import com.score.pro.model.data.homepage.new2.Match
 import com.score.pro.view.fragments.homeFrags.adapter.MainAdapter
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
-import com.score.pro.sharedPreferences.PromptFrequency.getPrompt_messageFromSP
-import com.score.pro.sharedPreferences.PromptFrequency.getPrompt_titleFromSP
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.score.pro.sharedPreferences.FootballOrBasketball.cleanFootballOrBasketball
+import com.score.pro.sharedPreferences.PromptFrequency.getMassageFromSP
+import com.score.pro.sharedPreferences.PromptFrequency.getTitleFromSP
 import score.pro.BuildConfig
 import score.pro.R
 import java.text.SimpleDateFormat
@@ -267,8 +267,8 @@ object GeneralTools {
         dialog.setContentView(R.layout.popup_dialog)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialog.findViewById<TextView>(R.id.title_message).setText(getPrompt_titleFromSP(activity.applicationContext))
-        dialog.findViewById<TextView>(R.id.message).setText(getPrompt_messageFromSP(activity.applicationContext))
+        dialog.findViewById<TextView>(R.id.title_message).setText(getTitleFromSP(activity.applicationContext))
+        dialog.findViewById<TextView>(R.id.message).setText(getMassageFromSP(activity.applicationContext))
 
         dialog.findViewById<View>(R.id.ok_bt).setOnClickListener {
             dialog.dismiss()

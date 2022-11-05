@@ -128,9 +128,16 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
                         recyclerViewMain?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                     }
 
-
                 } else {
-                    vm.makePastFutureCallBasketball(responseBody)
+                    //shod to handel here
+                    if (result_schedule.equals("schedule"))
+                    {
+                        vm.makeFutureCallBasketball(responseBody)
+                        recyclerViewMain?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    }else{
+                        vm.makePastFutureCallBasketball(responseBody)
+                        recyclerViewMain?.layoutManager = GridLayoutManager(context, 2)
+                    }
                 }
             }
 
@@ -242,7 +249,6 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
 
                         onChangeType=object : OnPostDetailResponse<Int> {
                             override fun onSuccess(position: Int) {
-
                                 when (position) {
                                     0 -> {
                                         mainAdapter?.setNewList(baseList, true)
@@ -299,6 +305,9 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
                         vm.scheduleFutureLiveData.observe(requireActivity()) { data ->
                             when (data.status) {
                                 Status.SUCCESS -> {
+
+                                    Log.i("TAG","BasketBall or football schedule ")
+
                                     pastScheduleAdapter = ScheduleAdapter(
                                         requireContext(),
                                         data.data!!.matchList,
@@ -319,12 +328,35 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
                         vm.pastFutureLiveDataBasketball.observe(requireActivity()) { data ->
                             when (data.status) {
                                 Status.SUCCESS -> {
+                                    Log.i("TAG","BasketBall1 past ")
                                     pastFutureAdapter = PastFutureAdapter(
                                         requireContext(),
                                         data.data!!.matchList,
                                         MainAdapterCommunicator.BASKETBALL_TYPE
                                     )
                                     recyclerViewMain?.adapter = pastFutureAdapter
+                                    recyclerViewMain?.adapter?.notifyDataSetChanged()
+                                }
+                                Status.ERROR -> {
+
+                                }
+                                Status.LOADING -> {
+
+                                }
+                            }
+                        }
+
+
+                        vm.futureLiveDataBasketball.observe(requireActivity()) { data ->
+                            when (data.status) {
+                                Status.SUCCESS -> {
+                                    Log.i("TAG","BasketBall1 past ")
+                                    pastScheduleAdapter = ScheduleAdapter(
+                                        requireContext(),
+                                        data.data!!.matchList,
+                                        MainAdapterCommunicator.BASKETBALL_TYPE
+                                    )
+                                    recyclerViewMain?.adapter = pastScheduleAdapter
                                     recyclerViewMain?.adapter?.notifyDataSetChanged()
                                 }
                                 Status.ERROR -> {

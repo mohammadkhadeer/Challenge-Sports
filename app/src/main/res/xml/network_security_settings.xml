@@ -3,6 +3,8 @@
 
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">zq.titan007.com</domain>
+        <domain includeSubdomains="true">app.8com.cloud</domain>
+
     </domain-config>
 
 </network-security-config>

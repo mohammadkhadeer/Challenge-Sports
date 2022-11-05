@@ -66,7 +66,7 @@ public class ApiReq {
                     Log.w("TAG","prompt_message: "+ prompt_message);
                     Log.w("TAG","map: "+ map);
 
-                    checkAndSavePromptFrequency(context,prompt_frequency,prompt_title,prompt_message,map);
+                    //checkAndSavePromptFrequency(context,prompt_frequency,prompt_title,prompt_message,map);
 
 //                    ApiResponse apiResponse = new ApiResponse(
 //                            map,prompt_frequency,prompt_title,prompt_message

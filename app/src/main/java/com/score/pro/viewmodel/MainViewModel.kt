@@ -39,6 +39,7 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     val pastFutureLiveData=MutableLiveData<Resource<PastFutureBaseCall>>()
     val scheduleFutureLiveData=MutableLiveData<Resource<PastFutureBaseCall>>()
     val pastFutureLiveDataBasketball=MutableLiveData<Resource<PastFutureBasketBall>>()
+    val futureLiveDataBasketball=MutableLiveData<Resource<PastFutureBasketBall>>()
     val basketballBriefingLiveData=MutableLiveData<Resource<BasketballBriefingBase>>()
     val analysisLiveDataBasketball=MutableLiveData<Resource<AnalysisBasktetballBase>>()
     var basketballLiveOdds= MutableLiveData<Resource<BasketballOddsBase>>()
@@ -493,6 +494,18 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
                 pastFutureLiveDataBasketball.postValue(Resource.success(pasFutureBase))
             }catch (e:Exception){
                 pastFutureLiveDataBasketball.postValue(Resource.error(e.toString(),null))
+            }
+        }
+    }
+
+    fun makeFutureCallBasketball(date: String) {
+        viewModelScope.launch {
+            try {
+                futureLiveDataBasketball.postValue(Resource.loading(null))
+                val pasFutureBase=apiHelper.getPastFutureMatchesBasketball(date)
+                futureLiveDataBasketball.postValue(Resource.success(pasFutureBase))
+            }catch (e:Exception){
+                futureLiveDataBasketball.postValue(Resource.error(e.toString(),null))
             }
         }
     }
