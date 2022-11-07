@@ -47,7 +47,7 @@ class SplashScreen : AppCompatActivity()  {
 
         val exo_tv=findViewById<TextView>(R.id.exo_score)
 
-        sentReqBanner(this@SplashScreen);
+        sentReqBanner(applicationContext);
 
         object : CountDownTimer(2000,2000){
             override fun onTick(p0: Long) {

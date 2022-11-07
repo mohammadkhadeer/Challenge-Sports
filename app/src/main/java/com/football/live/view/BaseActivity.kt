@@ -31,6 +31,7 @@ import com.football.live.model.Ads
 import com.football.live.model.api.ListResponse.adsArrayList
 import com.football.live.model.api.ListResponse.mapArrayList
 import com.football.live.model.data.LegaDetails
+import com.football.live.sharedPreferences.Functions.showPopupMessageCheck
 import com.football.live.sharedPreferences.PromptFrequency.getPromptFrequencyFromSP
 import com.football.live.utils.GeneralTools
 import com.football.live.utils.SharedPreference
@@ -241,10 +242,13 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
     }
 
     public fun showPopup() {
-        if (!getPromptFrequencyFromSP(this).equals("empty") && !getPromptFrequencyFromSP(this).equals("done")&& !getPromptFrequencyFromSP(this).equals("0")
-        ) {
+        if (showPopupMessageCheck(this))
             GeneralTools.messageDialog(this)
-        }
+
+//        if (!getPromptFrequencyFromSP(this).equals("empty") && !getPromptFrequencyFromSP(this).equals("done")&& !getPromptFrequencyFromSP(this).equals("0")
+//        ) {
+//            GeneralTools.messageDialog(this)
+//        }
     }
 
     public fun showDialogForLanguages() {
@@ -472,8 +476,6 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
             }
             (recycler_view!!.adapter as LegasAdapter).filterList(filterArrayList2)
         }
-
-
 
 
         dialog.show()

@@ -9,5 +9,5 @@ public class ListResponse {
 
     public static ArrayList<Ads> adsArrayList = new ArrayList<>();
     public static ArrayList<Map> mapArrayList = new ArrayList<>();
-
+    public static String prompt_frequency,prompt_title,prompt_message;
 }

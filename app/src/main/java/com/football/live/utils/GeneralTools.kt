@@ -23,11 +23,11 @@ import com.football.live.model.data.homepage.new2.Match
 import com.football.live.view.fragments.homeFrags.adapter.MainAdapter
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.football.live.model.api.ListResponse.prompt_message
+import com.football.live.model.api.ListResponse.prompt_title
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.football.live.sharedPreferences.FootballOrBasketball.cleanFootballOrBasketball
-import com.football.live.sharedPreferences.PromptFrequency.getMassageFromSP
-import com.football.live.sharedPreferences.PromptFrequency.getTitleFromSP
 import score.pro.BuildConfig
 import score.pro.R
 import java.text.SimpleDateFormat
@@ -267,8 +267,8 @@ object GeneralTools {
         dialog.setContentView(R.layout.popup_dialog)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialog.findViewById<TextView>(R.id.title_message).setText(getTitleFromSP(activity.applicationContext))
-        dialog.findViewById<TextView>(R.id.message).setText(getMassageFromSP(activity.applicationContext))
+        dialog.findViewById<TextView>(R.id.title_message).setText(prompt_title)
+        dialog.findViewById<TextView>(R.id.message).setText(prompt_message)
 
         dialog.findViewById<View>(R.id.ok_bt).setOnClickListener {
             dialog.dismiss()
