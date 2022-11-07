@@ -201,15 +201,12 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:id="@+id/cards_con"
-                            android:layout_marginEnd="@dimen/_3sdp"
-                            >
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_18sdp"
-                                android:orientation="horizontal">
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
                                 <RelativeLayout
                                     android:layout_width="wrap_content"
@@ -219,39 +216,12 @@
                                         android:layout_width="@dimen/_14sdp"
                                         android:layout_height="@dimen/_14sdp"
                                         android:id="@+id/team_1_logo"
+                                        android:layout_marginTop="@dimen/_4sdp"
                                         android:layout_centerVertical="true"
                                         android:src="@drawable/football"/>
 
                                 </RelativeLayout>
 
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent">
-
-                                    <ImageView
-                                        android:layout_width="@dimen/_14sdp"
-                                        android:layout_height="@dimen/_14sdp"
-                                        android:layout_centerVertical="true"
-                                        android:src="@drawable/yallow_card"/>
-
-                                </RelativeLayout>
-
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/yallow_card_Home"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/_9sdp"
-                                        android:layout_centerVertical="true"
-                                        android:textStyle="bold" />
-
-                                </RelativeLayout>
-
 
                                 <RelativeLayout
                                     android:layout_width="wrap_content"
@@ -261,107 +231,159 @@
                                         android:layout_width="@dimen/_14sdp"
                                         android:layout_height="@dimen/_14sdp"
                                         android:layout_centerVertical="true"
-                                        android:src="@drawable/red_card"/>
-
-                                </RelativeLayout>
-
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/red_card_Home"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/_9sdp"
-                                        android:layout_centerVertical="true"
-                                        android:textStyle="bold" />
+                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:id="@+id/team_2_logo"
+                                        android:src="@drawable/football"/>
 
                                 </RelativeLayout>
 
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_18sdp"
-                                android:orientation="horizontal">
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:id="@+id/cards_con"
+                                android:layout_marginEnd="@dimen/_3sdp"
+                                >
 
-                                <RelativeLayout
+                                <LinearLayout
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent">
-
-                                    <ImageView
-                                        android:layout_width="@dimen/_14sdp"
-                                        android:layout_height="@dimen/_14sdp"
-                                        android:layout_centerVertical="true"
-                                        android:id="@+id/team_2_logo"
-                                        android:src="@drawable/football"/>
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent">
-
-                                    <ImageView
-                                        android:layout_width="@dimen/_14sdp"
-                                        android:layout_height="@dimen/_14sdp"
-                                        android:layout_centerVertical="true"
-                                        android:src="@drawable/yallow_card"/>
-
-                                </RelativeLayout>
+                                    android:layout_height="@dimen/_18sdp"
+                                    android:orientation="horizontal">
 
 
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent">
 
-                                    <TextView
-                                        android:id="@+id/yallow_card_Away"
+                                    <RelativeLayout
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/_9sdp"
-                                        android:layout_centerVertical="true"
-                                        android:textStyle="bold" />
+                                        android:layout_height="match_parent">
 
-                                </RelativeLayout>
+                                        <ImageView
+                                            android:layout_width="@dimen/_14sdp"
+                                            android:layout_height="@dimen/_14sdp"
+                                            android:layout_centerVertical="true"
+                                            android:src="@drawable/yallow_card"/>
 
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent">
-
-                                    <ImageView
-                                        android:layout_width="@dimen/_14sdp"
-                                        android:layout_height="@dimen/_14sdp"
-                                        android:layout_centerVertical="true"
-                                        android:src="@drawable/red_card"/>
-
-                                </RelativeLayout>
+                                    </RelativeLayout>
 
 
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/red_card_Away"
+                                    <RelativeLayout
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/_9sdp"
-                                        android:layout_centerVertical="true"
-                                        android:textStyle="bold" />
+                                        android:layout_height="match_parent">
 
-                                </RelativeLayout>
+                                        <TextView
+                                            android:id="@+id/yallow_card_Home"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_9sdp"
+                                            android:layout_centerVertical="true"
+                                            android:textStyle="bold" />
+
+                                    </RelativeLayout>
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent">
+
+                                        <ImageView
+                                            android:layout_width="@dimen/_14sdp"
+                                            android:layout_height="@dimen/_14sdp"
+                                            android:layout_centerVertical="true"
+                                            android:src="@drawable/red_card"/>
+
+                                    </RelativeLayout>
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:id="@+id/red_card_Home"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_9sdp"
+                                            android:layout_centerVertical="true"
+                                            android:textStyle="bold" />
+
+                                    </RelativeLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_18sdp"
+                                    android:orientation="horizontal">
+
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent">
+
+                                        <ImageView
+                                            android:layout_width="@dimen/_14sdp"
+                                            android:layout_height="@dimen/_14sdp"
+                                            android:layout_centerVertical="true"
+                                            android:src="@drawable/yallow_card"/>
+
+                                    </RelativeLayout>
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:id="@+id/yallow_card_Away"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_9sdp"
+                                            android:layout_centerVertical="true"
+                                            android:textStyle="bold" />
+
+                                    </RelativeLayout>
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent">
+
+                                        <ImageView
+                                            android:layout_width="@dimen/_14sdp"
+                                            android:layout_height="@dimen/_14sdp"
+                                            android:layout_centerVertical="true"
+                                            android:src="@drawable/red_card"/>
+
+                                    </RelativeLayout>
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:id="@+id/red_card_Away"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_9sdp"
+                                            android:layout_centerVertical="true"
+                                            android:textStyle="bold" />
+
+                                    </RelativeLayout>
+
+                                </LinearLayout>
+
 
                             </LinearLayout>
 
-
                         </LinearLayout>
+
 
                     </RelativeLayout>
 

@@ -23,18 +23,18 @@
         tools:targetApi="31">
 
         <activity
-            android:name="com.score.pro.view.FullscreenActivity"
+            android:name="com.football.live.view.FullscreenActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
-            android:name="com.score.pro.view.OnboardingActivity"
+            android:name="com.football.live.view.OnboardingActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.score.pro.view.SplashScreen"
+            android:name="com.football.live.view.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -46,13 +46,13 @@
         </activity>
 
         <activity
-            android:name="com.score.pro.view.FirstActivity"
+            android:name="com.football.live.view.FirstActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.score.pro.view.BaseActivity"
+            android:name="com.football.live.view.BaseActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -60,15 +60,15 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.score.pro.model.test_exo.TestActivity"
+            android:name="com.football.live.model.test_exo.TestActivity"
             android:configChanges="uiMode"
             android:exported="true" >
 
         </activity>
 
-        <receiver android:name="com.score.pro.utils.MatchReminder" />
+        <receiver android:name="com.football.live.utils.MatchReminder" />
 
-        <service android:name="com.score.pro.view.floatingbubble.service.FloatingScoreService" />
+        <service android:name="com.football.live.view.floatingbubble.service.FloatingScoreService" />
     </application>
 
 </manifest>
