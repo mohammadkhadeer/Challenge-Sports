@@ -7,12 +7,14 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.util.DisplayMetrics
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.football.live.model.api.ApiReqBannerAds.sentReqBanner
 import com.football.live.utils.GeneralTools
 import com.football.live.utils.SharedPreference
+import org.json.JSONException
 import score.pro.R
 import java.util.*
 
@@ -47,7 +49,13 @@ class SplashScreen : AppCompatActivity()  {
 
         val exo_tv=findViewById<TextView>(R.id.exo_score)
 
-        sentReqBanner(applicationContext);
+        try {
+            Handler().postDelayed({ sentReqBanner(applicationContext) }, 100)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+
 
         object : CountDownTimer(2000,2000){
             override fun onTick(p0: Long) {

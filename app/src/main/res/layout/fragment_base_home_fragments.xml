@@ -369,13 +369,13 @@
         android:visibility="gone"
         android:layout_height="match_parent">
 
-        <com.airbnb.lottie.LottieAnimationView
-            app:lottie_rawRes="@raw/main_loading_anim"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
-            app:layout_constraintBottom_toTopOf="@+id/loading_text_botton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+<!--        <com.airbnb.lottie.LottieAnimationView-->
+<!--            app:lottie_rawRes="@raw/main_loading_anim"-->
+<!--            app:lottie_loop="true"-->
+<!--            app:lottie_autoPlay="true"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/loading_text_botton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
 
 
         <TextView

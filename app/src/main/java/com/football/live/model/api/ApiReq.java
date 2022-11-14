@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import score.pro.BuildConfig;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,7 +25,7 @@ public class ApiReq {
             try {
                 //"com.test.app"
                 //jsonObject.put("package_name", BuildConfig.APPLICATION_ID);
-                jsonObject.put("package_name", BuildConfig.APPLICATION_ID);
+                //jsonObject.put("package_name", BuildConfig.APPLICATION_ID);
                 jsonObject.put("platform","android");
                 jsonObject.put("device_name","Devie name");
                 jsonObject.put("version","1.0.0");

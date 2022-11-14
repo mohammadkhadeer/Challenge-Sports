@@ -142,18 +142,20 @@
                         android:id="@+id/next_bt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/next"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:background="@drawable/skip_bg"
                         android:backgroundTint="@color/brand_color_dark"
-                        android:layout_margin="@dimen/_10sdp"
                         android:paddingStart="@dimen/_14sdp"
-                        android:paddingEnd="@dimen/_14sdp"
                         android:paddingTop="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_14sdp"
                         android:paddingBottom="@dimen/_2sdp"
-                        android:layout_centerHorizontal="true"
-                        />
+                        android:text="@string/next"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </RelativeLayout>
 

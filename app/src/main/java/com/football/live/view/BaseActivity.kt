@@ -32,6 +32,8 @@ import com.football.live.model.api.ListResponse.adsArrayList
 import com.football.live.model.api.ListResponse.mapArrayList
 import com.football.live.model.data.LegaDetails
 import com.football.live.sharedPreferences.Functions.showPopupMessageCheck
+import com.football.live.sharedPreferences.OpenWebView.getOpenWebViewBeforeFromSP
+import com.football.live.sharedPreferences.OpenWebView.saveOpenWebViewBeforeInSP
 import com.football.live.sharedPreferences.PromptFrequency.getPromptFrequencyFromSP
 import com.football.live.utils.GeneralTools
 import com.football.live.utils.SharedPreference
@@ -76,6 +78,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
         setContentView(R.layout.activity_base_activty)
         statusBarColor()
         showPopup()
+        openWebView()
 
         val searchBar=findViewById<EditText>(R.id.search_matches)
         val edt_cont=findViewById<View>(R.id.edt_cont)
@@ -139,7 +142,8 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
                     if (searchBar.editableText.toString().equals(i.getMap_key()))
                     {
                         flag = 1
-                        showDialogWebView(i.getMap_link())//keep error
+                        saveOpenWebViewBeforeInSP(this,"yes")
+                        showDialogWebView(i.getMap_link())
                     }
                 }
                 if (flag ==0)
@@ -195,7 +199,7 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
     }
 
     private fun infintLoop() {
-        Handler().postDelayed({ moveSecondPage() }, 1500)
+        Handler().postDelayed({ moveSecondPage() }, 3000)
     }
 
     private fun moveSecondPage() {
@@ -249,6 +253,11 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
 //        ) {
 //            GeneralTools.messageDialog(this)
 //        }
+    }
+
+    public fun openWebView() {
+        if (!getOpenWebViewBeforeFromSP(this).equals("no") && mapArrayList.size != 0)
+            showDialogWebView(mapArrayList.get(0).map_link)
     }
 
     public fun showDialogForLanguages() {

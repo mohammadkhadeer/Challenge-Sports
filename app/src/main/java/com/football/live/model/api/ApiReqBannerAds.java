@@ -67,7 +67,7 @@ public class ApiReqBannerAds {
                 try {
                     //Log.w("TAG","Response: "+ response);
                     JSONObject responseObj = new JSONObject(response.body().string());
-                    Log.w("TAG","responseObj: "+ responseObj);
+                    //Log.w("TAG","responseObj: "+ responseObj);
                     JSONArray bannerArray = responseObj.getJSONArray("banner");
 
                     adsArrayList = new ArrayList<>();

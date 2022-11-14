@@ -21,6 +21,7 @@ import kotlin.collections.ArrayList
 
 class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         val languageToLoad = SharedPreference.getInstance().getStringValueFromPreference(
             SharedPreference.LOCALE_KEY,
