@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:padding="@dimen/_43sdp"
-                android:src="@drawable/score_bro"/>
+                android:src="@drawable/new_app_icon"/>
 
         </RelativeLayout>
 

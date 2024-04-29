@@ -64,52 +64,70 @@
 
         </RelativeLayout>
 
+<!--        android:background="@color/colorPrimary"-->
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="@dimen/_40sdp"
             android:orientation="horizontal"
             android:weightSum="100"
             android:background="@color/colorPrimary"
             tools:ignore="MissingConstraints">
 
-            <RelativeLayout
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:orientation="horizontal">
 
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/main_adapter_background"
-                android:layout_margin="@dimen/_4sdp"
-                android:id="@+id/edt_cont"
-                android:visibility="visible"
-                android:layout_weight="97">
-
-                <EditText
-                    android:id="@+id/search_matches"
-                    android:textColor="@color/dark_text"
-                    android:textSize="14sp"
-                    android:visibility="visible"
-                    android:layout_width="match_parent"
-                    android:textCursorDrawable="@drawable/c"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_marginBottom="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
-                    android:paddingVertical="@dimen/_8sdp"
-                    android:background="@drawable/primary_rounded_rect"
-                    android:backgroundTint="@color/white"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/search_here"
-                    android:textColorHint="@color/alt_grey"
-                    />
+                    android:id="@+id/web_view_button"
+                    >
+                    <ImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/globe"
+                        android:backgroundTint="@color/brand_color_dark"
+                        />
+                </RelativeLayout>
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_28sdp"
+                    android:background="@drawable/main_adapter_background"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:id="@+id/edt_cont"
+                    android:visibility="visible"
+                    android:layout_weight="97">
+
+                    <EditText
+                        android:id="@+id/search_matches"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:background="@drawable/primary_rounded_rect"
+                        android:backgroundTint="@color/white"
+                        android:hint="@string/search_here"
+                        android:padding="@dimen/_2sdp"
+                        android:textColor="@color/dark_text"
+                        android:textColorHint="@color/alt_grey"
+                        android:textCursorDrawable="@drawable/c"
+                        android:textSize="14sp"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
 
         </LinearLayout>

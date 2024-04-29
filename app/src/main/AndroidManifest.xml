@@ -4,9 +4,6 @@
     package="score.pro">
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.SET_ALARM" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -23,18 +20,26 @@
         tools:targetApi="31">
 
         <activity
-            android:name="com.football.live.view.FullscreenActivity"
+            android:name="com.challenge.sports.view.WebViewActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name="com.challenge.sports.view.FullscreenActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
-            android:name="com.football.live.view.OnboardingActivity"
+            android:name="com.challenge.sports.view.OnboardingActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.football.live.view.SplashScreen"
+            android:name="com.challenge.sports.view.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -46,13 +51,13 @@
         </activity>
 
         <activity
-            android:name="com.football.live.view.FirstActivity"
+            android:name="com.challenge.sports.view.FirstActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.football.live.view.BaseActivity"
+            android:name="com.challenge.sports.view.BaseActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -60,15 +65,15 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.football.live.model.test_exo.TestActivity"
+            android:name="com.challenge.sports.model.test_exo.TestActivity"
             android:configChanges="uiMode"
             android:exported="true" >
 
         </activity>
 
-        <receiver android:name="com.football.live.utils.MatchReminder" />
+        <receiver android:name="com.challenge.sports.utils.MatchReminder" />
 
-        <service android:name="com.football.live.view.floatingbubble.service.FloatingScoreService" />
+        <service android:name="com.challenge.sports.view.floatingbubble.service.FloatingScoreService" />
     </application>
 
 </manifest>

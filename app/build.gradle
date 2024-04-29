@@ -1,21 +1,17 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.firebase.firebase-perf'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
-
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.football.basketball.score.live.seven.ex"
+        applicationId "com.challenge.sports"
         minSdk 21
-        targetSdk 31
-        versionCode 5
-        versionName "0.0.05"
+        targetSdk 33
+        versionCode 1
+        versionName "0.0.01"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -48,11 +44,9 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-    implementation 'com.google.firebase:firebase-perf:19.0.5'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     testImplementation 'junit:junit:4.12'
