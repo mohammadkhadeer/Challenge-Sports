@@ -1,4 +1,4 @@
-package com.challenge.sports.view.homeFragments
+package com.challenge.sports.view.HomeActivity.homeFragments
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,7 @@ import com.challenge.sports.utils.GeneralTools.fillMatchesStatus
 import com.challenge.sports.view.adapters.RecyclerViewOnclick
 import com.challenge.sports.view.fragments.OnDetailListener
 import com.challenge.sports.view.fragments.homeFrags.adapter.NewsAdapter_Horizontal
-import com.challenge.sports.view.homeFragments.homeAdapter.MatchStatusAdapter
+import com.challenge.sports.view.HomeActivity.homeAdapter.MatchStatusAdapter
 import score.pro.R
 
 class MatchesFragment : Fragment() {
@@ -45,7 +45,7 @@ class MatchesFragment : Fragment() {
     private fun createRecyclerViewMatchStatus() {
         recycler_view.setNestedScrollingEnabled(false);
 //        recycler_view.adapter= MatchStatusAdapter(requireContext(), match_status_list)
-        recycler_view.adapter=MatchStatusAdapter(requireContext(), match_status_list,
+        recycler_view.adapter= MatchStatusAdapter(requireContext(), match_status_list,
             object : RecyclerViewOnclick{
                 override fun onClick(position: Int) {
                     upadateTheSelectedItemInRecyclerView(position)

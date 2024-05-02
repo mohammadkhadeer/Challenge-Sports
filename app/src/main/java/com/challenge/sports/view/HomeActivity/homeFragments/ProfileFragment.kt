@@ -1,4 +1,4 @@
-package com.challenge.sports.view.homeFragments
+package com.challenge.sports.view.HomeActivity.homeFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

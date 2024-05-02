@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.challenge.sports.model.api.ApiReqBannerAds.sentReqBanner
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
+import com.challenge.sports.view.HomeActivity.BaseActivity
 import org.json.JSONException
 import score.pro.R
 import java.util.*
@@ -60,7 +61,7 @@ class SplashScreen : AppCompatActivity()  {
             }
 
             override fun onFinish() {
-                startActivity(Intent(this@SplashScreen,BaseActivity::class.java))
+                startActivity(Intent(this@SplashScreen, BaseActivity::class.java))
 
 //                if (SharedPreference.getInstance().getBooleanValueFromPreference(SharedPreference.IS_FIRST_TIME,true,this@SplashScreen))
 //                    startActivity(Intent(this@SplashScreen,OnboardingActivity::class.java))

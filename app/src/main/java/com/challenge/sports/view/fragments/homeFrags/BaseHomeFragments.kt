@@ -35,7 +35,6 @@ import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
 import com.challenge.sports.utils.SpewViewModel
 import com.challenge.sports.utils.Status
-import com.challenge.sports.view.BaseActivity
 import com.challenge.sports.view.adapters.ViewPagerAdapter
 import com.challenge.sports.view.floatingbubble.service.FloatingScoreService
 import com.challenge.sports.view.fragments.OnBackPressedListener

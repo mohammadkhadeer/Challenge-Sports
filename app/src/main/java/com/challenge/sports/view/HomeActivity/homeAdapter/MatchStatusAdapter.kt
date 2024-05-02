@@ -1,4 +1,4 @@
-package com.challenge.sports.view.homeFragments.homeAdapter
+package com.challenge.sports.view.HomeActivity.homeAdapter
 
 import android.content.Context
 import android.util.Log

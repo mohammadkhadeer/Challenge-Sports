@@ -1,4 +1,4 @@
-package com.challenge.sports.view
+package com.challenge.sports.view.HomeActivity
 
 import android.app.Dialog
 import android.os.Build
@@ -28,8 +28,8 @@ import com.challenge.sports.view.fragments.homeFrags.FootballBasketDownMenu
 import com.challenge.sports.view.fragments.homeFrags.adapter.ViewPager2Adapter
 import com.challenge.sports.view.fragments.news.NewsFragment
 import com.challenge.sports.view.fragments.standings.StandingBaseFragment
-import com.challenge.sports.view.homeFragments.MatchesFragment
-import com.challenge.sports.view.homeFragments.ProfileFragment
+import com.challenge.sports.view.HomeActivity.homeFragments.MatchesFragment
+import com.challenge.sports.view.HomeActivity.homeFragments.ProfileFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import score.pro.R

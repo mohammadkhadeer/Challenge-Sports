@@ -76,7 +76,11 @@ class NewsInnerFragment : Fragment() {
         loadingBar=view.findViewById(R.id.loading_more_bar)
         nested_scroll_view_news_inner_fragment=view.findViewById(R.id.nested_scroll_view_news_inner_fragment)
 
-        val viewModel=ViewModelProvider(requireActivity().viewModelStore,ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))).get(MainViewModel::class.java)
+        val viewModel=ViewModelProvider(requireActivity().viewModelStore
+            ,ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))
+        ).get(MainViewModel::class.java)
+
+
         val viewModel2=ViewModelProvider(requireActivity().viewModelStore,ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))).get(MainViewModel::class.java)
 
         viewModel.makeNewsCallHorizontal("1",SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.CHINESE,requireContext()))

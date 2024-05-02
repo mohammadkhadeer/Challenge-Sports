@@ -13,6 +13,7 @@ import score.pro.R
 import com.challenge.sports.model.data.onboarding.OnboardingObject
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
+import com.challenge.sports.view.HomeActivity.BaseActivity
 import com.challenge.sports.view.adapters.ViewPagerAdapter
 import com.challenge.sports.view.fragments.onboarding.OnboardingFragment
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
@@ -69,7 +70,7 @@ class OnboardingActivity : AppCompatActivity() {
             viewpager.setCurrentItem(pos,true)
             if (pos==viewpager!!.adapter!!.itemCount){
                 SharedPreference.getInstance().saveBooleanToPreferences(SharedPreference.IS_FIRST_TIME,false,this)
-                startActivity(Intent(this,BaseActivity::class.java))
+                startActivity(Intent(this, BaseActivity::class.java))
                 finish()
             }
         }
@@ -84,7 +85,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         skip.setOnClickListener {
             SharedPreference.getInstance().saveBooleanToPreferences(SharedPreference.IS_FIRST_TIME,false,this)
-            startActivity(Intent(this,BaseActivity::class.java))
+            startActivity(Intent(this, BaseActivity::class.java))
             finish()
         }
 

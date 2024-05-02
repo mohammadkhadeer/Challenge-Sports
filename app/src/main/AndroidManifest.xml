@@ -58,7 +58,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.challenge.sports.view.BaseActivity"
+            android:name="com.challenge.sports.view.HomeActivity.BaseActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait"

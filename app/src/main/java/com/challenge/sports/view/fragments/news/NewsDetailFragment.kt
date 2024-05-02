@@ -19,7 +19,6 @@ import com.challenge.sports.model.data.news.details.NewsPostBase
 import com.challenge.sports.model.data.news.details.OnPostDetailResponse
 import com.challenge.sports.utils.SharedPreference
 import com.challenge.sports.utils.ViewModelFactory
-import com.challenge.sports.view.BaseActivity
 import com.challenge.sports.viewmodel.MainViewModel
 
 // TODO: Rename parameter arguments, choose names that match

@@ -9,7 +9,6 @@ import android.widget.RelativeLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.challenge.sports.sharedPreferences.FootballOrBasketball.getFootballOrBasketballFromSP
 import com.challenge.sports.sharedPreferences.FootballOrBasketball.saveFootballOrBasketballInSP
-import com.challenge.sports.view.BaseActivity
 import score.pro.R
 
 class FootballBasketDownMenu : BottomSheetDialogFragment() {
