@@ -70,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="100"
             android:background="@color/colorPrimary"
             tools:ignore="MissingConstraints">
@@ -114,7 +115,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_centerVertical="true"
-                        android:layout_margin="@dimen/_2sdp"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
                         android:background="@drawable/primary_rounded_rect"
                         android:backgroundTint="@color/white"
                         android:hint="@string/search_here"
@@ -183,8 +187,6 @@
 
     </LinearLayout>
 
-
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/baseViewPager"
         android:layout_width="match_parent"
@@ -213,7 +215,6 @@
 
     </RelativeLayout>
 
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutMain"
         android:layout_width="match_parent"
@@ -231,8 +232,10 @@
         android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
+
     </com.google.android.material.tabs.TabLayout>
 
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -34,13 +34,13 @@ class SplashScreen : AppCompatActivity()  {
         ) // your language
 
 
-        val config = applicationContext.resources.configuration
-        val locale = Locale(languageToLoad)
-        Locale.setDefault(locale)
-        config.setLocale(locale)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-           applicationContext.createConfigurationContext(config)
-        resources.updateConfiguration(config, resources.displayMetrics)
+//        val config = applicationContext.resources.configuration
+//        val locale = Locale(languageToLoad)
+//        Locale.setDefault(locale)
+//        config.setLocale(locale)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+//           applicationContext.createConfigurationContext(config)
+//        resources.updateConfiguration(config, resources.displayMetrics)
 
         setContentView(R.layout.activity_splash_screen)
 

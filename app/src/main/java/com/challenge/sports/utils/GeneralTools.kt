@@ -1,6 +1,5 @@
 package com.challenge.sports.utils
 
-import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlarmManager
@@ -19,13 +18,12 @@ import android.os.Parcelable
 import android.view.View
 import android.widget.Toast
 import com.challenge.sports.model.data.homepage.new2.Match
-import com.challenge.sports.view.fragments.homeFrags.adapter.MainAdapter
-import com.daimajia.androidanimations.library.Techniques
-import com.daimajia.androidanimations.library.YoYo
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.challenge.sports.model.data.matchStatus.MatchStatusJ
 import com.challenge.sports.sharedPreferences.FootballOrBasketball.cleanFootballOrBasketball
 import com.challenge.sports.sharedPreferences.OpenWebView
+import com.challenge.sports.view.fragments.homeFrags.adapter.MainAdapter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import score.pro.BuildConfig
 import score.pro.R
 import java.text.SimpleDateFormat
@@ -33,6 +31,23 @@ import java.util.*
 
 
 object GeneralTools {
+
+    fun  fillMatchesStatus(context: Context):ArrayList<MatchStatusJ>{
+
+        var match_status_list: ArrayList<MatchStatusJ> = ArrayList()
+
+
+        match_status_list.add(MatchStatusJ(context.getString(R.string.hot), true))
+        match_status_list.add(MatchStatusJ(context.getString(R.string.live), false))
+        match_status_list.add(MatchStatusJ(context.getString(R.string.up_coming), false))
+        match_status_list.add(MatchStatusJ(context.getString(R.string.finish), false))
+//        match_status_list.add(context.getString(R.string.hot))
+//        match_status_list.add(context.getString(R.string.live))
+//        match_status_list.add(context.getString(R.string.up_coming))
+//        match_status_list.add(context.getString(R.string.finish))
+
+        return match_status_list
+    }
 
     fun setAlarmFor(context: Context,time: Long){
         val intent = Intent(context, MatchReminder::class.java)

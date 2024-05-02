@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide
 import score.pro.R
 import com.challenge.sports.view.adapters.RecyclerViewOnclick
 
-class NewsAdapter_Horizontal (var context: Context, var  newsList:ArrayList<com.challenge.sports.model.data.news.List>, var onclick: RecyclerViewOnclick):RecyclerView.Adapter<NewsAdapter_Horizontal.viewHolder>(){
+class NewsAdapter_Horizontal (var context: Context, var  newsList:ArrayList<com.challenge.sports.model.data.news.List>
+, var onclick: RecyclerViewOnclick):RecyclerView.Adapter<NewsAdapter_Horizontal.viewHolder>(){
+
     inner class viewHolder(itemview: View): RecyclerView.ViewHolder(itemview){
         var headline=itemview.findViewById<TextView>(R.id.headline)
         var tag=itemview.findViewById<TextView>(R.id.detail)

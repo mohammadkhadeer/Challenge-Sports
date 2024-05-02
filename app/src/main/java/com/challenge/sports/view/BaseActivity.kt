@@ -1,16 +1,10 @@
 package com.challenge.sports.view
 
 import android.app.Dialog
-import android.content.Intent
-import android.content.res.Configuration
-import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
-import android.util.DisplayMetrics
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -20,31 +14,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.challenge.sports.model.Ads
 import com.challenge.sports.model.api.ListResponse.*
-import com.challenge.sports.model.data.LegaDetails
 import com.challenge.sports.sharedPreferences.OpenWebView.*
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
-import com.challenge.sports.view.adapters.RecyclerViewOnclick
 import com.challenge.sports.view.adapters.ViewPagerAdapter
 import com.challenge.sports.view.fragments.OnBackPressedListener
 import com.challenge.sports.view.fragments.homeFrags.BaseHomeFragments
 import com.challenge.sports.view.fragments.homeFrags.FootballBasketDownMenu
-import com.challenge.sports.view.fragments.homeFrags.adapter.LegasAdapter
 import com.challenge.sports.view.fragments.homeFrags.adapter.ViewPager2Adapter
 import com.challenge.sports.view.fragments.news.NewsFragment
 import com.challenge.sports.view.fragments.standings.StandingBaseFragment
+import com.challenge.sports.view.homeFragments.MatchesFragment
+import com.challenge.sports.view.homeFragments.ProfileFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import score.pro.R
 import java.util.*
 
+class BaseActivity : AppCompatActivity()
+    , OnBackPressedListener, ViewPager2Adapter.PassAdsDetails {
 
-class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adapter.PassAdsDetails {
     var shouldChangeBackpress=false
     var currentFrag:Fragment?=null
     var baseHomeFragments:BaseHomeFragments?=null
@@ -66,14 +59,12 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setting language
-        config()
+        //config()
 
         setContentView(R.layout.activity_base_activty)
         statusBarColor()
 
-        showPopup()
         infintLoopForPopUp()
-        openWebView()
 
         val searchBar=findViewById<EditText>(R.id.search_matches)
         val edt_cont=findViewById<View>(R.id.edt_cont)
@@ -84,15 +75,18 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
 
         handelSlider()
         checkToActiveWebButton()
-        actionListenerToButton()
-
 
         heading=findViewById<TextView>(R.id.top_heading_mainpage)
 
         val baseViewPager=findViewById<ViewPager2>(R.id.baseViewPager)
+
         val newsFrag= NewsFragment.newInstance(false,":")
         val homeFragment=BaseHomeFragments.newInstance("","")
+        val matchFrag= MatchesFragment.newInstance()
+        val profileFrag= ProfileFragment.newInstance()
+
         web_view_button=findViewById<RelativeLayout>(R.id.web_view_button)
+
         this.baseHomeFragments=homeFragment
 
         back_btn?.setOnClickListener {
@@ -102,59 +96,36 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
         homeFragment.onBackPressedListener=this
         val fragsList=ArrayList<Fragment>()
         fragsList.add(newsFrag)
-        fragsList.add(homeFragment)
+        fragsList.add(matchFrag)
         fragsList.add(StandingBaseFragment.newInstance("",""))
+        fragsList.add(homeFragment)
+        fragsList.add(profileFrag)
 
         newsFrag.setChangeBackPressBehaviourListener(this)
 
         baseViewPager.adapter=ViewPagerAdapter(supportFragmentManager,lifecycle,fragsList)
         baseViewPager.isUserInputEnabled=false
-        baseViewPager.offscreenPageLimit=3
+        baseViewPager.offscreenPageLimit=4
 
-        baseViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                if(position ==0)
-                {
-                    heading?.setText(getString(R.string.news))
-                }
-
-                if(position ==1)
-                {
-                    heading?.setText(getString(R.string.football))
-                }
-
-                if(position ==2)
-                {
-                    heading?.setText(getString(R.string.settings))
-                }
-            }
-        })
-        //baseViewPager.setPageTransformer(Pager2_GateTransformer())
 
         searchBar.addTextChangedListener {
-
             homeFragment.searchMatch(searchBar.editableText.toString())
-
             if (searchBar.editableText.toString().equals(""))
             {
                 homeFragment.searchMatch("")
             }else{
                 var flag = 0
                 for (i in mapArrayList){
-
                     if (searchBar.editableText.toString().equals(i.keyword))
                     {
                         flag = 1
                         //to active button open web view
                         activeWebButtonInSP(applicationContext,"active")
                         checkToActiveWebButton()
-
                         if (i.open_type.equals("1")) {
                             GeneralTools.openBrowser(this,i.redirect_url,i.open_type,"search")
                         } else {
-                            showDialogWebView(i.getRedirect_url(),i.open_type,"search")
                         }
-
                     }
                 }
                 if (flag ==0)
@@ -162,28 +133,37 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
                     homeFragment.searchMatch(searchBar.editableText.toString())
                 }
             }
-
         }
+
         val tabLayout=findViewById<TabLayout>(R.id.tabLayoutMain)
         TabLayoutMediator(tabLayout,baseViewPager){tab,position->
             when(position){
                 0->{
-                    tab.text=getString(R.string.news)
+                    tab.text=getString(R.string.home)
                     tab.icon=getDrawable(R.drawable.ic_home)
                 }
                 1->{
-                    tab.text=getString(R.string.home)
-                    tab.icon=ContextCompat.getDrawable(this,R.drawable.new_ic_home)
+                    tab.text=getString(R.string.matches)
+                    tab.icon=ContextCompat.getDrawable(this,R.drawable.matches)
                 }
                 2->{
-                    tab.text=getString(R.string.settings)
-                    tab.icon=ContextCompat.getDrawable(this,R.drawable.ic_standings)
+                    tab.text=" "
+                    tab.icon=ContextCompat.getDrawable(this,R.drawable.upload)
 
+                }
+                3->{
+                    tab.text=getString(R.string.discover)
+                    tab.icon=ContextCompat.getDrawable(this,R.drawable.discoveries)
+                }
+                4->{
+                    tab.text=getString(R.string.profile)
+                    tab.icon=ContextCompat.getDrawable(this,R.drawable.profile_ic)
                 }
             }
         }.attach()
 
-        tabLayout.getTabAt(1)?.select();
+        //to detect tab bar will start from where
+        tabLayout.getTabAt(0)?.select();
     }
 
     private  fun config(){
@@ -200,16 +180,6 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
-    fun casting(){
-
-    }
-
-    public fun downMenu() {
-        FootballBasketDownMenu().apply {
-            show(supportFragmentManager, FootballBasketDownMenu.TAG)
-        }
-    }
-
     private fun infintLoopForPopUp() {
         if (repeat_time != null) {
             coun_down = repeat_time.toInt()
@@ -217,10 +187,6 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
 
             ct =object : CountDownTimer(100000000,coun_down.toLong()){
                 override fun onTick(p0: Long) {
-//                    Log.i("TAG","onTick: ")
-//                    Log.i("TAG","dialog?.isShowing(): "+dialog?.isShowing())
-//                    Log.i("TAG","repeat_status: "+repeat_status)
-
 
                     if (dialog != null && dialog?.isShowing() == false && repeat_status.equals("0")&& how_many_time_popup_show==0)
                     {
@@ -236,11 +202,8 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
                         coun_down = coun_down * 1000
                     }
                 }
-
                 override fun onFinish() {
-
                 }
-
             }.start()
 
         }
@@ -276,234 +239,14 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
         infintLoop()
     }
 
-    public fun goToRateUs() {
-        GeneralTools.rateUs(this)
-    }
-
-    public fun goToShareApp() {
-        GeneralTools.shareApp(this)
-    }
-
-    public fun goToFeedBack() {
-        GeneralTools.feedback(this)
-    }
-
-    public fun getToPrivacyPolicy() {
-        GeneralTools.privacyPolicy(this)
-    }
-
-    public fun makeBackButtonVISIBLE() {
-        back_btn?.visibility=View.VISIBLE
-    }
-
-    public fun exatApp() {
-        GeneralTools.exitDialog(this)
-    }
-
-    public fun footballCase() {
-        heading?.setText(getString(R.string.football))
-        baseHomeFragments?.footballCase()
-    }
-
-    public fun basketballCase() {
-        heading?.setText(getString(R.string.basketball))
-        baseHomeFragments?.basketballCase()
-    }
-
-    public fun showPopup() {
-        dialog=Dialog(this,android.R.style.ThemeOverlay)
-        dialog?.setContentView(R.layout.popup_dialog)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.setCancelable(false)
-
-        dialog?.findViewById<TextView>(R.id.title_message)?.setText(prompt_title)
-        dialog?.findViewById<TextView>(R.id.message)?.setText(prompt_message)
-        dialog?.findViewById<TextView>(R.id.ok_bt)?.setText(button_text)
-
-        dialog?.findViewById<ImageView>(R.id.cancel_button_popup)?.setOnClickListener {
-
-            dialog!!.dismiss()
-            //dialog?.dismiss()
-        }
-
-        dialog?.findViewById<View>(R.id.ok_bt)?.setOnClickListener {
-
-            activeWebButtonInSP(applicationContext,"active")
-            checkToActiveWebButton()
-
-            if (open_type.equals("1")) {
-                //Log.i("TAG","redirect_url: "+redirect_url)
-                GeneralTools.openBrowser(applicationContext,redirect_url,open_type,"from_init")
-            } else {
-                showDialogWebView(redirect_url,open_type,"dailog_button")
-            }
-
-            dialog!!.dismiss()
-            //dialog?.dismiss()
-        }
-        //dialog.show()
-    }
-
-//    public fun showPopup() {
-//        if (showPopupMessageCheck(this))
-//            GeneralTools.messageDialog(this)
-//    }
-
     override fun onPause() {
-        //Log.i("TAG","onPause")
         if (repeat_time != null) ct!!.cancel()
         super.onPause()
     }
     override fun onResume() {
-        //Log.i("TAG","onResume")
         if (repeat_time != null) ct!!.start()
-
         super.onResume()
     }
-
-    public fun openWebView() {
-        if (!getOpenWebViewBeforeFromSP(this).equals("no") && mapArrayList.size != 0 && getOpenWebViewBeforeFromSP(this).equals("on"))
-        {
-            showDialogWebView(getLastWebLinkOpenedFromSP(this),getLastURLOpenTypeSP(this),"already_open_web")
-        }else{
-            if (!init_open_type.isNullOrEmpty() && !init_redirect_url.isNullOrEmpty())
-            {
-                if (init_open_type.equals("1")) {
-                    GeneralTools.openBrowser(applicationContext,init_redirect_url,init_open_type,"from_init")
-                } else {
-                    //web_view_on_the_top = true
-                    showDialogWebView(init_redirect_url,init_open_type,"from_init")
-                }
-            }
-        }
-    }
-
-    public fun showDialogForLanguages() {
-        var shouldRefresh=false
-        val dialog=Dialog(this,android.R.style.ThemeOverlay)
-        dialog.setContentView(R.layout.language_dialog)
-        val english=dialog.findViewById<View>(R.id.english)
-        val chinese=dialog.findViewById<View>(R.id.chinese)
-        val indonesian=dialog.findViewById<View>(R.id.indonesian)
-        val vietnam=dialog.findViewById<View>(R.id.vietnamese)
-        val thai=dialog.findViewById<View>(R.id.thai)
-
-        val english_radio=dialog.findViewById<View>(R.id.english_radio)
-        val chinese_radio=dialog.findViewById<View>(R.id.chinese_radio)
-        val indonesian_radio=dialog.findViewById<View>(R.id.indonesian_radio)
-        val vietnam_radio=dialog.findViewById<View>(R.id.vietnamese_radio)
-        val thai_radio=dialog.findViewById<View>(R.id.thai_radio)
-        //val back_btn = dialog.findViewById<RelativeLayout>(R.id.back_btn_rl)
-
-        dialog.findViewById<View>(R.id.back_btn_rl).setOnClickListener {
-            dialog.dismiss()
-            if (shouldRefresh)
-                recreate()
-        }
-        val english_text=dialog.findViewById<TextView>(R.id.english_text)
-        val chinese_text=dialog.findViewById<TextView>(R.id.chinese_text)
-        val indonesian_text=dialog.findViewById<TextView>(R.id.indonesian_text)
-        val vietnamese_text=dialog.findViewById<TextView>(R.id.vietnamese_text)
-        val thai_text=dialog.findViewById<TextView>(R.id.thai_text)
-
-
-
-        fun toggleSelected(){
-
-            when(GeneralTools.getLocale(this)){
-                SharedPreference.ENGLISH->{
-
-                    english_radio.visibility=View.VISIBLE
-                    chinese_radio.visibility=View.GONE
-                    indonesian_radio.visibility=View.GONE
-                    vietnam_radio.visibility=View.GONE
-                    thai_radio.visibility=View.GONE
-                }
-                SharedPreference.CHINESE->{
-
-                    chinese_radio.visibility=View.VISIBLE
-                    english_radio.visibility=View.GONE
-                    indonesian_radio.visibility=View.GONE
-                    vietnam_radio.visibility=View.GONE
-                    thai_radio.visibility=View.GONE
-
-                }
-                SharedPreference.INDONESIAN->{
-                    indonesian_radio.visibility=View.VISIBLE
-                    english_radio.visibility=View.GONE
-                    chinese_radio.visibility=View.GONE
-                    vietnam_radio.visibility=View.GONE
-                    thai_radio.visibility=View.GONE
-                }
-                SharedPreference.VIETNAMESE->{
-                    vietnam_radio.visibility=View.VISIBLE
-                    indonesian_radio.visibility=View.GONE
-                    english_radio.visibility=View.GONE
-                    chinese_radio.visibility=View.GONE
-                    thai_radio.visibility=View.GONE
-                }
-                SharedPreference.THAI->{
-                    thai_radio.visibility=View.VISIBLE
-                    vietnam_radio.visibility=View.GONE
-                    indonesian_radio.visibility=View.GONE
-                    english_radio.visibility=View.GONE
-                    chinese_radio.visibility=View.GONE
-                }
-
-            }
-        }
-
-        toggleSelected()
-
-        english.setOnClickListener {
-            GeneralTools.setLocale(this,SharedPreference.ENGLISH)
-            shouldRefresh=true
-            toggleSelected()
-            restartApp()
-        }
-        chinese.setOnClickListener {
-            GeneralTools.setLocale(this,SharedPreference.CHINESE)
-            shouldRefresh=true
-            toggleSelected()
-            restartApp()
-        }
-        indonesian.setOnClickListener {
-            GeneralTools.setLocale(this,SharedPreference.INDONESIAN)
-            shouldRefresh=true
-            toggleSelected()
-            restartApp()
-        }
-        vietnam.setOnClickListener {
-            GeneralTools.setLocale(this,SharedPreference.VIETNAMESE)
-            shouldRefresh=true
-            toggleSelected()
-            restartApp()
-        }
-        thai.setOnClickListener {
-            GeneralTools.setLocale(this,SharedPreference.THAI)
-            shouldRefresh=true
-            toggleSelected()
-            restartApp()
-        }
-
-        dialog.show()
-        dialog.setCancelable(false)
-    }
-
-    private fun actionListenerToButton() {
-        web_view_button?.setOnClickListener {
-
-            if (getLastURLOpenTypeSP(this).equals("1"))
-            {
-                GeneralTools.openBrowser(applicationContext,getLastWebLinkOpenedFromSP(this),"1","from_init")
-            }else{
-                showDialogWebView(getLastWebLinkOpenedFromSP(this),"0","web_button")
-            }
-
-        }
-
-    }
-
 
     private fun checkToActiveWebButton() {
         if (getWebButtonActiveOrNoSP(applicationContext).equals("active"))
@@ -512,30 +255,6 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
         }else{
             web_view_button?.visibility=View.GONE
         }
-    }
-
-
-    public fun showDialogWebView(url:String,open_type:String,from_where:String) {
-        if (!url.isNullOrEmpty())
-        {
-            if (!from_where.equals("from_init"))
-                saveWebViewOnOrOffInSP(applicationContext, "on")
-
-            saveLastWebLinkOpenedOnSP(applicationContext, url,open_type)
-
-            val intent = Intent(this@BaseActivity, WebViewActivity::class.java)
-            intent.putExtra("url",url)
-            intent.putExtra("from_where",from_where)
-            startActivity(intent)
-        }
-    }
-
-
-    private fun restartApp() {
-        val intent = Intent(this@BaseActivity, SplashScreen::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-        finish()
     }
 
     override fun onBackPressed() {
@@ -571,60 +290,10 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
         changeBackPressBehaviour(currentFragment)
     }
 
-    private fun setLocale(locale: Locale) {
-        val resources: Resources = resources
-        val configuration: Configuration = resources.configuration
-        val displayMetrics: DisplayMetrics = resources.displayMetrics
-        configuration.setLocale(locale)
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            applicationContext.createConfigurationContext(configuration)
-        } else {
-            resources.updateConfiguration(configuration, displayMetrics)
-        }
-    }
-
     private fun statusBarColor() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 
-
-    public fun showLega(leagueList: ArrayList<LegaDetails>) {
-        var dialog=Dialog(this,android.R.style.ThemeOverlay)
-        dialog.setContentView(R.layout.league_list)
-
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val recycler_view = dialog.findViewById<RecyclerView>(R.id.leags_rv)
-        val search_leags_edt =  dialog.findViewById<EditText>(R.id.search_leags_edt)
-
-        recycler_view.adapter=LegasAdapter(this, leagueList!! as ArrayList<LegaDetails>,
-            object : RecyclerViewOnclick{
-                override fun onClick(position: Int) {
-
-                    baseHomeFragments?.getLeagaMatches(position)
-                    dialog.dismiss()
-                }
-            })
-
-        recycler_view.layoutManager=
-            LinearLayoutManager(this.applicationContext, LinearLayoutManager.VERTICAL,false)
-
-        search_leags_edt.addTextChangedListener {
-            val filterArrayList2: ArrayList<LegaDetails> = ArrayList<LegaDetails>()
-            for (leagDetails:LegaDetails in leagueList) {
-                if (leagDetails.lega_name.toLowerCase()
-                        .contains(search_leags_edt.text.toString().lowercase())
-                ) {
-                    filterArrayList2.add(leagDetails)
-                }
-            }
-            (recycler_view!!.adapter as LegasAdapter).filterList(filterArrayList2)
-        }
-
-
-        dialog.show()
-        dialog.setCanceledOnTouchOutside(false)
-
-    }
 
     override fun onClickedAdsDetails(adsDetails: Ads?) {
         activeWebButtonInSP(applicationContext,"active")
@@ -634,10 +303,6 @@ class BaseActivity : AppCompatActivity() , OnBackPressedListener, ViewPager2Adap
             GeneralTools.openBrowser(applicationContext,adsDetails!!.redirect_url,adsDetails!!.open_type,"from_init")
         } else {
             //web_view_on_the_top = true
-            showDialogWebView(adsDetails!!.redirect_url,adsDetails!!.open_type,"bannar_ads")
         }
-
     }
-
-
 }

@@ -49,7 +49,7 @@ class FootballBasketDownMenu : BottomSheetDialogFragment() {
             football_radio.visibility=View.VISIBLE
             basketball_radio.visibility=View.GONE
             saveFootballOrBasketballInSP(requireContext(),"football")
-            (activity as BaseActivity?)?.footballCase()
+//            (activity as BaseActivity?)?.footballCase()
             dismiss()
         })
 
@@ -58,7 +58,7 @@ class FootballBasketDownMenu : BottomSheetDialogFragment() {
             basketball_radio.visibility=View.VISIBLE
             saveFootballOrBasketballInSP(requireContext(),"basketball")
 
-            (activity as BaseActivity?)?.basketballCase()
+//            (activity as BaseActivity?)?.basketballCase()
             dismiss()
         })
 

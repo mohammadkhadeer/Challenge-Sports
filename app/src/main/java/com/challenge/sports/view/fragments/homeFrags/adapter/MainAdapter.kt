@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+
  class MainAdapter(var context:Context,var dataList:ArrayList<Match>,var communicator: MainAdapterCommunicator)
      : RecyclerView.Adapter<MainAdapter.MainPageAdapterViewHolder>(),Filterable {
      var loadMore: Boolean=true

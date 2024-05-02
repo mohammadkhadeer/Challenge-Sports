@@ -100,7 +100,6 @@
                                     android:layout_height="35dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_centerVertical="true"
-                                    android:src="@drawable/football"
                                     />
 
                             </RelativeLayout>
@@ -197,7 +196,7 @@
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/basketball" />
+                                    />
 
                             </RelativeLayout>
 

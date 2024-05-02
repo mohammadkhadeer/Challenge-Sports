@@ -54,7 +54,7 @@ class NewsDetailFragment : Fragment() {
 
         viewModel.makeNewsPostCall(postID!!,object : OnPostDetailResponse<NewsPostBase>{
             override fun onSuccess(responseBody: NewsPostBase) {
-                (activity as BaseActivity?)?.makeBackButtonVISIBLE()
+//                (activity as BaseActivity?)?.makeBackButtonVISIBLE()
 
                 Glide.with(requireContext())
                     .load(responseBody.path)

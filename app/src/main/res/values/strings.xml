@@ -11,6 +11,19 @@
     <string name="latest">Latest</string>
     <string name="related_videos">Related videos</string>
 
+    //Home come
+    <string name="home">Home</string>
+    <string name="matches">Matches</string>
+    <string name="discover">Discover</string>
+    <string name="profile">Profile</string>
+
+    //home fragment
+    <string name="up_coming">Upcoming</string>
+    <string name="live">Live</string>
+    <string name="hot">Hot</string>
+    <string name="finish">Finish</string>
+
+
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="exit">Exit</string>
@@ -66,7 +79,6 @@
     <string name="animation">Animation</string>
     <string name="soon">Soon</string>
     <string name="company">Company</string>
-    <string name="home">Home</string>
     <string name="live_handicap">Live Handicap</string>
     <string name="init_handicap">Init. Handicap</string>
     <string name="head_to_head">Head to head</string>
@@ -107,8 +119,7 @@
     <string name="add_reminder">Add Reminder</string>
     <string name="add_to_highlights">Add to Highlights</string>
     <string name="pin_live_score">Pin Live Score</string>
-    <string name="all">All</string>
-    <string name="live">Live</string>
+
     <string name="ft">FT</string>
     <string name="other">Other</string>
     <string name="soccer">Soccer</string>

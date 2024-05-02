@@ -11,6 +11,7 @@ import score.pro.R
 import com.challenge.sports.view.adapters.ViewPagerAdapter
 import com.challenge.sports.view.fragments.OnBackPressedListener
 import com.challenge.sports.view.fragments.OnDetailListener
+import com.challenge.sports.view.fragments.news.NewsInnerFragment
 import com.challenge.sports.view.fragments.video.VideoBaseFragment
 import com.challenge.sports.view.fragments.video.VideosDetailFragment
 import com.google.android.material.tabs.TabLayout
@@ -49,7 +50,7 @@ class NewsFragment : Fragment() {
 
        val viewpager= view.findViewById<ViewPager2>(R.id.fragment_viewpager)
         val fragsList =ArrayList<Fragment>()
-        val frag=NewsInnerFragment.newInstance(",","")
+        val frag= NewsInnerFragment.newInstance(",","")
         val tabLayout=view.findViewById<TabLayout>(R.id.tabs_news)
         val tabsTitles=ArrayList<String>()
         tabsTitles.add(getString(R.string.news))

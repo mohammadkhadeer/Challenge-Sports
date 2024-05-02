@@ -101,12 +101,12 @@ class BaseHomeFragments : Fragment(), MainAdapterCommunicator,
         val football_basketball_rl=view.findViewById<RelativeLayout>(R.id.football_basketball_rl)
         //gradient text color
         football_basketball_rl.setOnClickListener{
-            (activity as BaseActivity?)?.downMenu()
+//            (activity as BaseActivity?)?.downMenu()
         }
 
         val lega_rl=view.findViewById<RelativeLayout>(R.id.lega_rl)
         lega_rl.setOnClickListener{
-            (activity as BaseActivity?)?.showLega(leagueList)
+//            (activity as BaseActivity?)?.showLega(leagueList)
         }
 
         val dateSelectedListener = object : OnPostDetailResponse<String> {

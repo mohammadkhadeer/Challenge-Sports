@@ -40,15 +40,15 @@
     <color name="not_selected_tab">#55595E</color>
     <color name="not_selected_tab_border">#55595E</color>
     <color name="main_adapter_background_color">#212121</color>
-    <color name="main_adapter_background_color_comp1">#332771</color>
     <color name="main_adapter_background_color_comp2">#A89FDC</color>
     <color name="main_adapter_background_color_comp3">#A89FDC</color>
     <color name="splash_screen_gradint_1">#007AFF</color>
-    <color name="splash_screen_gradint_2">#004999</color>
     <color name="text_color">#BAB9BA</color>
 
-
-    <color name="brand_color">#B7De6E</color>
+    <color name="main_adapter_background_color_comp1">#332771</color>
+    <color name="splash_screen_gradint_2">#004999</color>
+    <color name="transpernt_brand_color">#22007AFF</color>
+    <color name="brand_color">#007AFF</color>
     <color name="brand_color_dark">#89CB4C</color>
     <color name="brand_color_lit">#F7FFE4</color>
 
