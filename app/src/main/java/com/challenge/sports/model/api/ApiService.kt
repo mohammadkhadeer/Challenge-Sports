@@ -1,5 +1,6 @@
 package com.challenge.sports.model.api
 
+import com.challenge.sports.model.data.Matches.MatchesRoot
 import com.challenge.sports.model.data.basketball.analysis.AnalysisBasktetballBase
 import com.challenge.sports.model.data.basketball.briefing.BasketballBriefingBase
 import com.challenge.sports.model.data.basketball.homepage.BaseIndexBasketball
@@ -29,6 +30,9 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
+    @GET("https://sportsapi3.com/sportsapi/api/football/matchlist/today?hotMatches=true")
+    suspend fun getHotMatches(): MatchesRoot
+
     @GET(" /api/post-list/{locale}/{page}")
     suspend fun getNews(@Path("locale") locale:String,@Path("page") page:String): NewsBase
 

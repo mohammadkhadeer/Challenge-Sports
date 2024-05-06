@@ -6,6 +6,8 @@ package com.challenge.sports.model.data.Matches;//
 //
 
 import java.util.*;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,26 +15,37 @@ import com.google.gson.GsonBuilder;
 public class HomeInfo {
 
     @SerializedName("en_name")
+    @Expose
     private String enName;
     @SerializedName("cn_name")
+    @Expose
     private String cnName;
     @SerializedName("en_short_name")
+    @Expose
     private String enShortName;
     @SerializedName("logo")
+    @Expose
     private String logo;
     @SerializedName("home_score")
+    @Expose
     private int homeScore;
     @SerializedName("half_time_score")
+    @Expose
     private int halfTimeScore;
     @SerializedName("red_cards")
+    @Expose
     private int redCards;
     @SerializedName("yellow_cards")
+    @Expose
     private int yellowCards;
     @SerializedName("corner_score")
+    @Expose
     private int cornerScore;
     @SerializedName("overtime_score")
+    @Expose
     private int overtimeScore;
     @SerializedName("penalty_score")
+    @Expose
     private int penaltyScore;
 
     public void setEnName(String enName) {
@@ -123,15 +136,5 @@ public class HomeInfo {
         return this.penaltyScore;
     }
 
-
-    public static HomeInfo create(String json) {
-        Gson gson = new GsonBuilder().create();
-        return gson.fromJson(json, HomeInfo.class);
-    }
-
-    public String toString() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(this);
-    }
 
 }

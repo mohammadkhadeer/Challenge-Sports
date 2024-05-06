@@ -6,6 +6,8 @@ package com.challenge.sports.model.data.Matches;//
 //
 
 import java.util.*;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,10 +15,13 @@ import com.google.gson.GsonBuilder;
 public class Round {
 
     @SerializedName("stage_id")
+    @Expose
     private String stageId;
     @SerializedName("round_num")
+    @Expose
     private int roundNum;
     @SerializedName("group_num")
+    @Expose
     private int groupNum;
 
     public void setStageId(String stageId) {
@@ -41,17 +46,6 @@ public class Round {
 
     public int getGroupNum() {
         return this.groupNum;
-    }
-
-
-    public static Round create(String json) {
-        Gson gson = new GsonBuilder().create();
-        return gson.fromJson(json, Round.class);
-    }
-
-    public String toString() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(this);
     }
 
 }

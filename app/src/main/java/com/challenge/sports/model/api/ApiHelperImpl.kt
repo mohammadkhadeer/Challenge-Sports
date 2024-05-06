@@ -1,5 +1,6 @@
 package com.challenge.sports.model.api
 
+import com.challenge.sports.model.data.Matches.MatchesRoot
 import com.challenge.sports.model.data.basketball.analysis.AnalysisBasktetballBase
 import com.challenge.sports.model.data.basketball.briefing.BasketballBriefingBase
 import com.challenge.sports.model.data.basketball.homepage.BaseIndexBasketball
@@ -26,6 +27,8 @@ import com.challenge.sports.model.data.videos.VideosListBase
 
 
 class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
+
+   override suspend fun getMatches(locale: String, page: String): MatchesRoot = apiService.getHotMatches()
 
    override suspend fun getNews(locale: String, page: String): NewsBase =apiService.getNews(locale,page)
    override suspend fun getPostDetail(locale: String,postID: String): NewsPostBase=apiService.getPostDetail(locale,postID)

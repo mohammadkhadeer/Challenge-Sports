@@ -6,6 +6,8 @@ package com.challenge.sports.model.data.Matches;//
 //
 
 import java.util.*;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,16 +15,22 @@ import com.google.gson.GsonBuilder;
 public class LeagueInfo {
 
     @SerializedName("en_name")
+    @Expose
     private String enName;
     @SerializedName("cn_name")
+    @Expose
     private String cnName;
     @SerializedName("short_name")
+    @Expose
     private String shortName;
     @SerializedName("primary_color")
+    @Expose
     private String primaryColor;
     @SerializedName("secondary_color")
+    @Expose
     private String secondaryColor;
     @SerializedName("logo")
+    @Expose
     private String logo;
 
     public void setEnName(String enName) {
@@ -71,17 +79,6 @@ public class LeagueInfo {
 
     public String getLogo() {
         return this.logo;
-    }
-
-
-    public static LeagueInfo create(String json) {
-        Gson gson = new GsonBuilder().create();
-        return gson.fromJson(json, LeagueInfo.class);
-    }
-
-    public String toString() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(this);
     }
 
 }

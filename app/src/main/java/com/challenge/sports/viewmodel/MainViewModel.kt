@@ -1,9 +1,11 @@
 package com.challenge.sports.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.challenge.sports.model.api.ApiHelper
+import com.challenge.sports.model.data.Matches.MatchesRoot
 import com.challenge.sports.model.data.basketball.analysis.AnalysisBasktetballBase
 import com.challenge.sports.model.data.basketball.briefing.BasketballBriefingBase
 import com.challenge.sports.model.data.basketball.homepage.BaseIndexBasketball
@@ -36,6 +38,8 @@ import kotlinx.coroutines.launch
 import kotlin.Exception
 
 class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
+    var matches_root = MutableLiveData<Resource<MatchesRoot>>()
+
     val pastFutureLiveData=MutableLiveData<Resource<PastFutureBaseCall>>()
     val scheduleFutureLiveData=MutableLiveData<Resource<PastFutureBaseCall>>()
     val pastFutureLiveDataBasketball=MutableLiveData<Resource<PastFutureBasketBall>>()
@@ -72,15 +76,18 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         makeVideosListCall()*/
     }
 
-    private fun makeNewsCall() {
+    fun getMatchesList() {
         viewModelScope.launch {
-            newsLiveData.postValue(Resource.loading(null))
+            matches_root.postValue(Resource.loading(null))
             try {
-                val news = apiHelper.getNews("en", "1")
-                maxPageNumberNews = news.meta.lastPage
-                newsLiveData.postValue(Resource.success(news))
+                val matchesList = apiHelper.getMatches("en", "1")
+//                maxPageNumberNews = news.meta.lastPage
+
+                Log.i("TAG TAG","getMatchesList Mohammad "+ matchesList.hotMatches.size)
+                matches_root.postValue(Resource.success(matchesList))
+
             } catch (e: Exception) {
-                newsLiveData.postValue(Resource.error(e.toString(), null))
+                matches_root.postValue(Resource.error(e.toString(), null))
             }
         }
     }
@@ -96,6 +103,21 @@ class MainViewModel(private val apiHelper: ApiHelper) : ViewModel() {
             }
         }
     }
+
+    private fun makeNewsCall() {
+        viewModelScope.launch {
+            newsLiveData.postValue(Resource.loading(null))
+            try {
+                val news = apiHelper.getNews("en", "1")
+                maxPageNumberNews = news.meta.lastPage
+                newsLiveData.postValue(Resource.success(news))
+            } catch (e: Exception) {
+                newsLiveData.postValue(Resource.error(e.toString(), null))
+            }
+        }
+    }
+
+
 
     fun makeNewsCall(pageNumber: String,lang:String) {
         viewModelScope.launch {

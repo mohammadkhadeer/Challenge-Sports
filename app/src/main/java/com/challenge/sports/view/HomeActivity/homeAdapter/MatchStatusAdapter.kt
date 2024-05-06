@@ -23,8 +23,7 @@ class MatchStatusAdapter(var context: Context, var dataList:ArrayList<MatchStatu
 
     override fun onBindViewHolder(holder: MatchStatusAdapterViewHolder, position: Int) {
         holder.match_status_txv.text = dataList[position].name
-        Log.i("TAG","dataList["+position+"].selected "+dataList[position].selected)
-        Log.i("TAG","dataList["+position+"].name "+dataList[position].name)
+
         if (dataList[position].selected)
         {
             holder.container_match_status_rl.setBackgroundResource(R.drawable.matches_status_selected_bg)

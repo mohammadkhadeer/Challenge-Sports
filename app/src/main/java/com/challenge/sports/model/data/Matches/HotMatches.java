@@ -1,59 +1,82 @@
-package com.challenge.sports.model.data.Matches;//
-//  HotMatches.java
+
+package com.challenge.sports.model.data.Matches;
+//  HotMatches1.java
 //
 //  Generated using https://jsonmaster.github.io
 //  Created on May 02, 2024
 //
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 
 public class HotMatches {
 
     @SerializedName("id")
+    @Expose
     private String id;
     @SerializedName("season_id")
+    @Expose
     private String seasonId;
     @SerializedName("competition_id")
+    @Expose
     private String competitionId;
     @SerializedName("home_team_id")
+    @Expose
     private String homeTeamId;
     @SerializedName("away_team_id")
+    @Expose
     private String awayTeamId;
     @SerializedName("status_id")
+    @Expose
     private int statusId;
     @SerializedName("match_time")
+    @Expose
     private int matchTime;
     @SerializedName("venue_id")
+    @Expose
     private String venueId;
     @SerializedName("referee_id")
+    @Expose
     private String refereeId;
     @SerializedName("neutral")
+    @Expose
     private int neutral;
     @SerializedName("note")
+    @Expose
     private String note;
     @SerializedName("home_position")
+    @Expose
     private String homePosition;
     @SerializedName("away_position")
+    @Expose
     private String awayPosition;
     @SerializedName("coverage")
+    @Expose
     private Coverage coverage;
     @SerializedName("round")
+    @Expose
     private Round round;
     @SerializedName("updated_at")
+    @Expose
     private int updatedAt;
     @SerializedName("match_timing")
+    @Expose
     private String matchTiming;
     @SerializedName("update_timing")
+    @Expose
     private String updateTiming;
     @SerializedName("home_Info")
+    @Expose
     private HomeInfo homeInfo;
     @SerializedName("away_Info")
+    @Expose
     private AwayInfo awayInfo;
     @SerializedName("league_Info")
+    @Expose
     private LeagueInfo leagueInfo;
     @SerializedName("venueDetails")
+    @Expose
     private VenueDetails venueDetails;
 
     public void setId(String id) {
@@ -216,9 +239,6 @@ public class HotMatches {
         return this.awayInfo;
     }
 
-    public void setLeagueInfo(LeagueInfo leagueInfo) {
-        this.leagueInfo = leagueInfo;
-    }
 
     public LeagueInfo getLeagueInfo() {
         return this.leagueInfo;
@@ -232,15 +252,5 @@ public class HotMatches {
         return this.venueDetails;
     }
 
-
-    public static HotMatches create(String json) {
-        Gson gson = new GsonBuilder().create();
-        return gson.fromJson(json, HotMatches.class);
-    }
-
-    public String toString() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(this);
-    }
 
 }

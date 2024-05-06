@@ -6,6 +6,8 @@ package com.challenge.sports.model.data.Matches;//
 //
 
 import java.util.*;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,18 +15,25 @@ import com.google.gson.GsonBuilder;
 public class VenueDetails {
 
     @SerializedName("id")
+    @Expose
     private String id;
     @SerializedName("name")
+    @Expose
     private String name;
     @SerializedName("capacity")
+    @Expose
     private int capacity;
     @SerializedName("country_id")
+    @Expose
     private String countryId;
     @SerializedName("city")
+    @Expose
     private String city;
     @SerializedName("country")
+    @Expose
     private String country;
     @SerializedName("updated_at")
+    @Expose
     private int updatedAt;
 
     public void setId(String id) {
@@ -83,15 +92,5 @@ public class VenueDetails {
         return this.updatedAt;
     }
 
-
-    public static VenueDetails create(String json) {
-        Gson gson = new GsonBuilder().create();
-        return gson.fromJson(json, VenueDetails.class);
-    }
-
-    public String toString() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(this);
-    }
 
 }

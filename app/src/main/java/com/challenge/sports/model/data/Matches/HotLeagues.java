@@ -8,6 +8,8 @@ package com.challenge.sports.model.data.Matches;
 //
 
 import java.util.*;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,12 +17,16 @@ import com.google.gson.GsonBuilder;
 public class HotLeagues {
 
     @SerializedName("id")
+    @Expose
     private String id;
     @SerializedName("nameEn")
+    @Expose
     private String nameEn;
     @SerializedName("nameEnShort")
+    @Expose
     private String nameEnShort;
     @SerializedName("nameCn")
+    @Expose
     private String nameCn;
 
     public void setId(String id) {
@@ -55,15 +61,5 @@ public class HotLeagues {
         return this.nameCn;
     }
 
-
-    public static HotLeagues create(String json) {
-        Gson gson = new GsonBuilder().create();
-        return gson.fromJson(json, HotLeagues.class);
-    }
-
-    public String toString() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(this);
-    }
 
 }

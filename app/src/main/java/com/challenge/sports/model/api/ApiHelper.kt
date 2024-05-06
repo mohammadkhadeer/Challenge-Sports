@@ -1,5 +1,6 @@
 package com.challenge.sports.model.api
 
+import com.challenge.sports.model.data.Matches.MatchesRoot
 import com.challenge.sports.model.data.basketball.analysis.AnalysisBasktetballBase
 import com.challenge.sports.model.data.basketball.briefing.BasketballBriefingBase
 import com.challenge.sports.model.data.basketball.homepage.BaseIndexBasketball
@@ -26,6 +27,8 @@ import com.challenge.sports.model.data.videos.VideosListBase
 
 
 interface ApiHelper {
+    suspend fun getMatches(locale: String, page: String) : MatchesRoot
+
     suspend fun getNews(locale: String, page: String) : NewsBase
     suspend fun getPostDetail(locale: String,postID: String): NewsPostBase
     suspend fun getVideos(locale: String,page: String):VideosListBase
