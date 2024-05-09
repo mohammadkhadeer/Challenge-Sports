@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.homepage.liveOdds.BaseLiveOdds
+
 import com.challenge.sports.view.fragments.homeFrags.adapter.OddsRvPopulator
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,7 +25,7 @@ class IndexViewPagerFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var oddsType: String? = null
     private var param2: String? = null
-    private lateinit var data:BaseLiveOdds
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,44 +45,15 @@ class IndexViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         try {
-            populateRecyclerView()
+
         }catch (e:Exception){
 
         }
 
     }
 
-     fun populateRecyclerView() {
-        val rv=view?.findViewById<RecyclerView>(R.id.odds_rv)
-        rv?.adapter= OddsRvPopulator(requireContext(),returnOddsListForType(),oddsType!!)
-        rv?.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-    }
 
-    fun returnOddsListForType(): List<Any> {
-        return when(oddsType!!){
-            OddsRvPopulator.ASIA_FULL->{
-                data.list[0].handicap[0]
-            }
-            OddsRvPopulator._1X2_FULL->{
-                data.list[0].europeOdds[0]
-            }
-            OddsRvPopulator.OVERUNDER_FULL->{
-                data.list[0].overUnder[0]
-            }
-            OddsRvPopulator.ASIA_HALF->{
-                data.list[0].handicapHalf[0]
-            }
-            OddsRvPopulator.OVERUNDER_HALF->{
-                data.list[0].overUnderHalf[0]
-            }
-            else -> {
-                data.list[0].handicap[0]
-            }
-        }
-    }
-    fun setupData(data: BaseLiveOdds){
-       this.data=data
-    }
+
 
     companion object {
         /**

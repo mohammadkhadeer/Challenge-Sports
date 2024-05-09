@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import score.pro.R
-import com.challenge.sports.model.data.videos.List
+
 import com.challenge.sports.view.adapters.RecyclerViewOnclick
 
-class VideosAdapter(var context: Context,var list: ArrayList<List>, var layout: Int, var onclick: RecyclerViewOnclick,var loadMoreCommunicator: LoadMoreCommunicator): RecyclerView.Adapter<VideosAdapter.viewHolder>() {
+class VideosAdapter(var context: Context, var layout: Int, var onclick: RecyclerViewOnclick,var loadMoreCommunicator: LoadMoreCommunicator): RecyclerView.Adapter<VideosAdapter.viewHolder>() {
     inner class viewHolder(itemview: View): RecyclerView.ViewHolder(itemview){
         var headline=itemview.findViewById<TextView>(R.id.headline_rv)
         var tag=itemview.findViewById<TextView>(R.id.tag)
@@ -29,22 +29,11 @@ class VideosAdapter(var context: Context,var list: ArrayList<List>, var layout: 
     }
 
     override fun onBindViewHolder(holder: VideosAdapter.viewHolder, position: Int) {
-        holder.headline.text = list?.get(position)?.title
-        holder.tag.text =list?.get(position)?.createTime.substringBefore("T")
-        Glide.with(context)
-            .load(list?.get(position)?.thumbnailPath)
-            .into(holder.imageContainer)
-        if (position==list.size-1){
-            loadMoreCommunicator.loadMore()
-        }
+
     }
 
-    fun updateList(list: kotlin.collections.List<List>){
-        this.list.addAll(list)
-        notifyDataSetChanged()
-    }
     override fun getItemCount(): Int {
-        return list.size
+        return 5
     }
 
 }

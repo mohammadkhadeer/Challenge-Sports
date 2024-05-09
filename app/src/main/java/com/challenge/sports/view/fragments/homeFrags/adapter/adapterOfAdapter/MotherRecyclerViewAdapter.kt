@@ -8,11 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.homepage.leagueInfo.any.LeagueStandingTypeGroupBase
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
 
-class MotherRecyclerViewAdapter(var context: Context, var data: LeagueStandingTypeGroupBase):
+class MotherRecyclerViewAdapter(var context: Context):
     RecyclerView.Adapter<MotherRecyclerViewAdapter.MotherRecyclerViewAdapterViewHolder>() {
     inner class MotherRecyclerViewAdapterViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         var childRv=itemView.findViewById<RecyclerView>(R.id.child_rv)
@@ -27,21 +26,10 @@ class MotherRecyclerViewAdapter(var context: Context, var data: LeagueStandingTy
     }
 
     override fun onBindViewHolder(holder: MotherRecyclerViewAdapterViewHolder, position: Int) {
-            val element=data.list[0].score[0].groupScore[position]
-            val group=when(GeneralTools.getLocale(context)){
-                SharedPreference.CHINESE->{
-                    element.groupCn
-                }
-                else->{
-                    element.groupEn
-                }
-            }
-            holder.groupNameTV.text=group
-            holder.childRv.adapter=ChildRecyclerViewAdapter(context,element.scoreItems)
-            holder.childRv.layoutManager=LinearLayoutManager(context)
+
     }
 
     override fun getItemCount(): Int {
-     return data.list[0].score[0].groupScore.size
+     return 4
     }
 }

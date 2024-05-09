@@ -14,8 +14,6 @@ import score.pro.R
 import com.challenge.sports.model.api.ApiHelperImpl
 import com.challenge.sports.model.api.RetroInstance
 import com.challenge.sports.model.data.news.details.OnPostDetailResponse
-import com.challenge.sports.model.data.videos.List
-import com.challenge.sports.model.data.videos.VideosListBase
 import com.challenge.sports.utils.SharedPreference
 import com.challenge.sports.utils.Status
 import com.challenge.sports.utils.ViewModelFactory
@@ -69,79 +67,7 @@ class VideoBaseFragment : Fragment() {
             ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))
         ).get(MainViewModel::class.java)
 
-        viewModel.videosLiveData.observe(requireActivity()) {
-            if (it.status == Status.SUCCESS) {
-                moreVidsRecyclerView.adapter = object : MultipurposeAdapter(
-                    requireContext(),
-                    R.layout.video_item_view,
-                    object : RecyclerViewOnclick {
-                        override fun onClick(position: Int) {
-                            val link = it.data?.list?.get(position)?.path
-                            val maxPage = it.data?.meta?.lastPage
-                            val titleDate=it.data?.list?.get(position)?.title+getString(R.string.titledateSeperator)+it.data?.list?.get(position)?.createTime
-                            if (maxPage != null) {
-                                if (link != null) {
-                                    val list=ArrayList<String>()
-                                    list.add(link)
-                                    list.add(titleDate)
-                                    list.add(maxPage.toString())
-                                    onDetailListener?.onDetail(list)
-                                }
-                            }
-                        }
-                    }) {
-                    override fun onBindViewHolder(holder: viewHolder, position: Int) {
-                        holder.headline.text = it.data?.list?.get(position)?.title
-                        holder.tag.text = it.data?.list?.get(position)?.createTime
-                        Glide.with(requireContext())
-                            .load(it.data?.list?.get(position)?.thumbnailPath)
-                            .into(holder.imageContainer)
-                    }
 
-                    override fun getItemCount(): Int {
-                        return it.data?.list?.size ?: 0
-                    }
-
-                }
-                moreVidsRecyclerView.adapter=VideosAdapter(requireContext(),
-                    it.data?.list!! as ArrayList<List>, R.layout.video_item_view,
-                    object : RecyclerViewOnclick {
-                        override fun onClick(position: Int) {
-                            val link = it.data?.list?.get(position)?.path
-                            val maxPage = it.data?.meta?.lastPage
-                            val titleDate=it.data?.list?.get(position)?.title+getString(R.string.titledateSeperator)+it.data?.list?.get(position)?.createTime
-                            if (maxPage != null) {
-                                if (link != null) {
-                                    val list=ArrayList<String>()
-                                    list.add(link)
-                                    list.add(titleDate)
-                                    list.add(maxPage.toString())
-                                    onDetailListener?.onDetail(list)
-                                }
-                            }
-                        }
-                    },object : LoadMoreCommunicator{
-                        override fun loadMore() {
-                            viewModel.makeVideosListCall(object : OnPostDetailResponse<VideosListBase>{
-                                override fun onSuccess(responseBody: VideosListBase) {
-                                    (moreVidsRecyclerView.adapter as VideosAdapter).updateList(responseBody.list)
-                                    loadingMoreBar.visibility=View.GONE
-                                }
-                                override fun onFailure(message: String) {
-                                    loadingMoreBar.visibility=View.GONE
-                                }
-
-                                override fun onLoading(message: String) {
-                                    loadingMoreBar.visibility=View.VISIBLE
-                                }
-                            },SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.CHINESE,requireContext()))
-                        }
-                    }
-                )
-                moreVidsRecyclerView.layoutManager=LinearLayoutManager(requireContext())
-            }
-        }
-        viewModel.makeVideosListCall("1",SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.CHINESE,requireContext()))
     }
 
     companion object {

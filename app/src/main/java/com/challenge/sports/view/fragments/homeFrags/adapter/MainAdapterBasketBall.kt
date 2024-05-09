@@ -10,23 +10,19 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.basketball.homepage.Match
+
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,var communicator: MainAdapterCommunicator):RecyclerView.Adapter<MainAdapterBasketBall.MainAdapterBasketBallViewHolder>(),
+class MainAdapterBasketBall(var context:Context
+,var communicator: MainAdapterCommunicator):RecyclerView.Adapter<MainAdapterBasketBall.MainAdapterBasketBallViewHolder>(),
     Filterable {
 
-    var originalList = dataList
-    var liveMatches = ArrayList<Match>()
-    var soonMatches = ArrayList<Match>()
-    var ftMatches = ArrayList<Match>()
-    var categoryFilterType: MainAdapter.CategoryFilterType = MainAdapter.CategoryFilterType.ALL
-    private var filterString = ""
+
 
     init {
-        sortMatchesOnCategory()
+
     }
 
     inner class MainAdapterBasketBallViewHolder(itemView: View) :
@@ -107,119 +103,16 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
     override fun onBindViewHolder(holder: MainAdapterBasketBallViewHolder, position: Int) {
 
 
-        val data = dataList[position]
-        holder.apply {
-            //event_bt.visibility = View.GONE
-            leagueNameShort.text = data.leagueEn
-            homeNameTv.text = data.homeTeamEn
-            awayNameTv.text = data.awayTeamEn
-            if (data.matchState == 0) {
-                scoreIndicator.text = context.getString(R.string.soon)
-                score_indicator_s.visibility = View.GONE
-                point_cont.visibility = View.GONE
 
-            } else {
-                score_indicator_s.text = data.homeScore
-                scoreIndicator.text = data.awayScore
-            }
-            stateNdate.text = returnState(data)
-            matchTimeTv.text = return24HrsOnly(returnTime(data))
-            try {
-                indexC1R1.text =
-                    if (data.odds.moneyLineAverage?.liveHomeWinRate == null) "" else data.odds.moneyLineAverage?.liveHomeWinRate.toString()
-                indexC1R2.text =
-                    if (data.odds.moneyLineAverage?.liveAwayWinRate == null) "" else data.odds.moneyLineAverage?.liveAwayWinRate.toString()
-                indexC2R1.text = if (data.odds.spread?.get(9)
-                        .toString() == "null"
-                ) "" else data.odds.spread?.get(9).toString()
-                indexC2R2.text = if (data.odds.spread?.get(10)
-                        .toString() == "null"
-                ) "" else data.odds.spread?.get(10).toString()
-                indexC3R1.text = if (data.odds.total?.get(9)
-                        .toString() == "null"
-                ) "" else data.odds.total?.get(9).toString()
-                indexC3R2.text =
-                    if (data.odds.total?.get(10).toString() == "null") "" else data.odds.total?.get(
-                        10
-                    ).toString()
-            } catch (e: Exception) {
 
-            }
-
-            home_q1.text = data.home1
-            home_q2.text = data.home2
-            home_q3.text = data.home3
-            home_q4.text = data.home4
-            home_f.text = data.homeScore
-            away_q1.text = data.away1
-            away_q2.text = data.away2
-            away_q3.text = data.away3
-            away_q4.text = data.away4
-            away_f.text = data.awayScore
-//            if (!data.havBriefing) {
-//                brief_bt.visibility = View.GONE
-//            } else {
-//                brief_bt.visibility = View.VISIBLE
-//            }
-        }
     }
 
     override fun getItemCount(): Int {
-        return dataList.size
+        return 5
     }
 
 
-    fun returnState(data: Match): String {
-        val sdf = SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-        val sdf2 = SimpleDateFormat("EEE, dd MMM")
-        return when (data.matchState) {
-            0 -> {
-                sdf2.format(sdf.parse(data.matchTime).time)
-            }
-            1 -> {
-                "Q1"
-            }
-            2 -> {
-                "Q2"
-            }
-            3 -> {
-                "Q3"
-            }
-            4 -> {
-                "Q4"
-            }
-            5 -> {
-                "OT 1"
-            }
-            6 -> {
-                "OT 2"
-            }
-            7 -> {
-                "OT 3"
-            }
-            50 -> {
-                "HT"
-            }
-            -1 -> {
-                "FT"
-            }
-            -2 -> {
-                "TBD"
-            }
-            -3 -> {
-                "INTR"
-            }
-            -4 -> {
-                "C"
-            }
-            -5 -> {
-                "DEL"
-            }
-            else -> {
-                ""
-            }
-        }
-    }
+
 
     private fun return24HrsOnly(matchTime: String): String {
         val splitDateTime = matchTime.split(" ")[1].split(":")
@@ -227,19 +120,7 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
     }
 
 
-    private fun returnTime(dataObject: Match): String {
-        val sdf = SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-        val time = returnGMTToCurrentTimezone(returnGMTTimeInMs(dataObject.matchTime))
-        return sdf.format(time)
-    }
 
-    private fun returnMinutes(dataObject: com.challenge.sports.model.data.homepage.new2.Match): String {
-        val startTimeMs = returnGMTTimeInMs(dataObject.startTime)
-        val matchTimeMs = returnGMTTimeInMs(dataObject.matchTime)
-        var minutesElapsed = returnTimeInGmtCurrentLocale() - startTimeMs
-        minutesElapsed /= 60000
-        return minutesElapsed.toString()
-    }
 
     private fun returnTimeInGmtCurrentLocale(): Long {
         val timeZone = TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT)
@@ -278,43 +159,9 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
     }
 
     override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(charset: CharSequence?): FilterResults {
-
-                val filterResults = FilterResults()
-                val filterList = ArrayList<Match>()
-                val baseList = returnFilterData()
-                if (charset.isNullOrEmpty()) {
-                    filterResults.apply {
-                        count = baseList.size
-                        values = baseList
-                    }
-                } else {
-                    baseList.forEach {
-                        if (it.homeTeamNameEn.startsWith(charset, true)
-                            || it.awayTeamNameEn.startsWith(charset, true)
-                            || it.leagueNameCn.startsWith(charset, true)
-                            || it.leagueNameShortEn.startsWith(charset, true)
-                        ) {
-                            filterList.add(it)
-                        }
-                    }
-                    filterResults.apply {
-                        count = filterList.size
-                        values = filterList
-                    }
-                }
-                return filterResults
-            }
-
-            override fun publishResults(p0: CharSequence?, results: FilterResults?) {
-                dataList = results?.values as ArrayList<Match>
-                filterString = p0.toString()
-                notifyDataSetChanged()
-            }
-
-        }
+        TODO("Not yet implemented")
     }
+
 
     /*
         *
@@ -334,108 +181,11 @@ class MainAdapterBasketBall(var context:Context,var dataList:ArrayList<Match>,va
         -5 - delay
         *
         * */
-    fun sortMatchesOnCategory(){
-        soonMatches.clear()
-        liveMatches.clear()
-        ftMatches.clear()
-        originalList.forEach{
-            when (it.matchState) {
-                0 -> {
-                    soonMatches.add(it)
-                }
-                1 -> {
-                    liveMatches.add(it)
-                }
-                2 -> {
-                    liveMatches.add(it)
-                }
-                3 -> {
-                    liveMatches.add(it)
-                }
-                4 -> {
-                    liveMatches.add(it)
-                }
-                5 -> {
-                    liveMatches.add(it)
-                }
-                6 -> {
-                    liveMatches.add(it)
-                }
-                7 -> {
-                    liveMatches.add(it)
-                }
-                50 -> {
-                    liveMatches.add(it)
-                }
-                -1 -> {
-                    ftMatches.add(it)
-                }
-                -2 -> {
-                    soonMatches.add(it)
-                }
-                -3 -> {
-                    soonMatches.add(it)
-                }
-                -4 -> {
-                    ftMatches.add(it)
-                }
-                -5 -> {
-                    soonMatches.add(it)
-                }
-                else -> {
-                  soonMatches.add(it)
-                }
-            }
-        }
 
-    }
 
-    fun setFilter(filter: MainAdapter.CategoryFilterType){
-        categoryFilterType=filter
-        updateFilter()
-    }
 
-    fun updateFilter(){
-        when(categoryFilterType){
-            MainAdapter.CategoryFilterType.ALL -> {
-                dataList=originalList
-            }
-            MainAdapter.CategoryFilterType.LIVE -> {
-                dataList=liveMatches
-            }
-            MainAdapter.CategoryFilterType.SOON -> {
-                dataList=soonMatches
-            }
-            MainAdapter.CategoryFilterType.FT -> {
-                dataList=ftMatches
-            }
-            MainAdapter.CategoryFilterType.OTHER -> {
 
-            }
-        }
-        filter.filter(filterString)
-        notifyDataSetChanged()
-    }
 
-    fun returnFilterData(): ArrayList<Match> {
-        return when (categoryFilterType) {
-            MainAdapter.CategoryFilterType.ALL -> {
-                originalList
-            }
-            MainAdapter.CategoryFilterType.LIVE -> {
-                liveMatches
-            }
-            MainAdapter.CategoryFilterType.SOON -> {
-                soonMatches
-            }
-            MainAdapter.CategoryFilterType.FT -> {
-                ftMatches
-            }
-            MainAdapter.CategoryFilterType.OTHER -> {
-                originalList
-            }
-        }
 
 
     }
-}

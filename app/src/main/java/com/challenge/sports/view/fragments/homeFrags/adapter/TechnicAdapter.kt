@@ -8,10 +8,9 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.homepage.event.formatted.FormattedTecnicEvent
 import com.challenge.sports.utils.Formatters
 
-class TechnicAdapter(var context: Context,var dataList:List<FormattedTecnicEvent>) :RecyclerView.Adapter<TechnicAdapter.TechnicAdapterViewHolder>(){
+class TechnicAdapter(var context: Context) :RecyclerView.Adapter<TechnicAdapter.TechnicAdapterViewHolder>(){
     inner class TechnicAdapterViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
 
         var technicName=itemView.findViewById<TextView>(R.id.technic_name)
@@ -28,27 +27,7 @@ class TechnicAdapter(var context: Context,var dataList:List<FormattedTecnicEvent
 
     override fun onBindViewHolder(holder: TechnicAdapterViewHolder, position: Int) {
 
-        holder.technicName.text=Formatters.returnTechnicName(dataList[position].tecnicName,context)
-        holder.homeValue.text=dataList[position].homeCount
-        holder.awayValue.text=dataList[position].awayCount
 
-        if (dataList[position].homeCount.contains("%"))
-        {
-            val homeCountSplit=dataList[position].homeCount.substringBefore("%")
-            val width=homeCountSplit.toDouble()/100
-            (holder.homeIndicator.layoutParams as ConstraintLayout.LayoutParams)
-                .matchConstraintPercentWidth=width.toFloat()
-        }
-        else{
-            try {
-                (holder.homeIndicator.layoutParams as ConstraintLayout.LayoutParams)
-                    .matchConstraintPercentWidth=
-                    returnHomePercentage(dataList[position].homeCount.toDouble(),dataList[position].awayCount.toDouble()).toFloat()
-            }catch (e:Exception){
-
-            }
-
-        }
     }
 
     private fun returnHomePercentage(homeScore: Double, awayScore: Double): Double {
@@ -57,7 +36,7 @@ class TechnicAdapter(var context: Context,var dataList:List<FormattedTecnicEvent
     }
 
     override fun getItemCount(): Int {
-       return dataList.size
+       return 8
     }
 
 }

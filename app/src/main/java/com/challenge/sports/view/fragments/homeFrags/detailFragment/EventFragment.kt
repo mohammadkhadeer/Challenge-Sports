@@ -45,36 +45,7 @@ class EventFragment : Fragment() {
         val technicRv=view.findViewById<RecyclerView>(R.id.technic_rv)
         val eventsRv=view.findViewById<RecyclerView>(R.id.event_rv)
         val vm=SpewViewModel.giveMeViewModel(requireActivity())
-        vm.eventsLiveData.observe(requireActivity()){
-            when(it.status){
-                Status.SUCCESS -> {
-                    try {
-                        val data=it.data!!
 
-                        val eventList=Formatters.filterEvents(matchId!!,data)
-                        val formattedEvents=Formatters.formatEvents(matchId!!,eventList)
-
-                        eventsRv.adapter=EventsAdapter(requireContext(),formattedEvents)
-                        eventsRv.layoutManager=LinearLayoutManager(requireContext())
-
-                        val technicList=Formatters.formatTechnic(Formatters.filterEvents(matchId!!,data).technic[0].technicCount)
-                        technicRv.adapter=TechnicAdapter(requireContext(),technicList)
-                        technicRv.layoutManager=LinearLayoutManager(context)
-
-                    }catch (e:Exception){
-
-                    }
-
-                }
-                Status.ERROR -> {
-
-                }
-                Status.LOADING -> {
-
-                }
-            }
-        }
-        vm.makeEventListCall()
     }
 
     private fun inti() {

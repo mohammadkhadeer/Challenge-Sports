@@ -9,12 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import score.pro.R
-import com.challenge.sports.model.data.homepage.leagueInfo.TeamInfo
-import com.challenge.sports.model.data.homepage.leagueInfo.TotalStanding
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
 
-class RankingsAdapterDetail(var context:Context, var teams:ArrayList<TeamInfo>, var rankings:ArrayList<TotalStanding>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RankingsAdapterDetail(var context:Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class RankingViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         var ranking_tv=itemView.findViewById<TextView>(R.id.rank_text)
         var rankingIndicator=itemView.findViewById<ImageView>(R.id.rank_indicator)
@@ -55,61 +53,6 @@ class RankingsAdapterDetail(var context:Context, var teams:ArrayList<TeamInfo>, 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        try {
-            val team=spewTeam(rankings[position].teamId)
-            val name=when(GeneralTools.getLocale(context)){
-                SharedPreference.ENGLISH->{
-                    team.nameEn
-                }
-                SharedPreference.CHINESE->{
-                    team.nameCht
-                }
-                else->{
-                    team.nameEn
-                }
-            }
-            val myholder=holder as RankingViewHolder
-
-            myholder.ranking_tv.text=rankings[position].rank.toString()
-            Glide.with(context)
-                .load(team.flag)
-                .into(myholder.teamFlag)
-            myholder.teamName.text=name
-            myholder.matchPlayed.text=rankings[position].totalCount.toString()
-            myholder.won.text=rankings[position].winCount.toString()
-            myholder.draw.text=rankings[position].drawCount.toString()
-            myholder.loss.text=rankings[position].loseCount.toString()
-            myholder.gf.text=rankings[position].getScore.toString()
-            myholder.ga.text=rankings[position].loseScore.toString()
-            myholder.pts.text=rankings[position].integral.toString()
-            val rank=rankings[position]
-            val percentStats="W%="+rank.winRate+"% / L%="+rank.loseRate+
-                    "% / AVA="+rank.loseAverage+" D%="+rank.drawRate+"% / AVF="+rank.winAverage
-
-            myholder.percentStats.text=percentStats
-
-            Glide.with(context)
-                .load(returnMatchAsset(rank.recentFirstResult))
-                .into(myholder.match1)
-            Glide.with(context)
-                .load(returnMatchAsset(rank.recentSecondResult))
-                .into(myholder.match2)
-            Glide.with(context)
-                .load(returnMatchAsset(rank.recentThirdResult))
-                .into(myholder.match3)
-            Glide.with(context)
-                .load(returnMatchAsset(rank.recentFourthResult))
-                .into(myholder.match4)
-            Glide.with(context)
-                .load(returnMatchAsset(rank.recentFifthResult))
-                .into(myholder.match5)
-            Glide.with(context)
-                .load(returnMatchAsset(rank.recentSixthResult))
-                .into(myholder.match6)
-        }catch (e:Exception){
-
-        }
-
 
     }
 
@@ -127,23 +70,7 @@ class RankingsAdapterDetail(var context:Context, var teams:ArrayList<TeamInfo>, 
     }
 
 
-    private fun spewTeam(teamId:Int):TeamInfo{
-        for (team in teams){
-            if (teamId==team.teamId){
-                return team
-            }
-        }
-        val notfoundTeam=TeamInfo()
-        notfoundTeam.teamId=0
-        notfoundTeam.flag=""
-        notfoundTeam.conferenceFlg=0
-        notfoundTeam.nameChs=""
-        notfoundTeam.nameCht=""
-        notfoundTeam.nameEn="not found"
-        return notfoundTeam
-    }
-
     override fun getItemCount(): Int {
-        return rankings.size
+        return 7
     }
 }

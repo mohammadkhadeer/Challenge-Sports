@@ -48,6 +48,7 @@
     <color name="main_adapter_background_color_comp1">#332771</color>
     <color name="splash_screen_gradint_2">#004999</color>
     <color name="transpernt_brand_color">#22007AFF</color>
+
     <color name="brand_color">#007AFF</color>
     <color name="brand_color_dark">#89CB4C</color>
     <color name="brand_color_lit">#F7FFE4</color>

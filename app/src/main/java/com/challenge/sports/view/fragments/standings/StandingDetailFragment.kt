@@ -11,13 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import score.pro.R
-import com.challenge.sports.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
-import com.challenge.sports.model.data.homepage.leagueInfo.LeagueStanding
-import com.challenge.sports.model.data.homepage.leagueInfo.any.LeagueStandingTypeGroupBase
-import com.challenge.sports.model.data.standings.StandingsBase
-import com.challenge.sports.model.data.standings.TeamInfo
-import com.challenge.sports.model.data.standings.TotalStanding
-import com.challenge.sports.model.data.standings.player.List
+
+
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
 import com.challenge.sports.utils.SpewViewModel
@@ -39,7 +34,7 @@ class StandingDetailFragment : Fragment() {
     private var leagueId: String? = null
     private var isLeague: Boolean? = null
     private var callApi:Boolean?=null
-    var leagueStandingsBase:BaseLeagueInfoHomePage?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,81 +59,11 @@ class StandingDetailFragment : Fragment() {
             val vm = SpewViewModel.giveMeViewModel(requireActivity())
             if (isLeague!!) {
                 view.findViewById<View>(R.id.team_standing_view).visibility=View.VISIBLE
-                vm.leagueInfoLiveData.observe(requireActivity()) {
-                    when(it.status){
-                        Status.SUCCESS -> {
-                            try {
-                                var name= when(GeneralTools.getLocale(requireContext())){
-                                    SharedPreference.ENGLISH->{
-                                        it?.data?.leagueData01?.get(0)?.nameEn
-                                    }
-                                    SharedPreference.CHINESE->{
-                                        it?.data?.leagueData01?.get(0)?.nameChs
-                                    }
-                                    SharedPreference.INDONESIAN->{
-                                        it?.data?.leagueData01?.get(0)?.nameId
-                                    }
-                                    SharedPreference.VIETNAMESE->{
-                                        it?.data?.leagueData01?.get(0)?.nameVi
-                                    }
-                                    SharedPreference.THAI->{
-                                        it?.data?.leagueData01?.get(0)?.nameTh
-                                    }
-                                    else->{
-                                        it?.data?.leagueData01?.get(0)?.nameEn
-                                    }
 
-                                }
-                                view.findViewById<TextView>(R.id.league_name).text= name+" "+ it?.data?.leagueData01?.get(0)?.currSeason
-                                populateRecyclerView(view,it?.data!!)
-                                view.findViewById<View>(R.id.loading_layout).visibility=View.GONE
-                            }catch (e:Exception){
-
-                            }
-                        }
-                        Status.ERROR -> {
-                            view.findViewById<View>(R.id.error_layout).visibility=View.VISIBLE
-                        }
-                        Status.LOADING -> {
-                            view.findViewById<View>(R.id.error_layout).visibility=View.GONE
-                            view.findViewById<View>(R.id.loading_layout).visibility=View.VISIBLE
-                        }
-                    }
-
-                     //   vm.standingsLiveData.removeObservers(requireActivity())
-
-                }
-                vm.getLeagueInfoForMatch(leagueId!!,"0","0")
             } else {
                    view.findViewById<View>(R.id.player_standing_view).visibility=View.VISIBLE
                 try {
-                    vm.playerStandingsLiveData.observe(requireActivity()) {
 
-                        when(it.status){
-                            Status.SUCCESS -> {
-
-                                val theList = it.data?.list
-                                        try {
-                                            view.findViewById<TextView>(R.id.league_name).visibility=View.GONE
-                                            populateRecyclerView(rv, theList)
-                                            view.findViewById<View>(R.id.loading_layout).visibility=View.GONE
-                                        }catch (e:Exception){
-
-                                        }
-                            }
-                            Status.ERROR -> {
-                                view.findViewById<View>(R.id.error_layout).visibility=View.VISIBLE
-                            }
-                            Status.LOADING -> {
-                                view.findViewById<View>(R.id.error_layout).visibility=View.GONE
-                                view.findViewById<View>(R.id.loading_layout).visibility=View.VISIBLE
-                            }
-                        }
-
-                          //  vm.standingsLiveData.removeObservers(requireActivity())
-
-                    }
-                    vm.makePlayerStandingCall(leagueId!!)
                 }catch (e:Exception){
 
                 }
@@ -148,7 +73,7 @@ class StandingDetailFragment : Fragment() {
         }
         else{
             try {
-                populateRecyclerView(leagueStandingsBase!!)
+
             }catch (e:Exception){
 
             }
@@ -157,90 +82,9 @@ class StandingDetailFragment : Fragment() {
 
     }
 
-    private fun populateRecyclerView(rv: RecyclerView, list: MutableList<List>?) {
-        val properList = list as ArrayList<List>
-        rv.adapter=PlayerStandingAdapter(requireContext(),properList)
-        rv.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-    }
-
-    fun populateRecyclerView(data: BaseLeagueInfoHomePage){
-        val rv=view?.findViewById<RecyclerView>(R.id.standing_recycler)
-        try {
-            when(data.leagueStanding[0]){
-                is LeagueStandingTypeGroupBase ->{
-                    populateRecyclerView(rv!!,data)
-                }
-                is LeagueStanding->{
-                    populateRecyclerView(rv!!,data.leagueStanding[0] as LeagueStanding)
-                }
-                else->{
-
-                }
-            }
-
-        }catch (e:Exception){
-            leagueStandingsBase=data
-            println(e)
-        }
-    }
-    fun populateRecyclerView(view: View,data: BaseLeagueInfoHomePage){
-        val rv=view?.findViewById<RecyclerView>(R.id.standing_recycler)
-        try {
-            when(data.leagueStanding[0]){
-                is LeagueStandingTypeGroupBase ->{
-                    populateRecyclerView(rv!!,data)
-                }
-                is LeagueStanding->{
-                    populateRecyclerView(rv!!,data.leagueStanding[0] as LeagueStanding)
-                }
-                else->{
-
-                }
-            }
-
-        }catch (e:Exception){
-            leagueStandingsBase=data
-            println(e)
-        }
-    }
-
-    private fun populateRecyclerView(rv: RecyclerView, data: BaseLeagueInfoHomePage) {
-        val dataList=data.leagueStanding[0] as LeagueStandingTypeGroupBase
-        val loadinto=view?.findViewById<ImageView>(R.id.league_logo)
-        Glide.with(requireContext())
-            .load(data.leagueData01[0].leagueLogo)
-            .into(loadinto!!)
-        rv.adapter=MotherRecyclerViewAdapter(requireContext(),data.leagueStanding[0] as LeagueStandingTypeGroupBase)
-        rv.layoutManager=LinearLayoutManager(requireContext())
-    }
 
 
-    private fun populateRecyclerView(rv: RecyclerView, data: StandingsBase) {
-        val loadinto=view?.findViewById<ImageView>(R.id.league_logo)
-        Glide.with(requireContext())
-            .load(data.leagueInfo.logo)
-            .into(loadinto!!)
-        val rankings = data.totalStandings as ArrayList<TotalStanding>
-        rv.adapter = RankingsAdapter(
-            requireContext(), data.teamInfo as ArrayList<TeamInfo>,
-            rankings
-        )
-        rv.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-    }
-    private fun populateRecyclerView(rv: RecyclerView, data: LeagueStanding) {
-        val loadinto=view?.findViewById<ImageView>(R.id.league_logo)
-        Glide.with(requireContext())
-            .load(data.leagueInfo.logo)
-            .into(loadinto!!)
-        val rankings = data.totalStandings as ArrayList<com.challenge.sports.model.data.homepage.leagueInfo.TotalStanding>
-        rv.adapter = RankingsAdapterDetail(
-            requireContext(), data.teamInfo as ArrayList<com.challenge.sports.model.data.homepage.leagueInfo.TeamInfo>,
-            rankings
-        )
-        rv.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-    }
+
 
     companion object {
         /**

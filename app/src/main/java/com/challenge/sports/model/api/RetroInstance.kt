@@ -9,7 +9,8 @@ object RetroInstance {
         "https://www.77577.com"*/
     //app.sports996.com
     //app.app99877.com
-    var BASE_URL = "https://app.app99877.com"
+    //var BASE_URL = "https://app.app99877.com"
+    var BASE_URL = "https://sportsapi3.com/sportsapi/"
 
     private var retrofit: Retrofit? = null
     val retroClient: Retrofit?

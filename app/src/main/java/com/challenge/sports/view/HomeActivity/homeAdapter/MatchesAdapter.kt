@@ -1,39 +1,29 @@
 package com.challenge.sports.view.HomeActivity.homeAdapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.challenge.sports.model.data.Matches.HotMatches
-import com.challenge.sports.model.data.Matches.MatchesRoot
+import com.bumptech.glide.Glide
+import com.challenge.sports.model.data.MatchesKotlin.HotMatche
+import com.challenge.sports.model.data.MatchesKotlin.MatchesRootK
 import com.challenge.sports.view.fragments.homeFrags.adapter.MainAdapterCommunicator
 import score.pro.R
 import kotlin.collections.ArrayList
 
-class MatchesAdapter (var context: Context, var dataList: MatchesRoot, var communicator: MainAdapterCommunicator)
+class MatchesAdapter (var context: Context, var dataList: MatchesRootK, var communicator: MainAdapterCommunicator)
     : RecyclerView.Adapter<MatchesAdapter.MainAdapterViewHolder>(),
     Filterable {
 
-    companion object{
-        val GMT_OFFSET_IN_MS:Long=28800000
-        val HOUR_CONSTANT:Long=3600000
-        val MINS_CONSTANT:Long=60000
-    }
-
-    var loadMore: Boolean=true
-    var isMaxLoaded: Boolean=false
     var originalList = dataList.hotMatches
-
-    var listMatches= ArrayList<HotMatches>()
-
-
-    var categoryFilterType:CategoryFilterType=CategoryFilterType.ALL
-    private var filterString=""
+    var listMatches= ArrayList<HotMatche>()
 
     init {
         sortMatchesOnCategory()
@@ -42,8 +32,8 @@ class MatchesAdapter (var context: Context, var dataList: MatchesRoot, var commu
     private fun sortMatchesOnCategory(){
         listMatches.clear()
 
-        for (match in originalList ){
-            listMatches.add(match)
+        for (match in originalList!!){
+            listMatches.add(match!!)
         }
     }
 
@@ -53,41 +43,22 @@ class MatchesAdapter (var context: Context, var dataList: MatchesRoot, var commu
 
     inner class MainAdapterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var leagueNameShort=itemView.findViewById<TextView>(R.id.group_indicator)
-        var homeNameTv=itemView.findViewById<TextView>(R.id.team_1_name)
-        var awayNameTv=itemView.findViewById<TextView>(R.id.team_2_name)
-        var scoreIndicatorHome=itemView.findViewById<TextView>(R.id.score_indicator_home)
-        var scoreIndicatorAway=itemView.findViewById<TextView>(R.id.score_indicator_away)
-        //var redCard=itemView.findViewById<TextView>(R.id.red_card)
-        //var yellowCard=itemView.findViewById<TextView>(R.id.yellow_cards)
-        var stateNdate=itemView.findViewById<TextView>(R.id.match_date)
-        var matchTimeTv=itemView.findViewById<TextView>(R.id.match_time)
-        var indexC1R1=itemView.findViewById<TextView>(R.id.index_c1_r1)
-        var indexC1R2=itemView.findViewById<TextView>(R.id.index_c1_r2)
-        var indexC2R1=itemView.findViewById<TextView>(R.id.index_c2_r1)
-        var indexC2R2=itemView.findViewById<TextView>(R.id.index_c2_r2)
-        var indexC3R1=itemView.findViewById<TextView>(R.id.index_c3_r1)
-        var indexC3R2=itemView.findViewById<TextView>(R.id.index_c3_r2)
-        var cornerRatio=itemView.findViewById<TextView>(R.id.c_ht_text)
-        var halfRatio=itemView.findViewById<TextView>(R.id.ht_ratio)
+
+        var home_team_name=itemView.findViewById<TextView>(R.id.home_team_name)
+        var away_team_name=itemView.findViewById<TextView>(R.id.away_team_name)
+        var match_score=itemView.findViewById<TextView>(R.id.match_score_txt)
+
+        var home_image=itemView.findViewById<ImageView>(R.id.home_team_image)
+        var away_image=itemView.findViewById<ImageView>(R.id.away_team_image)
+        var leagua_image=itemView.findViewById<ImageView>(R.id.leagua_image)
+
         var index_btn=itemView.findViewById<View>(R.id.index_bt)
-        var analysis_bt=itemView.findViewById<View>(R.id.analysis_bt)
-        var event_bt=itemView.findViewById<View>(R.id.event_bt)
-        var brief_bt=itemView.findViewById<View>(R.id.briefing_button)
-        var league_bt=itemView.findViewById<View>(R.id.league_bt)
+
         var fragment_container=itemView.findViewById<FrameLayout>(R.id.fragment_container)
-        //var normal_options_container=itemView.findViewById<View>(R.id.normal_options_container)
-        var bottom_options_container=itemView.findViewById<View>(R.id.bottom_options_container)
-        var odds_container=itemView.findViewById<View>(R.id.odds_container)
         init {
             itemView.setOnClickListener {
-//                if (normal_options_container.visibility==VISIBLE){
-//                    GeneralTools.flipReplaceAnimation(normal_options_container,bottom_options_container)
-//                }else{
-//                    GeneralTools.flipReplaceAnimation(bottom_options_container,normal_options_container)
-//                }
 
             }
-
         }
     }
 
@@ -97,13 +68,21 @@ class MatchesAdapter (var context: Context, var dataList: MatchesRoot, var commu
 
     override fun onBindViewHolder(holder: MainAdapterViewHolder, position: Int) {
 
-        val dataObject=dataList.hotMatches.get(position)
+        Log.i("TAG","dataList.hotMatches "+ (dataList.hotMatches?.size ?: 10))
+        Log.i("TAG","dataList.hotMatches!!.get(position) "+ dataList.hotMatches!!.get(position)!!.id)
 
+        val dataObject = dataList.hotMatches!!.get(position)
 
-//        holder.leagueNameShort.text=dataObject.leagueInfo.enName
-//
-//        holder.homeNameTv.text=dataObject.homeInfo.enName
-//        holder.awayNameTv.text=dataObject.awayInfo.enName
+        holder.leagueNameShort.text = "mohamamd"
+
+        Log.i("TAG","dataObject?.homeInfo "+ dataObject?.homeInfo?.enName)
+
+        holder.home_team_name.text= dataObject?.homeInfo?.enName
+
+        holder.away_team_name.text=dataObject?.awayInfo?.enName
+
+        Glide.with(context).load(dataObject?.homeInfo?.logo).into(holder.home_image)
+        Glide.with(context).load(dataObject?.awayInfo?.logo).into(holder.away_image)
 
 
 //        if (position==dataList.size-1&&loadMore)
@@ -112,16 +91,7 @@ class MatchesAdapter (var context: Context, var dataList: MatchesRoot, var commu
 
 
     override fun getItemCount(): Int {
-        return dataList.hotMatches.size
-    }
-
-
-    enum class CategoryFilterType{
-        ALL,
-        LIVE,
-        SOON,
-        FT,
-        OTHER
+        return dataList.hotMatches?.size ?: 0
     }
 
     override fun getFilter(): Filter {

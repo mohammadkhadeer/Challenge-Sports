@@ -22,7 +22,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/brand_color_dark"
+            android:background="@color/main_adapter_background_color_comp1"
             >
             <ImageView
                 android:id="@+id/image_view_news"

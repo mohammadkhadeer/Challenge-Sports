@@ -10,11 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import score.pro.R
-import com.challenge.sports.model.data.homepage.event.formatted.EventKind
-import com.challenge.sports.model.data.homepage.event.formatted.FormattedEventG_S_F
 import com.challenge.sports.utils.Formatters
 
-class EventsAdapter(var context: Context, var data: List<FormattedEventG_S_F>) :
+class EventsAdapter(var context: Context) :
     RecyclerView.Adapter<EventsAdapter.EventsAdapterViewHolder>() {
     inner class EventsAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var headingView = itemView.findViewById<View>(R.id.heading_view)
@@ -37,86 +35,11 @@ class EventsAdapter(var context: Context, var data: List<FormattedEventG_S_F>) :
     }
 
     override fun onBindViewHolder(holder: EventsAdapterViewHolder, position: Int) {
-        val element = data[position].eventDetail
 
-        when (data[position].eventType) {
-            EventKind.GOAL -> {
-                if (element.isHome) {
-                    holder.homeView.visibility = VISIBLE
-                    Glide.with(context)
-                        .load(R.drawable.ic_goal)
-                        .into(holder.iconHome)
-                    holder.textHome.text = Formatters.returnKind(element.kind.toString(),context)+": "+element.nameEn
-                    holder.timeHome.text = element.time
-                } else {
-                    holder.awayView.visibility = VISIBLE
-                    Glide.with(context)
-                        .load(R.drawable.ic_goal)
-                        .into(holder.iconAway)
-                    holder.textAway.text = Formatters.returnKind(element.kind.toString(),context)+": "+element.nameEn
-                    holder.timeAway.text = element.time
-                }
-            }
-            EventKind.GOAL_HEADING -> {
-                holder.headingView.visibility= VISIBLE
-                Glide.with(context)
-                    .load(R.drawable.ic_goal_heading)
-                    .into(holder.iconHeading)
-                holder.textHeading.text=context.getString(R.string.goals_and_assists)
-            }
-            EventKind.FOUL -> {
-                if (element.isHome) {
-                    holder.homeView.visibility = VISIBLE
-                    Glide.with(context)
-                        .load(R.drawable.ic_foul)
-                        .into(holder.iconHome)
-                    holder.textHome.text = Formatters.returnKind(element.kind.toString(),context)+" : "+element.nameEn
-                    holder.timeHome.text = element.time
-                } else {
-                    holder.awayView.visibility = VISIBLE
-                    Glide.with(context)
-                        .load(R.drawable.ic_foul)
-                        .into(holder.iconAway)
-                    holder.textAway.text = Formatters.returnKind(element.kind.toString(),context)+" : "+element.nameEn
-                    holder.timeAway.text = element.time
-                }
-            }
-            EventKind.FOUL_HEADING -> {
-                holder.headingView.visibility= VISIBLE
-                Glide.with(context)
-                    .load(R.drawable.ic_foul)
-                    .into(holder.iconHeading)
-                holder.textHeading.text=context.getString(R.string.fouls)
-            }
-            EventKind.SUBSTITUTION_HEADING -> {
-                holder.headingView.visibility= VISIBLE
-                Glide.with(context)
-                    .load(R.drawable.ic_subs)
-                    .into(holder.iconHeading)
-                holder.textHeading.text=context.getString(R.string.subs)
-            }
-            EventKind.SUBSTITUTION -> {
-                if (element.isHome) {
-                    holder.homeView.visibility = VISIBLE
-                    Glide.with(context)
-                        .load(R.drawable.ic_subs)
-                        .into(holder.iconHome)
-                    holder.textHome.text = element.nameEn
-                    holder.timeHome.text = element.time
-                } else {
-                    holder.awayView.visibility = VISIBLE
-                    Glide.with(context)
-                        .load(R.drawable.ic_subs)
-                        .into(holder.iconAway)
-                    holder.textAway.text = element.nameEn
-                    holder.timeAway.text = element.time
-                }
-            }
-        }
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return 4
     }
 
 }

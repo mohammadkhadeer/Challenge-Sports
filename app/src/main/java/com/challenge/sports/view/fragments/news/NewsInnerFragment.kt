@@ -83,8 +83,8 @@ class NewsInnerFragment : Fragment() {
 
         val viewModel2=ViewModelProvider(requireActivity().viewModelStore,ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))).get(MainViewModel::class.java)
 
-        viewModel.makeNewsCallHorizontal("1",SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.CHINESE,requireContext()))
-        viewModel2.makeNewsCall("2",SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.CHINESE,requireContext()))
+        viewModel.makeNewsCallHorizontal("1",SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.ENGLISH,requireContext()))
+        viewModel2.makeNewsCall("2",SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.ENGLISH,requireContext()))
 
         val data=viewModel.newsLiveData.value
         val data2=viewModel2.newsLiveData2.value

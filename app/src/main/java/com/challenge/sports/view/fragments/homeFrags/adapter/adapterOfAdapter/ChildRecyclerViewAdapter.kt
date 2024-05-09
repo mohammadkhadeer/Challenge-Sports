@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.homepage.leagueInfo.any.ScoreItem
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
 
-class ChildRecyclerViewAdapter(var context: Context,var scoreItems: List<ScoreItem>) : RecyclerView.Adapter<ChildRecyclerViewAdapter.ChildRecyclerViewAdapterViewHolder>() {
+class ChildRecyclerViewAdapter(var context: Context) : RecyclerView.Adapter<ChildRecyclerViewAdapter.ChildRecyclerViewAdapterViewHolder>() {
     inner class ChildRecyclerViewAdapterViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         var ranking_tv=itemView.findViewById<TextView>(R.id.rank_text)
         var teamName=itemView.findViewById<TextView>(R.id.team_name)
@@ -32,28 +31,11 @@ class ChildRecyclerViewAdapter(var context: Context,var scoreItems: List<ScoreIt
     }
 
     override fun onBindViewHolder(holder: ChildRecyclerViewAdapterViewHolder, position: Int) {
-        val data=scoreItems[position]
-        holder.ranking_tv.text=data.rank
 
-        holder.teamName.text= when(GeneralTools.getLocale(context)){
-            SharedPreference.CHINESE->{
-                data.teamNameChs
-            }
-            else->{
-                data.teamNameEn
-            }
-        }
-        holder.matchPlayed.text=data.totalCount
-        holder.won.text=data.winCount
-        holder.draw.text=data.drawCount
-        holder.loss.text=data.loseCount
-        holder.gf.text=data.getScore
-        holder.ga.text=data.loseScore
-        holder.pts.text=data.integral
     }
 
     override fun getItemCount(): Int {
-            return scoreItems.size
+            return 4
          }
 
 }

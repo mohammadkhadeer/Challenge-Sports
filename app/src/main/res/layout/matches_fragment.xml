@@ -22,8 +22,7 @@
         android:id="@+id/main_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_130sdp"
-        android:paddingHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:nestedScrollingEnabled="false"
         tools:ignore="MissingConstraints"
         />

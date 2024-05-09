@@ -17,20 +17,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import score.pro.R
-import com.challenge.sports.model.data.homepage.new2.Match
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
- class MainAdapter(var context:Context,var dataList:ArrayList<Match>,var communicator: MainAdapterCommunicator)
+ class MainAdapter(var context:Context,var communicator: MainAdapterCommunicator)
      : RecyclerView.Adapter<MainAdapter.MainPageAdapterViewHolder>(),Filterable {
      var loadMore: Boolean=true
      var isMaxLoaded: Boolean=false
-     var originalList=dataList
-     var liveMatches= ArrayList<Match>()
-     var soonMatches= ArrayList<Match>()
-     var ftMatches= ArrayList<Match>()
+
      var categoryFilterType:CategoryFilterType=CategoryFilterType.ALL
      private var filterString=""
 
@@ -48,166 +44,34 @@ import kotlin.collections.ArrayList
 
      override fun onBindViewHolder(holder: MainPageAdapterViewHolder, position: Int) {
 
-         val dataObject=dataList[position]
-
-         if (!dataObject.havOdds){
-             holder.index_btn.visibility= GONE
-             holder.odds_container.visibility= GONE
-         }else{
-             holder.index_btn.visibility= VISIBLE
-         }
-         if (!dataObject.havBriefing){
-             holder.brief_bt.visibility= GONE
-         }else{
-             holder.brief_bt.visibility= VISIBLE
-         }
-
-         holder.leagueNameShort.text=dataObject.leagueName
-         holder.leagueNameShort.text=dataObject.leagueNameShort
-
-         holder.homeNameTv.text=dataObject.homeName
-         holder.awayNameTv.text=dataObject.awayName
 
 
 
-         if (dataObject.homeLogo.isEmpty())
-             Glide.with(context).load(R.drawable.football).into(holder.team_1_logo)
-         else
-             Glide.with(context).load(dataObject.homeLogo).into(holder.team_1_logo)
-
-         if (dataObject.awayLogo.isEmpty())
-             Glide.with(context).load(R.drawable.football).into(holder.team_2_logo)
-         else
-             Glide.with(context).load(dataObject.awayLogo).into(holder.team_2_logo)
 
 
 
-         if (dataObject.state!=0){
-             holder.score_team1.text=dataObject.homeScore.toString()
-             holder.score_team2.text=dataObject.awayScore.toString()
-
-             holder.yallow_card_Home.text=dataObject.homeYellow.toString()
-             holder.red_card_Home.text=dataObject.awayRed.toString()
-
-             holder.yallow_card_Away.text=dataObject.awayYellow.toString()
-             holder.red_card_Away.text=dataObject.awayRed.toString()
 
 
-         }else{
-             holder.cards_con.visibility=View.GONE
-         }
 
 
-         if (!dataObject.startTime.isNullOrEmpty()){
-             // "matchTime": "2022/8/25 16:30:00",
-             try {
-                 holder.stateNdate.text= returnStateDate(dataObject)
-             }
-             catch (e:Exception){
-                 Log.d("EXCEPTION!!!",e.toString())
 
-             }
-         }
-         else{
-             val sdf=SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-             val sdf2=SimpleDateFormat("EEE, dd MMM")
-             holder.stateNdate.text= sdf2.format(sdf.parse(dataObject.matchTime).time)
-         }
-         holder.matchTimeTv.text=return24HrsOnly(returnTime(dataObject))
 
-         if (dataObject.havOdds){
-             try {
-                 holder.indexC1R1.text= dataObject.odds.handicap!![6].toString()
-                 holder.indexC2R1.text=dataObject.odds.handicap!![5].toString()
-                 holder.indexC3R1.text=dataObject.odds.handicap!![7].toString()
 
-                 holder.indexC1R2.text= dataObject.odds.overUnder!![6].toString()
-                 holder.indexC2R2.text=dataObject.odds.overUnder!![5].toString()
-                 holder.indexC3R2.text=dataObject.odds.overUnder!![7].toString()
-
-             }
-             catch (e:Exception){
-
-             }
-         }else{
-//             //I put space to keep card high same high for all cards
-//             holder.indexC1R1.text="4"
-//             holder.indexC1R2.text="3"
-         }
 
 
          //holder.redCard.text=context.getString(R.string.red_card)+" "+dataObject.homeRed+":"+dataObject.awayRed
          //holder.yellowCard.text=context.getString(R.string.yellow_card)+" "+dataObject.homeYellow+":"+dataObject.awayYellow
 //         val c_ht="C= "+dataObject.homeCorner.toString()+":"+dataObject.awayCorner.toString()+" HT= "+dataObject.homeHalfScore.toString()+":"+dataObject.awayHalfScore.toString()
 
-         val c_ht="HT= "+dataObject.homeHalfScore.toString()+":"+dataObject.awayHalfScore.toString()
-         holder.cRatio.text="C= "+dataObject.homeCorner.toString()+":"+dataObject.awayCorner.toString()
-         holder.cornerRatio.text=c_ht
-         if (position==dataList.size-1&&loadMore)
-             communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,position,0)
+
+
+
+
      }
 
 
      init {
-         sortMatchesOnCategory()
-     }
 
-
-     private fun sortMatchesOnCategory(){
-         soonMatches.clear()
-         liveMatches.clear()
-         ftMatches.clear()
-         for (match in originalList){
-             when(match.state){
-                 0->{
-                     soonMatches.add(match)
-                     //soon
-                 }
-                 1->{
-                     liveMatches.add(match)
-                    // "FH "
-                 }
-                 2->{
-                     liveMatches.add(match)
-                   //  "HT "
-                 }
-                 3->{
-                     liveMatches.add(match)
-                    // "SH "
-                 }
-                 4-> {
-                     liveMatches.add(match)
-                     //"OT "
-                 }
-                 5-> {
-                     liveMatches.add(match)
-                    // "PT "
-                 }
-                 -1-> {
-                     ftMatches.add(match)
-                   //  "FT"
-                 }
-                 -10-> {
-                   //  "CL"
-                 }
-                 -11-> {
-                  //   "TBD"
-                 }
-                 -12-> {
-                  //   "CIH"
-                 }
-                 -13-> {
-                  //   "INT"
-                 }
-                 -14-> {
-                 //    "DEL"
-                 }
-                 else -> {
-                     soonMatches.add(match)
-                    // "Soon"
-                 }
-             }
-         }
      }
 
 
@@ -301,22 +165,6 @@ import kotlin.collections.ArrayList
     }
 
 
-    private fun returnTime(dataObject: Match):String{
-        val sdf = SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-        val time=returnGMTToCurrentTimezone(returnGMTTimeInMs(dataObject.matchTime))
-        return sdf.format(time)
-
-
-    }
-
-    private fun returnMinutes(dataObject: Match):String
-    {
-        val startTimeMs=returnGMTTimeInMs(dataObject.startTime)
-        val matchTimeMs=returnGMTTimeInMs(dataObject.matchTime)
-        var minutesElapsed=returnTimeInGmtCurrentLocale()-startTimeMs
-        minutesElapsed /= 60000
-       return minutesElapsed.toString()
-    }
 
     private fun returnTimeInGmtCurrentLocale():Long{
         val timeZone= TimeZone.getDefault().getDisplayName(false,TimeZone.SHORT)
@@ -353,171 +201,29 @@ import kotlin.collections.ArrayList
         return sdf.parse(time).time - GMT_OFFSET_IN_MS
     }
 
-    private fun returnStateDate(dataObject:Match):String{
-        val sdf=SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-        val sdf2=SimpleDateFormat("EEE, dd MMM")
-       return when(dataObject.state){
-            0->{
-               sdf2.format(sdf.parse(dataObject.matchTime).time)
-            }
-            1->{
-                "FH "+returnMinutes(dataObject)+" \'"
-            }
-            2->{
-                "HT "+returnMinutes(dataObject)+" \'"
-            }
-            3->{
-                "SH "+returnMinutes(dataObject)+" \'"
-            }
-            4-> {
-                "OT "+returnMinutes(dataObject)+" \'"
-            }
-            5-> {
-                "PT "+returnMinutes(dataObject)+" \'"
-            }
-            -1-> {
-                "FT"
-            }
-            -10-> {
-                "CL"
-            }
-            -11-> {
-                "TBD"
-            }
-            -12-> {
-                "CIH"
-            }
-            -13-> {
-                "INT"
-            }
-            -14-> {
-                "DEL"
-            }
-            else -> {
-                "Soon"
-            }
-        }
-    }
 
     override fun getItemCount(): Int {
-        return dataList.size
+        return 5
     }
 
-     override fun getFilter(): Filter {
 
-         return object : Filter(){
-             override fun performFiltering(charset: CharSequence?): FilterResults {
-                 val filterResults=FilterResults()
-                 val filterList=ArrayList<Match>()
-                 val baseList=returnFilterData()
-                 if (charset.isNullOrEmpty()){
-                     filterResults.apply {
-                         count=baseList.size
-                         values=baseList
-                     }
-                 }else{
-                     for (match in baseList){
-                         if (match.homeName.startsWith(charset,true)
-                             ||match.awayName.startsWith(charset,true)
-                             ||match.leagueName.startsWith(charset,true)
-                             ||match.leagueNameShort.startsWith(charset,true))
-                         {
-                             filterList.add(match)
-                         }
-                     }
-
-                     filterResults.apply {
-                         count=filterList.size
-                         values=filterList
-                     }
-                 }
-                 return filterResults
-             }
-
-             @Suppress("UNCHECKED_CAST")
-             @SuppressLint("NotifyDataSetChanged")
-             override fun publishResults(p0: CharSequence?, results: FilterResults?) {
-                 try {
-                     dataList=results?.values as ArrayList<Match>
-                     filterString=p0.toString()
-                     if (dataList.size==0&&!isMaxLoaded){
-                         if (loadMore){
-                             communicator.onMessageFromAdapter(MainAdapterMessages.LOAD_MORE,0,0)
-                         }
-                     }
-                     notifyDataSetChanged()
-                 }catch (e:Exception){
-                     dataList=originalList
-                     notifyDataSetChanged()
-                 }
-             }
-         }
-
-     }
-
-     fun updateList(list:List<Match>) {
-         originalList.addAll(list)
-         sortMatchesOnCategory()
-         updateFilter()
-     }
-     fun setNewList(list:List<Match>,loadMore:Boolean){
-         this.loadMore=loadMore
-         originalList.clear()
-         originalList.addAll(list)
-         sortMatchesOnCategory()
-         updateFilter()
-     }
 
      fun setFilter(filter:CategoryFilterType){
          categoryFilterType=filter
-         updateFilter()
-     }
-     fun updateFilter(){
-         when(categoryFilterType){
-             CategoryFilterType.ALL -> {
-                 dataList=originalList
-             }
-             CategoryFilterType.LIVE -> {
-                 dataList=liveMatches
-             }
-             CategoryFilterType.SOON -> {
-                 dataList=soonMatches
-             }
-             CategoryFilterType.FT -> {
-                 dataList=ftMatches
-             }
-             CategoryFilterType.OTHER -> {
 
-             }
-         }
-         filter.filter(filterString)
-         notifyDataSetChanged()
      }
-     fun returnFilterData():ArrayList<Match>{
-         return when(categoryFilterType){
-             CategoryFilterType.ALL -> {
-                 originalList
-             }
-             CategoryFilterType.LIVE -> {
-                 liveMatches
-             }
-             CategoryFilterType.SOON -> {
-                 soonMatches
-             }
-             CategoryFilterType.FT -> {
-                 ftMatches
-             }
-             CategoryFilterType.OTHER -> {
-                 originalList
-             }
-         }
-     }
+
+
      enum class CategoryFilterType{
          ALL,
          LIVE,
          SOON,
          FT,
          OTHER
+     }
+
+     override fun getFilter(): Filter {
+         TODO("Not yet implemented")
      }
 
  }

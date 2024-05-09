@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.homepage.analysis.analysisOdds.FormattedAnalysisOdds
 
-class SortedOddsAdapter(var context:Context,var oddsList:List<FormattedAnalysisOdds>):RecyclerView.Adapter<SortedOddsAdapter.SortedOddsAdapterViewHolder>() {
+class SortedOddsAdapter(var context:Context):RecyclerView.Adapter<SortedOddsAdapter.SortedOddsAdapterViewHolder>() {
     inner class SortedOddsAdapterViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         var typeOddsTv=itemView.findViewById<TextView>(R.id.type_odd_tv)
         var roundTv=itemView.findViewById<TextView>(R.id.round_tv)
@@ -27,18 +26,11 @@ class SortedOddsAdapter(var context:Context,var oddsList:List<FormattedAnalysisO
     }
 
     override fun onBindViewHolder(holder: SortedOddsAdapterViewHolder, position: Int) {
-        holder.typeOddsTv.text=oddsList[position].nameType
-        holder.roundTv.text=oddsList[position].round
-        holder.w_tv.text=oddsList[position].win
-        holder.d_tv.text=oddsList[position].draw
-        holder.l_tv.text=oddsList[position].loss
-        holder.percent_tv.text=oddsList[position].percent
-        holder.over_tv.text=oddsList[position].over
-        holder.under_tv.text=oddsList[position].under
+
     }
 
     override fun getItemCount(): Int {
-        return oddsList.size
+        return 9
     }
 
 }

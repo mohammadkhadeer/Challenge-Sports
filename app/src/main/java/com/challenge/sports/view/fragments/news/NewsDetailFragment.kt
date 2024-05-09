@@ -51,45 +51,6 @@ class NewsDetailFragment : Fragment() {
             ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))
         ).get(MainViewModel::class.java)
 
-        viewModel.makeNewsPostCall(postID!!,object : OnPostDetailResponse<NewsPostBase>{
-            override fun onSuccess(responseBody: NewsPostBase) {
-//                (activity as BaseActivity?)?.makeBackButtonVISIBLE()
-
-                Glide.with(requireContext())
-                    .load(responseBody.path)
-                    .into(view.findViewById(R.id.cover))
-
-                view.findViewById<TextView>(R.id.heading).text=responseBody.title
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    view.findViewById<TextView>(R.id.body).text=Html.fromHtml(responseBody.content,Html.FROM_HTML_MODE_COMPACT)
-                }
-                val rv= view.findViewById<RecyclerView>(R.id.tags_rv)
-                val keywords= responseBody.keywords.split(",")
-
-                rv.adapter=object : RecyclerView.Adapter<viewHolder>() {
-                    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-                        return viewHolder(LayoutInflater.from(context).inflate(R.layout.tags_item,parent,false))
-                    }
-
-                    override fun onBindViewHolder(holder: viewHolder, position: Int) {
-                        holder.tag.text=keywords[position]
-                    }
-
-
-                    override fun getItemCount(): Int {
-                        return keywords.size
-                    }
-                }
-                rv.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL)
-            }
-            override fun onFailure(message: String) {
-
-            }
-
-            override fun onLoading(message: String) {
-
-            }
-        },SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.CHINESE,requireContext()))
 
     }
     class viewHolder(itemview: View): RecyclerView.ViewHolder(itemview){

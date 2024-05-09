@@ -8,11 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.standings.player.List
+
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
 
-class PlayerStandingAdapter(var context:Context,var playerList:ArrayList<List>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PlayerStandingAdapter(var context:Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class PlayerStandingAdapterViewHolder(itemView:View) : RecyclerView.ViewHolder(itemView){
         var ranking_tv=itemView.findViewById<TextView>(R.id.rank_text)
         var teamNameTv=itemView.findViewById<TextView>(R.id.team_name)
@@ -44,36 +44,17 @@ class PlayerStandingAdapter(var context:Context,var playerList:ArrayList<List>) 
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val myholder=holder as PlayerStandingAdapterViewHolder
-        val player=playerList[position]
+
         val rank=(position+1).toString()
         var playerName=""
-        val teamName=when(GeneralTools.getLocale(context)){
-            SharedPreference.ENGLISH->{
-                playerName=player.playerNameEn
-                player.teamNameEn
-            }
-            SharedPreference.CHINESE->{
-                playerName=player.playerNameChs
-                player.teamNameChs
-            }
-            else->{
-                playerName=player.playerNameEn
-                player.teamNameEn
-            }
-        }
+
+
         myholder.ranking_tv.text= rank
-        myholder.teamNameTv.text=teamName
-        myholder.playerNameTv.text=playerName
-        myholder.goalsTv.text=player.goals.toString()
-        myholder.goalsHomeTv.text=player.homeGoals.toString()
-        myholder.goalsAwayTv.text=player.awayGoals.toString()
-        myholder.home_penalties.text=player.homePenalty.toString()
-        myholder.away_penalties.text=player.awayPenalty.toString()
-        myholder.matches_played.text=player.matchNum.toString()
-        myholder.substituted.text=player.subNum.toString()
+
+
     }
 
     override fun getItemCount(): Int {
-        return playerList.size
+        return 8
     }
 }

@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.basketball.analysis.AwayLastMatche
-import com.challenge.sports.model.data.basketball.analysis.HeadToHead
-import com.challenge.sports.model.data.basketball.analysis.HomeLastMatche
+
 
 class MatchesPopulatingAdapterBasketball(var context: Context, var data: List<Any>) :
 RecyclerView.Adapter<MatchesPopulatingAdapterBasketball.MatchesPopulatingAdapterBasketballViewHolder>() {
@@ -36,44 +34,7 @@ RecyclerView.Adapter<MatchesPopulatingAdapterBasketball.MatchesPopulatingAdapter
     }
 
     override fun onBindViewHolder(holder: MatchesPopulatingAdapterBasketballViewHolder, position: Int) {
-        when(data[position]){
-            is HeadToHead->{
-                val data=data[position] as HeadToHead
-                holder.apply {
-                    dateTime.text=data.matchTime
-                    leagueNameTv.text=data.leagueEn
-                    total_points_half.text=context.getString(R.string.total_points)+": "+data.total+" "+context.getString(R.string.half)+": "+data.homeHalfScore+":"+data.awayHalfScore
-                    scoreIndicator.text=data.homeScore.toString()+":"+data.awayScore.toString()
-                    homeTeam.text=data.homeTeamEn
-                    awayTeam.text=data.awayTeamEn
-                }
-            }
-            is HomeLastMatche->{
-                val data=data[position] as HomeLastMatche
-                holder.apply {
-                    dateTime.text=data.matchTime
-                    leagueNameTv.text=data.leagueEn
-                    total_points_half.text=context.getString(R.string.total_points)+": "+data.total+" "+context.getString(R.string.half)+": "+data.homeHalfScore+":"+data.awayHalfScore
-                    scoreIndicator.text=data.homeScore.toString()+":"+data.awayScore.toString()
-                    homeTeam.text=data.homeTeamEn
-                    awayTeam.text=data.awayTeamEn
-                }
-            }
-            is AwayLastMatche->{
-                val data=data[position] as AwayLastMatche
-                holder.apply {
-                    dateTime.text=data.matchTime
-                    leagueNameTv.text=data.leagueEn
-                    total_points_half.text=context.getString(R.string.total_points)+": "+data.total+" "+context.getString(R.string.half)+": "+data.homeHalfScore+":"+data.awayHalfScore
-                    scoreIndicator.text=data.homeScore.toString()+":"+data.awayScore.toString()
-                    homeTeam.text=data.homeTeamEn
-                    awayTeam.text=data.awayTeamEn
-                }
-            }
-            else->{
 
-            }
-        }
     }
 
 

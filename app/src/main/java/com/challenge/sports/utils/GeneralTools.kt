@@ -17,7 +17,6 @@ import android.os.Build
 import android.os.Parcelable
 import android.view.View
 import android.widget.Toast
-import com.challenge.sports.model.data.homepage.new2.Match
 import com.challenge.sports.model.data.matchStatus.MatchStatusJ
 import com.challenge.sports.sharedPreferences.FootballOrBasketball.cleanFootballOrBasketball
 import com.challenge.sports.sharedPreferences.OpenWebView
@@ -94,39 +93,7 @@ object GeneralTools {
 //            }
 //    }
 
-    fun saveToHighlightedMatches(match:Match,context:Context){
-        val currentMatchesJson=SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.SAVED_MATCHES_TOKEN,null,context)
-        val type=object : TypeToken<ArrayList<Match>>(){}.type
-        var list=Gson().fromJson<ArrayList<Match>>(currentMatchesJson,type)
-        if (list.isNullOrEmpty())
-         list=ArrayList()
-        for (item in list){
-            if (item.matchId==match.matchId){
-                return
-            }
-        }
-        list.add(match)
-        SharedPreference.getInstance().saveStringToPreferences(SharedPreference.SAVED_MATCHES_TOKEN,Gson().toJson(list),context)
-    }
-    fun getHighlightedMatches(context: Context):ArrayList<Match>?{
-        val currentMatchesJson=SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.SAVED_MATCHES_TOKEN,null,context)
-        val type=object : TypeToken<ArrayList<Match>>(){}.type
-        val list=Gson().fromJson<ArrayList<Match>>(currentMatchesJson,type)
-        return list?:null
-    }
-    fun removeHighlightedMatches(match: Match,context: Context){
-        val currentMatchesJson=SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.SAVED_MATCHES_TOKEN,null,context)
-        val type=object : TypeToken<ArrayList<Match>>(){}.type
-        var list=Gson().fromJson<ArrayList<Match>>(currentMatchesJson,type)
-        if (list.isEmpty()||list==null)
-            list=ArrayList()
-        for (item in list){
-            if (item.matchId==match.matchId){
-                list.remove(item)
-            }
-        }
-        SharedPreference.getInstance().saveStringToPreferences(SharedPreference.SAVED_MATCHES_TOKEN,Gson().toJson(list),context)
-    }
+
 
     @SuppressLint("SimpleDateFormat")
     fun getCalculatedDate(dateFormat: String?, days: Int): String{
@@ -164,14 +131,6 @@ object GeneralTools {
         return sdf.format(time)
     }
 
-      fun returnMinutes(dataObject: Match):String
-    {
-        val startTimeMs=returnGMTTimeInMs(dataObject.startTime)
-        val matchTimeMs=returnGMTTimeInMs(dataObject.matchTime)
-        var minutesElapsed=returnTimeInGmtCurrentLocale()-startTimeMs
-        minutesElapsed /= 60000
-        return minutesElapsed.toString()
-    }
 
       fun returnTimeInGmtCurrentLocale():Long{
         val timeZone= TimeZone.getDefault().getDisplayName(false,TimeZone.SHORT)
@@ -208,51 +167,6 @@ object GeneralTools {
         return sdf.parse(time).time - MainAdapter.GMT_OFFSET_IN_MS
     }
 
-      fun returnStateDate(dataObject:Match):String{
-        val sdf=SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-        val sdf2=SimpleDateFormat("EEE, dd MMM")
-        return when(dataObject.state){
-            0->{
-                sdf2.format(sdf.parse(dataObject.matchTime).time)
-            }
-            1->{
-                "FH "+returnMinutes(dataObject)+" \'"
-            }
-            2->{
-                "HT "+returnMinutes(dataObject)+" \'"
-            }
-            3->{
-                "SH "+returnMinutes(dataObject)+" \'"
-            }
-            4-> {
-                "OT "+returnMinutes(dataObject)+" \'"
-            }
-            5-> {
-                "PT "+returnMinutes(dataObject)+" \'"
-            }
-            -1-> {
-                "FT"
-            }
-            -10-> {
-                "CL"
-            }
-            -11-> {
-                "TBD"
-            }
-            -12-> {
-                "CIH"
-            }
-            -13-> {
-                "INT"
-            }
-            -14-> {
-                "DEL"
-            }
-            else -> {
-                "Soon"
-            }
-        }
-    }
 
     fun getLocale(context: Context): String {
        return SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.CHINESE,context)

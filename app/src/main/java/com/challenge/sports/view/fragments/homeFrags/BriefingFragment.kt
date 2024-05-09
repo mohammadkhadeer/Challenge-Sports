@@ -51,61 +51,12 @@ class BriefingFragment : Fragment() {
         val vm=SpewViewModel.giveMeViewModel(requireActivity())
        // val briefTv=view.findViewById<TextView>(R.id.briefing_container_tv)
         if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE){
-            vm.basketballBriefingLiveData.observe(requireActivity()){
-                when(it.status){
-                    Status.SUCCESS -> {
-                        view.findViewById<View>(R.id.baskteball_briefing).visibility=View.VISIBLE
-                        val briefinBody=view.findViewById<TextView>(R.id.briefing_body)
-                        val descriptionBody=view.findViewById<TextView>(R.id.description_body)
-                        val confidenceIndex=view.findViewById<TextView>(R.id.confidence_index_body)
-                        val matchTrackRecord=view.findViewById<TextView>(R.id.match_track_body)
-                        it.data?.apply {
-                            briefinBody.text=analyseEn
-                            descriptionBody.text=explainEn
-                            confidenceIndex.text=confidenceEn
-                            matchTrackRecord.text=headToHeadEn
-                        }
-                    }
-                    Status.ERROR -> {
-                        println(it.message)
-                    }
-                    Status.LOADING -> {
-                        view.findViewById<View>(R.id.baskteball_briefing).visibility=View.GONE
-                    }
-                }
-            }
-            vm.makeBasketBallBriefingCall(matchId!!)
+
+
         }else{
             view.findViewById<View>(R.id.baskteball_briefing).visibility=View.GONE
-            vm.briefingLiveData.observe(requireActivity()){
-                when(it.status){
-                    Status.SUCCESS ->{
 
-                        //     briefTv.visibility=View.VISIBLE
-                        val data = it.data
-                        val webview = view.findViewById<WebView>(R.id.briefing_container_tv)
-                        webview.visibility=View.VISIBLE
-                        webview.webViewClient = WebViewClient()
-                        webview.settings.javaScriptCanOpenWindowsAutomatically = true
-                        webview.settings.pluginState = WebSettings.PluginState.ON
-                        webview.settings.mediaPlaybackRequiresUserGesture = false
-                        webview.webChromeClient = WebChromeClient()
-                        webview.loadDataWithBaseURL(null, data!!, "text/html", "UTF-8", null)
-                        /*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                briefTv.text= Html.fromHtml(it.data,Html.FROM_HTML_MODE_COMPACT)
-                            }else{
-                                briefTv.text= Html.fromHtml(it.data)
-                            }*/
-                    }
-                    Status.ERROR ->{
 
-                    }
-                    Status.LOADING -> {
-                        view.findViewById<WebView>(R.id.briefing_container_tv).visibility=View.GONE
-                    }
-                }
-            }
-            vm.getBriefing(matchId!!)
         }
 
 

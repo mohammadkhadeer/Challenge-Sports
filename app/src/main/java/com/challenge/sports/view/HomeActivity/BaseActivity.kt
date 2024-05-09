@@ -163,7 +163,7 @@ class BaseActivity : AppCompatActivity()
         }.attach()
 
         //to detect tab bar will start from where
-        tabLayout.getTabAt(0)?.select();
+        tabLayout.getTabAt(1)?.select();
     }
 
     private  fun config(){

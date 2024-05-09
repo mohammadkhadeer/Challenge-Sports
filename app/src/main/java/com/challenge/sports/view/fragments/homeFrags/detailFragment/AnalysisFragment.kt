@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.homepage.analysis.analysisOdds.FormattedAnalysisOdds
 import com.challenge.sports.utils.SpewViewModel
 import com.challenge.sports.utils.Status
 import com.challenge.sports.view.fragments.homeFrags.adapter.MainAdapterCommunicator
@@ -53,124 +52,14 @@ class AnalysisFragment : Fragment() {
 
         val vm=SpewViewModel.giveMeViewModel(requireActivity())
         if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE){
-            vm.analysisLiveDataBasketball.observe(requireActivity()){
-                when(it.status){
-                    Status.SUCCESS -> {
-                        try {
-                            headToHeadRv.visibility=View.VISIBLE
-                            awayRecentRv.visibility=View.VISIBLE
-                            homeRecentRv.visibility=View.VISIBLE
-
-                            headToHeadRv.adapter=MatchesPopulatingAdapterBasketball(requireContext(),it.data!!.list[0].headToHead)
-                            awayRecentRv.adapter=MatchesPopulatingAdapterBasketball(requireContext(),it.data.list[0].awayLastMatches)
-                            homeRecentRv.adapter=MatchesPopulatingAdapterBasketball(requireContext(),it.data.list[0].homeLastMatches)
-
-                            headToHeadRv.layoutManager=LinearLayoutManager(context)
-                            awayRecentRv.layoutManager=LinearLayoutManager(context)
-                            homeRecentRv.layoutManager=LinearLayoutManager(context)
-                        }catch (e:Exception){
-                            println(e)
-                        }
-
-
-                    }
-                    Status.ERROR -> {
-
-                    }
-                    Status.LOADING ->{
-                        headToHeadRv.visibility=View.GONE
-                        awayRecentRv.visibility=View.GONE
-                        homeRecentRv.visibility=View.GONE
-                        homeOddsRv.visibility=View.GONE
-                        awayOddsRv.visibility=View.GONE
-
-                    }
-                }
-            }
-
-            vm.makeAnalysisCallBasketball(matchId!!)
 
         }else{
-            vm.analysisLiveData.observe(requireActivity()){
-                when(it.status){
-                    Status.SUCCESS -> {
-                        try {
-                            headToHeadRv.visibility=View.VISIBLE
-                            awayRecentRv.visibility=View.VISIBLE
-                            homeRecentRv.visibility=View.VISIBLE
-                            homeOddsRv.visibility=View.VISIBLE
-                            awayOddsRv.visibility=View.VISIBLE
 
-                            headToHeadRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data?.list?.get(0)?.headToHead!!)
-                            headToHeadRv.layoutManager=LinearLayoutManager(requireContext())
-
-                            homeRecentRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data.list[0].homeLastMatches)
-                            homeRecentRv.layoutManager=LinearLayoutManager(requireContext())
-
-                            awayRecentRv.adapter=MatchesPopulatingAdapter(requireContext(), it.data.list[0].awayLastMatches)
-                            awayRecentRv.layoutManager=LinearLayoutManager(requireContext())
-
-                            homeOddsRv.adapter=SortedOddsAdapter(requireContext(),returnFormattedOddsList(it.data.list[0].homeOdds))
-                            homeOddsRv.layoutManager=LinearLayoutManager(requireContext())
-
-                            awayOddsRv.adapter=SortedOddsAdapter(requireContext(),returnFormattedOddsList(it.data.list[0].awayOdds))
-                            awayOddsRv.layoutManager=LinearLayoutManager(requireContext())
-
-
-                        }catch (e:Exception){
-
-                        }
-
-                        //    vm.analysisLiveData.removeObservers(requireActivity())
-                    }
-                    Status.ERROR -> {
-                        //            vm.analysisLiveData.removeObservers(requireActivity())
-                    }
-                    Status.LOADING -> {
-                        headToHeadRv.visibility=View.GONE
-                        awayRecentRv.visibility=View.GONE
-                        homeRecentRv.visibility=View.GONE
-                        homeOddsRv.visibility=View.GONE
-                        awayOddsRv.visibility=View.GONE
-
-                    }
-                }
-            }
-            vm.makeAnalysisCall(matchId!!)
         }
 
     }
 
-    private fun returnFormattedOddsList(mixedOdds: List<List<String>>): List<FormattedAnalysisOdds> {
-       val list=ArrayList<FormattedAnalysisOdds>()
 
-        var odds=mixedOdds[0]
-        var os=odds[0].split("^")
-        list.add(FormattedAnalysisOdds(getString(R.string.total_fulltime),os[1],os[2],os[3],os[4],os[5],os[6]+"/"+os[7],os[8]+"/"+os[9]))
-
-        odds=mixedOdds[1]
-        os=odds[0].split("^")
-        list.add(FormattedAnalysisOdds(getString(R.string.home_fulltime),os[1],os[2],os[3],os[4],os[5],os[6]+"/"+os[7],os[8]+"/"+os[9]))
-
-        odds=mixedOdds[2]
-        os=odds[0].split("^")
-        list.add(FormattedAnalysisOdds(getString(R.string.away_fulltime),os[1],os[2],os[3],os[4],os[5],os[6]+"/"+os[7],os[8]+"/"+os[9]))
-
-        odds=mixedOdds[4]
-        os=odds[0].split("^")
-        list.add(FormattedAnalysisOdds(getString(R.string.total_halftime),os[1],os[2],os[3],os[4],os[5],os[6]+"/"+os[7],os[8]+"/"+os[9]))
-
-        odds=mixedOdds[5]
-        os=odds[0].split("^")
-        list.add(FormattedAnalysisOdds(getString(R.string.home_halftime),os[1],os[2],os[3],os[4],os[5],os[6]+"/"+os[7],os[8]+"/"+os[9]))
-
-        odds=mixedOdds[6]
-        os=odds[0].split("^")
-        list.add(FormattedAnalysisOdds(getString(R.string.away_halftime),os[1],os[2],os[3],os[4],os[5],os[6]+"/"+os[7],os[8]+"/"+os[9]))
-
-        return list
-
-    }
 
     companion object {
         @JvmStatic

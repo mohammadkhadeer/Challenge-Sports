@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import score.pro.R
-import com.challenge.sports.model.data.homepage.past.future.Match
 import com.challenge.sports.utils.GeneralTools
 import com.challenge.sports.utils.SharedPreference
 import com.challenge.sports.view.fragments.homeFrags.adapter.MainAdapterCommunicator
@@ -86,142 +85,12 @@ class PastFutureAdapter(var context: Context, var matches: List<Any>, var adapte
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (adapterType != MainAdapterCommunicator.BASKETBALL_TYPE) {
             val mHolder = holder as PastFutureAdapterFootball
-            mHolder.apply {
-                val match = matches[position] as Match
-                val sdf = SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-                val sdf2 = SimpleDateFormat("EEE, dd MMM")
-                var league=""
-                var homeTeamT=""
-                var awayTeamT=""
-                when(GeneralTools.getLocale(context)){
-                    SharedPreference.CHINESE->{
-                        league=match.leagueCnShort
-                        homeTeamT=match.homeChs
-                        awayTeamT=match.awayChs
-                    }
-                    SharedPreference.INDONESIAN->{
-                        league=match.leagueNameShortId
-                        homeTeamT=match.homeNameId
-                        awayTeamT=match.awayNameId
-                    }
-                    SharedPreference.VIETNAMESE->{
-                        league=match.leagueNameShortTh
-                        homeTeamT=match.homeNameVi
-                        awayTeamT=match.awayNameVi
-                    }
-                    SharedPreference.THAI->{
-                        league=match.leagueNameShortVi
-                        homeTeamT=match.homeNameTh
-                        awayTeamT=match.awayNameTh
-                    }
-                    else->{
-                        league=match.leagueEnShort
-                        homeTeamT=match.homeEn
-                        awayTeamT=match.awayEn
-                    }
-                }
 
-                time.text = GeneralTools.return24HrsOnly(GeneralTools.returnTime(match.matchTime))
-                date.text = sdf2.format(sdf.parse(match.matchTime).time)
-
-                leagueNameTv.text = league
-                ht_ratio.text =
-                    match.homeHalfScore.toString() + ":" + match.awayHalfScore.toString()
-                c_ratio.text = match.homeCorner.toString() + ":" + match.awayCorner.toString()
-
-                if (match.state!=0){
-                    holder.score_team1.text=match.homeScore.toString()
-                    holder.score_team2.text=match.awayScore.toString()
-
-                    holder.yallow_card_Home.text=match.homeYellow.toString()
-                    holder.red_card_Home.text=match.awayRed.toString()
-
-                    holder.yallow_card_Away.text=match.awayYellow.toString()
-                    holder.red_card_Away.text=match.awayRed.toString()
-
-                    if (match.homeLogo.isEmpty())
-                        Glide.with(context).load(R.drawable.football).into(holder.team_1_logo)
-                    else
-                        Glide.with(context).load(match.homeLogo).into(holder.team_1_logo)
-
-                    if (match.awayLogo.isEmpty())
-                        Glide.with(context).load(R.drawable.football).into(holder.team_2_logo)
-                    else
-                        Glide.with(context).load(match.awayLogo).into(holder.team_2_logo)
-
-                }else{
-                    holder.cards_con.visibility=View.GONE
-                }
-
-                homeTeam.text =homeTeamT
-                awayTeam.text = awayTeamT
-            }
         }
 
         else {
             val mHolder = holder as PastFutureAdapterBasketball
-            mHolder.apply {
-                val match =
-                    matches[position] as com.challenge.sports.model.data.basketball.homepage.past.future.Match
-                val sdf = SimpleDateFormat("yyyy/M/dd HH:mm:ss")
-                val sdf2 = SimpleDateFormat("EEE, dd MMM")
-                matchTimeTv.text =
-                    GeneralTools.return24HrsOnly(GeneralTools.returnTime(match.matchTime))
-                stateNdate.text = sdf2.format(sdf.parse(match.matchTime).time)
 
-                var league=""
-                var homeTeam=""
-                var awayTeam=""
-                when(GeneralTools.getLocale(context)){
-                    SharedPreference.CHINESE->{
-                        league=match.leagueChs
-                        homeTeam=match.homeTeamChs
-                        awayTeam=match.awayTeamChs
-                    }
-                    SharedPreference.INDONESIAN->{
-                        league=match.leagueNameId
-                        homeTeam=match.homeTeamId
-                        awayTeam=match.awayTeamId
-                    }
-                    SharedPreference.VIETNAMESE->{
-                        league=match.leagueNameVi
-                        homeTeam=match.homeTeamVi
-                        awayTeam=match.awayTeamVi
-                    }
-                    SharedPreference.THAI->{
-                        league=match.leagueNameTh
-                        homeTeam=match.homeTeamTh
-                        awayTeam=match.awayTeamTh
-                    }
-                    else->{
-                        league=match.leagueEn
-                        homeTeam=match.homeTeamEn
-                        awayTeam=match.awayTeamEn
-                    }
-                }
-
-                leagueNameShort.text = league
-                homeNameTv.text = homeTeam
-                awayNameTv.text = awayTeam
-
-                if (match.matchState == 0) {
-                    scoreIndicator.text = context.getString(R.string.soon)
-                } else {
-                    scoreIndicator.text = match.homeScore + " : " + match.awayScore
-                }
-                home_q1.text = match.home1
-                home_q2.text = match.home2
-                home_q3.text = match.home3
-                home_q4.text = match.home4
-                home_f.text=match.homeScore
-
-                away_q1.text=match.away1
-                away_q2.text=match.away2
-                away_q3.text=match.away3
-                away_q4.text=match.away4
-                away_f.text=match.awayScore
-
-            }
         }
 
 

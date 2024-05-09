@@ -1,6 +1,7 @@
 package com.challenge.sports.view.HomeActivity.homeFragments
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.challenge.sports.model.api.ApiHelperImpl
 import com.challenge.sports.model.api.InstanceWithoutBase
 import com.challenge.sports.model.api.RetroInstance
-import com.challenge.sports.model.data.Matches.MatchesRoot
+import com.challenge.sports.model.data.MatchesKotlin.MatchesRootK
 import com.challenge.sports.model.data.matchStatus.MatchStatusJ
 import com.challenge.sports.model.data.news.List
 import com.challenge.sports.utils.GeneralTools.fillMatchesStatus
+import com.challenge.sports.utils.Resource
 import com.challenge.sports.utils.SharedPreference
 import com.challenge.sports.utils.Status
 import com.challenge.sports.utils.ViewModelFactory
@@ -40,7 +42,6 @@ class MatchesFragment : Fragment(), MainAdapterCommunicator {
     private var mainAdapter: MatchesAdapter? = null
     private var onDetailListener: OnDetailListener?=null
 
-    var matches_data:MatchesRoot? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +58,10 @@ class MatchesFragment : Fragment(), MainAdapterCommunicator {
         casting(view)
         match_status_list = fillMatchesStatus(requireContext())
         createRecyclerViewMatchStatus()
+        sendRequestToGetHotMatches()
+    }
 
+    private fun sendRequestToGetHotMatches() {
         val viewModel = ViewModelProvider(
             requireActivity().viewModelStore
             , ViewModelFactory(ApiHelperImpl(InstanceWithoutBase.apiService2323)))
@@ -65,35 +69,43 @@ class MatchesFragment : Fragment(), MainAdapterCommunicator {
 
         viewModel.getMatchesList()
 
-        val data=viewModel.matches_root.value
+        handelHotMatchesResponse(viewModel)
+    }
 
+    private fun handelHotMatchesResponse(viewModel: MainViewModel) {
         viewModel.matches_root.observe(requireActivity()){
             if (it.status==Status.SUCCESS){
 
-                mainAdapter = MatchesAdapter(
-                    requireContext(),
-                    it.data!!,
-                    this
-                )
+                if (it.data!!.hotMatches?.get(0) != null)
+                {
+                    Log.i("TAG" ,"data.hotMatches[0] != null ")
+                    Log.i("TAG" ,"data.hotMatches[0] id "+ it.data.hotMatches!![0]?.id)
+                    Log.i("TAG" ,"data.hotMatches[0] seasonId "+it!!.data!!.hotMatches!![0]?.seasonId)
 
-                recyclerViewMain.adapter = mainAdapter
-                recyclerViewMain.layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-                Log.i("TAG" ,"data.status "+it.status)
-                Log.i("TAG" ,"viewModel.matches_root "+it.data!!.hotMatches.size)
-                if (it.data!!.hotMatches[0] != null) {
-                    Log.i("TAG" ,"it.data!!.hotMatches[0] != null")
+//                    Log.i("TAG" ,"data.hotMatches[0].coverage.mlive "+it.data.hotMatches[0].coverage.mlive)
+//                    Log.i("TAG" ,"data.hotMatches[0] "+it.data.hotMatches[0].homeInfo.enName)
+                    passADataToMainAdapter(it)
                 }else{
-                    Log.i("TAG" ,"it.data!!.hotMatches[0] == null")
+                    Log.i("TAG" ,"data.hotMatches[0] == null ")
                 }
-//                Log.i("TAG" ,"viewModel.matches_root "+it.data!!.hotMatches[0].homeTeamId)
 
             }else{
+                //handel error case
                 Log.i("TAG" ,"data.status "+it.status)
             }
         }
+    }
 
+    private fun passADataToMainAdapter(it: Resource<MatchesRootK>?) {
+        mainAdapter = MatchesAdapter(
+            requireContext(),
+            it!!.data!!,
+            this
+        )
+
+        recyclerViewMain.adapter = mainAdapter
+        recyclerViewMain.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun createRecyclerViewMatchStatus() {
@@ -128,7 +140,6 @@ class MatchesFragment : Fragment(), MainAdapterCommunicator {
 
     }
 
-
     companion object {
         @JvmStatic
         fun newInstance() =
@@ -137,9 +148,6 @@ class MatchesFragment : Fragment(), MainAdapterCommunicator {
                 }
             }
     }
-
-
-
 
     override fun onMessageFromAdapter(
         message: MainAdapterMessages,

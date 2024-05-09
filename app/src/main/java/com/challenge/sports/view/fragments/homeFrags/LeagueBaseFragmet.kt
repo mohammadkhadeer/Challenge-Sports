@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import score.pro.R
-import com.challenge.sports.model.data.homepage.leagueInfo.BaseLeagueInfoHomePage
-import com.challenge.sports.model.data.homepage.new2.Match
 import com.challenge.sports.model.data.news.details.OnPostDetailResponse
 import com.challenge.sports.view.adapters.ViewPagerAdapter
 import com.challenge.sports.view.fragments.homeFrags.adapter.MainAdapterCommunicator
@@ -24,9 +22,6 @@ private const val ARG_PARAM2 = "param2"
 class LeagueBaseFragmet : Fragment() {
     private var param1: String? = null
     private var adapterType: Int? = null
-    private var match: Match? = null
-    private var bbMatch: com.challenge.sports.model.data.basketball.homepage.Match? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +31,6 @@ class LeagueBaseFragmet : Fragment() {
         }
     }
 
-    fun setData(match: Match) {
-        this.match = match
-    }
-    fun setData(match: com.challenge.sports.model.data.basketball.homepage.Match) {
-        this.bbMatch = match
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,54 +44,7 @@ class LeagueBaseFragmet : Fragment() {
         val viewpager = view.findViewById<ViewPager2>(R.id.league_viewpager)
         val tabLayout = view.findViewById<TabLayout>(R.id.league_tab_layout)
         val fragsList = ArrayList<Fragment>()
-        try {
-            val frag=LeagueInfoFragment.newInstance(if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE)bbMatch!!.leagueId.toString()else match!!.leagueId.toString()
-                ,adapterType!!)
-            if (adapterType==MainAdapterCommunicator.BASKETBALL_TYPE){
-                frag.bbMatch=bbMatch
-                fragsList.add(frag)
-            }else{
-                frag.match=match
-                fragsList.add(frag)
-                val frag2=StandingDetailFragment.newInstance(match!!.leagueId.toString(), true,false)
-                fragsList.add(frag2)
-                frag.OnPostDetailResponse=object : OnPostDetailResponse<BaseLeagueInfoHomePage>{
-                    override fun onSuccess(responseBody: BaseLeagueInfoHomePage) {
-                        frag2.populateRecyclerView(responseBody)
-                    }
 
-                    override fun onFailure(message: String) {
-                        println(message)
-                    }
-
-                    override fun onLoading(message: String) {
-
-                    }
-                }
-
-            }
-
-            viewpager.adapter = ViewPagerAdapter(
-                requireActivity().supportFragmentManager,
-                requireActivity().lifecycle,
-                fragsList
-            )
-            TabLayoutMediator(tabLayout, viewpager) { tab, pos ->
-                tab.text = when (pos) {
-                    0 -> {
-                        getString(R.string.league_cup_info)
-                    }
-                    1 -> {
-                        getString(R.string.league_standings)
-                    }
-                    else -> {
-                        getString(R.string.league_cup_info)
-                    }
-                }
-            }.attach()
-        }catch (e:Exception){
-            println(e)
-        }
 
     }
 

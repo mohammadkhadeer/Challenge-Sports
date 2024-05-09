@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import score.pro.R
 import com.challenge.sports.model.api.ApiHelperImpl
 import com.challenge.sports.model.api.RetroInstance
-import com.challenge.sports.model.data.videos.List
 import com.challenge.sports.utils.SharedPreference
 import com.challenge.sports.utils.Status
 import com.challenge.sports.utils.ViewModelFactory
@@ -40,7 +39,6 @@ class VideosDetailFragment : Fragment() {
     private var titleDate: String? = null
     private var maxPage: Int? = null
     private var exo:ExoPlayer?=null
-    private var data:kotlin.collections.List<List>?=null
     private var recyclerView:RecyclerView?=null
     private var previousPosition=0
 
@@ -89,96 +87,22 @@ class VideosDetailFragment : Fragment() {
             ViewModelFactory(ApiHelperImpl(RetroInstance.apiService))
         ).get(MainViewModel::class.java)
 
-        viewModel.videosLiveData.observe(requireActivity()){
-            if (it.status==Status.SUCCESS){
-                val data=it?.data
-                this.data=data?.list
-                populateRv(detailRecyclerview,data?.list)
-                viewModel.videosLiveData.removeObservers(requireActivity())
-            }
-        }
         var pageNumber=maxPage?.div(10)
 
         pageNumber=(1..pageNumber!!).random()
-        viewModel.makeVideosListCall(pageNumber.toString(),SharedPreference.getInstance().getStringValueFromPreference(SharedPreference.LOCALE_KEY,SharedPreference.ENGLISH,requireContext()))
-        player.addListener(object: Player.Listener{
-            override fun onPlaybackStateChanged(playbackState: Int) {
-                if (playbackState==Player.STATE_READY){
-                    videoPlayer.hideController()
-                }
-                if (playbackState==Player.STATE_ENDED){
-                    if(view.findViewById<SwitchMaterial>(R.id.autoplay_switch).isChecked){
-                        val link=getNextLink(data)
-                        playThisVideo(link,geNextTitle(data),getNextTime(data))
-                        previousPosition++
-                    }
-                }
-            }
-        })
-        player.playWhenReady=true
+
 
 
     }
 
-    private fun getNextTime(data: kotlin.collections.List<List>?): String {
-        val prev=  previousPosition+1
-        return if (prev<data!!.size ){
 
-            data[prev].createTime
-        } else{
-            ""
-        }
-    }
 
-    private fun geNextTitle(data: kotlin.collections.List<List>?): String {
-        val prev=  previousPosition+1
-        return if (prev<data!!.size ){
-
-            data[prev].title
-        } else{
-            ""
-        }
-    }
-
-    private fun getNextLink(data: kotlin.collections.List<List>?): String {
-      val prev=  previousPosition+1
-        return if (prev<data!!.size ){
-            data[prev].path
-        } else{
-            ""
-        }
-    }
     fun playThisVideo(videoLink:String,title:String,date:String){
        exo?.setMediaItem(MediaItem.fromUri(videoLink))
        exo?.seekToNextMediaItem()
        view?.findViewById<TextView>(R.id.video_title)?.text=title
        view?.findViewById<TextView>(R.id.date_time)?.text=date
    }
-
-    fun populateRv(detailRecyclerview: RecyclerView, list: MutableList<List>?){
-        detailRecyclerview.adapter=object : MultipurposeAdapter(requireContext(),R.layout.videos_recommended_item,object : RecyclerViewOnclick{
-            override fun onClick(position: Int) {
-                playThisVideo(list?.get(position)?.path!!, list[position].title!!, list[position].createTime!!)
-            }
-        }){
-            override fun onBindViewHolder(holder: viewHolder, position: Int) {
-                holder.headline.text= list?.get(position)?.title
-                holder.tag.text=list?.get(position)?.createTime
-                Glide.with(requireContext())
-                    .load(list?.get(position)?.thumbnailPath)
-                    .into(holder.imageContainer)
-            }
-
-            override fun getItemCount(): Int {
-                return try {
-                    list?.size!!
-                } catch (e:Exception){
-                    0
-                }
-            }
-        }
-        detailRecyclerview.layoutManager=LinearLayoutManager(requireContext())
-    }
 
     companion object {
         @JvmStatic

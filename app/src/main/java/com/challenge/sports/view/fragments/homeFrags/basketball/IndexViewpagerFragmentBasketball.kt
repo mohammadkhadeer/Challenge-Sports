@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import score.pro.R
-import com.challenge.sports.model.data.basketball.odds.BasketballOddsBase
 import com.challenge.sports.view.fragments.homeFrags.adapter.OddsRvPopulatorBasketball
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +26,7 @@ class IndexViewpagerFragmentBasketball : Fragment() {
     private var param2: String? = null
     private var oddsType: String?=null
 
-    var data:BasketballOddsBase?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -48,33 +47,14 @@ class IndexViewpagerFragmentBasketball : Fragment() {
         populateRecyclerView()
     }
 
-    fun setupData(data: BasketballOddsBase) {
-        this.data=data
-    }
+
 
     fun populateRecyclerView() {
         val rv=view?.findViewById<RecyclerView>(R.id.odds_rv)
-        rv?.adapter= OddsRvPopulatorBasketball(requireContext(),returnOddsListForType(),oddsType!!)
+
         rv?.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
     }
-    private fun returnOddsListForType(): List<Any> {
-        return when(oddsType!!){
-            OddsRvPopulatorBasketball.SPREAD->{
-                val list= data?.list?.get(0)?.spread?.get(0)
-             list?:ArrayList()
-            }
-            OddsRvPopulatorBasketball.TOTAL->{
-                val list= data?.list?.get(0)?.total?.get(0)
-                list?:ArrayList()
 
-            }
-            else -> {
-                val list= data?.list?.get(0)?.spread?.get(0)
-                list?:ArrayList()
-
-            }
-        }
-    }
     companion object {
         /**
          * Use this factory method to create a new instance of
